@@ -140,33 +140,89 @@
         <h2 class="text-2xl font-semibold mb-6 text-center sm:text-left">Recommendations</h2>
 
         <!-- YouTube Testimonials -->
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
-          <iframe width="914" height="514" src="https://www.youtube.com/embed/FsPb0lJYhXA" title="Review of Jinlei Huo  From United Kingdom" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <iframe width="914" height="514" src="https://www.youtube.com/embed/MGpMlAJfDvk" title="Review of Allan Saravia From United States" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <iframe width="912" height="514" src="https://www.youtube.com/embed/nb2kPf37noA" title="Review 2 of Russell Sebastian From United States" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <iframe width="912" height="514" src="https://www.youtube.com/embed/JXGxaqgmMBw" title="Review of Taniya From United Kingdom" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <iframe width="914" height="514" src="https://www.youtube.com/embed/CA04yI-XYuA" title="Review 1 of Russell Sebastian From United States" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
+<div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 mb-12">
+  <div class="w-full aspect-video">
+    <iframe
+      src="https://www.youtube.com/embed/FsPb0lJYhXA"
+      title="Review of Jinlei Huo From United Kingdom"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      class="w-full h-full rounded-lg"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+
+  <div class="w-full aspect-video">
+    <iframe
+      src="https://www.youtube.com/embed/MGpMlAJfDvk"
+      title="Review of Allan Saravia From United States"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      class="w-full h-full rounded-lg"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+
+  <div class="w-full aspect-video">
+    <iframe
+      src="https://www.youtube.com/embed/nb2kPf37noA"
+      title="Review 2 of Russell Sebastian From United States"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      class="w-full h-full rounded-lg"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+
+  <div class="w-full aspect-video">
+    <iframe
+      src="https://www.youtube.com/embed/JXGxaqgmMBw"
+      title="Review of Taniya From United Kingdom"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      class="w-full h-full rounded-lg"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+
+  <!-- Optional full-width final video -->
+  <div class="w-full aspect-video md:col-span-2">
+    <iframe
+      src="https://www.youtube.com/embed/CA04yI-XYuA"
+      title="Review 1 of Russell Sebastian From United States"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      class="w-full h-full rounded-lg"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+</div>
+
 
         <!-- Screenshot Reviews -->
-        <h3 class="text-xl font-semibold mb-4">Client Reviews</h3>
-        <div class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-          <img src="./reviews/review1.png" alt="Review 1" class="rounded shadow-md" />
-          <img src="./reviews/review2.png" alt="Review 2" class="rounded shadow-md" />
-          <img src="./reviews/review3.png" alt="Review 3" class="rounded shadow-md" />
-          <img src="./reviews/review4.png" alt="Review 4" class="rounded shadow-md" />
-          <img src="./reviews/review5.png" alt="Review 5" class="rounded shadow-md" />
-          <img src="./reviews/review6.png" alt="Review 6" class="rounded shadow-md" />
-          <img src="./reviews/review7.png" alt="Review 7" class="rounded shadow-md" />
-          <img src="./reviews/review8.png" alt="Review 8" class="rounded shadow-md" />
-          <img src="./reviews/review9.png" alt="Review 9" class="rounded shadow-md" />
-          <img src="./reviews/review10.png" alt="Review 10" class="rounded shadow-md" />
-          <img src="./reviews/review11.png" alt="Review 11" class="rounded shadow-md" />
-          <img src="./reviews/review12.png" alt="Review 12" class="rounded shadow-md" />
-          <img src="./reviews/review13.png" alt="Review 13" class="rounded shadow-md" />
-          <img src="./reviews/review14.png" alt="Review 14" class="rounded shadow-md" />
-          <img src="./reviews/review15.png" alt="Review 15" class="rounded shadow-md" />
-        </div>
+      <h3 class="text-xl font-semibold mb-4">Client Reviews</h3>
+    <div class="flex flex-col gap-4">
+      <img src="./reviews/review1.png" alt="Review 1" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review2.png" alt="Review 2" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review3.png" alt="Review 3" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review4.png" alt="Review 4" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review5.png" alt="Review 5" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review6.png" alt="Review 6" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review7.png" alt="Review 7" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review8.png" alt="Review 8" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review9.png" alt="Review 9" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review10.png" alt="Review 10" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review11.png" alt="Review 11" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review12.png" alt="Review 12" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review13.png" alt="Review 13" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+      <img src="./reviews/review14.png" alt="Review 14" class="min-h-[250px] w-full object-contain rounded shadow-md" />
+    </div>
+
       </section>
 			<section class="mb-16">
 				<h2 class="text-2xl font-semibold mb-6 text-center sm:text-left">Contact</h2>
