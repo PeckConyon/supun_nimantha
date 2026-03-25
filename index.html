@@ -7,10 +7,12 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&family=Dancing+Script:wght@500;600&display=swap"
 			rel="stylesheet"
 		/>
 		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 		<script>
 			tailwind.config = {
 				theme: {
@@ -18,6 +20,7 @@
 						fontFamily: {
 							display: ['"Cormorant Garamond"', "Georgia", "serif"],
 							sans: ["Outfit", "ui-sans-serif", "system-ui", "sans-serif"],
+							script: ['"Dancing Script"', "cursive"],
 						},
 						colors: {
 							paper: "#f6f3ec",
@@ -57,6 +60,26 @@
 			.hero-enter {
 				animation: fade-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 			}
+			.hero-text-panel {
+				position: relative;
+				overflow: hidden;
+			}
+			.hero-text-panel::before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				background-image: url("./images/maori-coding-tattoo.svg");
+				background-size: cover;
+				background-position: 50% 20%;
+				opacity: 0.22;
+				transform: scale(1.03);
+				z-index: 0;
+				pointer-events: none;
+			}
+			.hero-text-panel > * {
+				position: relative;
+				z-index: 1;
+			}
 			.nav-link {
 				position: relative;
 			}
@@ -87,17 +110,355 @@
 				transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 				box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
 			}
+			.pill-meta {
+				display: inline-flex;
+				align-items: center;
+				border-radius: 9999px;
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				background: rgba(26, 107, 92, 0.06);
+				padding: 0.35rem 0.75rem;
+				font-size: 0.85rem;
+				font-weight: 500;
+				color: #2d3340;
+				white-space: nowrap;
+			}
+			.flag-meta {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 9999px;
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				background: rgba(26, 107, 92, 0.06);
+				padding: 0.15rem 0.55rem;
+				font-size: 1rem;
+				line-height: 1;
+				white-space: nowrap;
+			}
+			.flag-meta img {
+				width: 26px;
+				height: 18px;
+				display: block;
+				border-radius: 2px;
+				object-fit: cover;
+			}
+
+			.company-web-meta {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 9999px;
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				background: rgba(26, 107, 92, 0.06);
+				width: 28px;
+				height: 28px;
+				color: #1a6b5c;
+				flex: 0 0 auto;
+			}
+
+			.company-web-meta svg {
+				width: 16px;
+				height: 16px;
+			}
+
+			.company-web-meta--disabled {
+				opacity: 0.55;
+				pointer-events: none;
+			}
+			/* Education timeline (dotted rope + centered arrows) */
+			.edu-timeline {
+				position: relative;
+				padding-left: 1rem;
+				padding-right: 1rem;
+			}
+			.edu-timeline::before {
+				content: "";
+				position: absolute;
+				left: 50%;
+				top: 0;
+				bottom: 0;
+				width: 0;
+				border-left: 2px dotted rgba(26, 107, 92, 0.45);
+				transform: translateX(-50%);
+				pointer-events: none;
+			}
+			.edu-step {
+				width: 100%;
+				display: flex;
+				position: relative;
+				padding: 1.25rem 0;
+			}
+			.edu-step--left {
+				justify-content: flex-start;
+			}
+			.edu-step--right {
+				justify-content: flex-end;
+			}
+			.edu-card {
+				width: calc(50% - 1.75rem);
+				min-width: 16rem;
+				position: relative;
+			}
+			.edu-icon-badge {
+				position: absolute;
+				top: 1rem;
+				right: 1rem;
+				width: 2.5rem;
+				height: 2.5rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 0.9rem;
+				background: rgba(26, 107, 92, 0.06);
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				pointer-events: none;
+				z-index: 3;
+			}
+			.edu-icon-badge svg {
+				width: 1.55rem;
+				height: 1.55rem;
+			}
+			.edu-step::after {
+				content: "";
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				pointer-events: none;
+				border-left: 7px solid transparent;
+				border-right: 7px solid transparent;
+				border-top: 12px solid rgba(26, 107, 92, 0.95); /* arrow pointing down */
+				filter: drop-shadow(0 2px 6px rgba(18, 21, 28, 0.12));
+				z-index: 2;
+			}
+			/* Final timeline endpoint: thinking bubble at the end of the dotted rope */
+			.edu-think-end {
+				padding-top: 2.2rem;
+				padding-bottom: 3rem;
+			}
+			.edu-think-end::after {
+				display: none;
+			}
+			.edu-think-bubble-wrap {
+				position: absolute;
+				left: 50%;
+				bottom: 0.15rem;
+				transform: translateX(-50%);
+				width: 14.5rem;
+				z-index: 4;
+				pointer-events: none;
+			}
+			.edu-think-bubble {
+				position: relative;
+				margin: 0 auto;
+				width: fit-content;
+				max-width: 100%;
+				background: rgba(255, 255, 255, 0.82);
+				border: 1px solid rgba(26, 107, 92, 0.25);
+				border-radius: 1.25rem;
+				padding: 0.75rem 1.1rem;
+				text-align: center;
+				box-shadow: 0 18px 45px -22px rgba(18, 21, 28, 0.35);
+				backdrop-filter: blur(10px);
+				color: #12151c;
+				font-weight: 700;
+				font-size: 1.15rem;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.35rem;
+			}
+			.edu-think-bubble svg {
+				width: 2rem;
+				height: 2rem;
+			}
+			/* Thought-bubble “tail” dots */
+			.edu-think-bubble::before,
+			.edu-think-bubble::after {
+				content: "";
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				background: rgba(255, 255, 255, 0.82);
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				border-radius: 9999px;
+			}
+			.edu-think-bubble::before {
+				width: 0.85rem;
+				height: 0.85rem;
+				bottom: -0.42rem;
+			}
+			.edu-think-bubble::after {
+				width: 0.55rem;
+				height: 0.55rem;
+				bottom: -0.98rem;
+			}
+			/* Extra Curricular hover radial menu (inside each education card) */
+			.edu-extra {
+				margin-top: 1.05rem;
+				position: relative;
+			}
+			.edu-extra-menu {
+				--radius: 5.75rem;
+				--node-size: 3.05rem;
+
+				position: absolute;
+				left: 50%;
+				top: calc(100% + 0.6rem);
+				width: 18rem;
+				height: 10.75rem;
+				transform: translateX(-50%) scale(0.98) translateY(-6px);
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 180ms ease, transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+				z-index: 10;
+			}
+			.edu-extra-trigger:hover + .edu-extra-menu,
+			.edu-extra-menu:hover,
+			.edu-extra-trigger:focus + .edu-extra-menu {
+				opacity: 1;
+				transform: translateX(-50%) scale(1) translateY(0);
+				pointer-events: auto;
+			}
+			.edu-extra-center {
+				position: absolute;
+				left: 50%;
+				top: 1.05rem;
+				width: 2.55rem;
+				height: 2.55rem;
+				transform: translateX(-50%);
+				border-radius: 9999px;
+				background: rgba(26, 107, 92, 0.08);
+				border: 1px solid rgba(26, 107, 92, 0.25);
+				box-shadow: 0 18px 45px -22px rgba(18, 21, 28, 0.25);
+				z-index: 3;
+			}
+			.edu-extra-items {
+				position: absolute;
+				inset: 0;
+			}
+			.edu-extra-connector {
+				position: absolute;
+				left: 50%;
+				top: 1.05rem;
+				width: 2px;
+				height: 0;
+				background: rgba(26, 107, 92, 0.38);
+				transform: translateX(-50%) rotate(var(--angle));
+				transform-origin: top center;
+				opacity: 0;
+				transition: height 380ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
+				z-index: 1;
+			}
+			.edu-extra-trigger:hover + .edu-extra-menu .edu-extra-connector,
+			.edu-extra-menu:hover .edu-extra-connector,
+			.edu-extra-trigger:focus + .edu-extra-menu .edu-extra-connector {
+				height: var(--radius);
+				opacity: 1;
+			}
+			.edu-extra-node {
+				position: absolute;
+				left: 50%;
+				top: 1.05rem;
+				width: var(--node-size);
+				height: var(--node-size);
+				border-radius: 9999px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				overflow: hidden;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.88);
+				border: 1px solid rgba(26, 107, 92, 0.22);
+				box-shadow: 0 20px 40px -30px rgba(18, 21, 28, 0.28);
+				transform: translate(-50%, -50%)
+					rotate(var(--angle))
+					translateY(0)
+					rotate(calc(var(--angle) * -1));
+				opacity: 0;
+				transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
+				z-index: 2;
+				user-select: none;
+				backdrop-filter: blur(8px);
+			}
+			.edu-extra-trigger:hover + .edu-extra-menu .edu-extra-node,
+			.edu-extra-menu:hover .edu-extra-node,
+			.edu-extra-trigger:focus + .edu-extra-menu .edu-extra-node {
+				opacity: 1;
+				transform: translate(-50%, -50%)
+					rotate(var(--angle))
+					translateY(var(--radius))
+					rotate(calc(var(--angle) * -1));
+			}
+			.edu-extra-node .edu-extra-emoji {
+				font-size: 1.4rem;
+				line-height: 1;
+				pointer-events: none;
+			}
+			.edu-extra-tooltip {
+				position: absolute;
+				z-index: 30;
+				pointer-events: none;
+				opacity: 0;
+				transform: translate(-50%, -110%);
+				transition: opacity 140ms ease, transform 140ms ease;
+				white-space: nowrap;
+				padding: 0.4rem 0.65rem;
+				border-radius: 9999px;
+				background: rgba(18, 21, 28, 0.82);
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				color: rgba(255, 255, 255, 0.96);
+				font-size: 0.9rem;
+				box-shadow: 0 18px 50px -18px rgba(18, 21, 28, 0.35);
+				backdrop-filter: blur(10px);
+			}
+			.edu-extra-tooltip[data-visible="true"] {
+				opacity: 1;
+				transform: translate(-50%, -120%);
+			}
+			@media (max-width: 640px) {
+				.edu-extra-menu {
+					width: 16rem;
+					height: 10.25rem;
+					--radius: 4.95rem;
+					--node-size: 2.75rem;
+				}
+				.edu-extra-center {
+					width: 2.25rem;
+					height: 2.25rem;
+				}
+			}
+			@media (max-width: 640px) {
+				.edu-timeline {
+					padding-left: 1rem;
+					padding-right: 1rem;
+				}
+				.edu-timeline::before {
+					left: 1.5rem;
+					transform: none;
+				}
+				.edu-step {
+					padding: 1rem 0;
+					justify-content: flex-start;
+				}
+				.edu-card {
+					width: 100%;
+					min-width: 0;
+				}
+				.edu-step::after {
+					left: 1.5rem;
+				}
+			}
 			.pill-tech:hover {
 				border-color: rgba(26, 107, 92, 0.45);
 				background: rgba(26, 107, 92, 0.06);
 			}
 			.pill-tech img {
-				width: 1.75rem !important;
-				height: 1.75rem !important;
+				width: 2.25rem !important; /* 36px */
+				height: 2.25rem !important;
 			}
 			.pill-tech svg {
-				width: 1.75rem !important;
-				height: 1.75rem !important;
+				width: 2.25rem !important;
+				height: 2.25rem !important;
 			}
 			/* Readability: bump common Tailwind sizes that are visually small on this layout */
 			.text-xs {
@@ -105,6 +466,293 @@
 			}
 			.text-sm {
 				font-size: 1rem !important; /* 16px */
+			}
+
+			/* Carousel speedo (top-center) */
+			.carousel-speedo .speedo-dial {
+				width: 86px;
+				height: 86px;
+				border-radius: 9999px;
+				position: relative;
+				display: grid;
+				place-items: center;
+				background: rgba(246, 243, 236, 0.68);
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				box-shadow: 0 10px 34px -18px rgba(18, 21, 28, 0.22);
+				backdrop-filter: blur(10px);
+			}
+			.carousel-speedo .speedo-ring {
+				position: absolute;
+				inset: 0;
+				border-radius: 9999px;
+				background: conic-gradient(#1a6b5c calc(var(--pct, 0) * 100%), rgba(26, 107, 92, 0.12) 0);
+				z-index: 0;
+			}
+			.carousel-speedo .speedo-needle {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				width: 2px;
+				height: 34px;
+				background: #1a6b5c;
+				border-radius: 9999px;
+				transform-origin: bottom center;
+				transform: translate(-50%, -100%) rotate(calc(var(--pct, 0) * 240deg - 120deg));
+				z-index: 2;
+				box-shadow: 0 0 0 2px rgba(26, 107, 92, 0.08);
+			}
+			.carousel-speedo .speedo-center {
+				position: relative;
+				z-index: 3;
+				width: 56px;
+				height: 56px;
+				border-radius: 9999px;
+				background: rgba(246, 243, 236, 0.92);
+				border: 1px solid rgba(18, 21, 28, 0.06);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 1px;
+			}
+			.carousel-speedo .speedo-heading {
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+				font-size: 10px;
+				font-weight: 800;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: rgba(26, 107, 92, 0.95);
+				line-height: 1;
+			}
+			.carousel-speedo .speedo-value {
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+				font-size: 18px;
+				font-weight: 900;
+				color: #12151c;
+				line-height: 1;
+			}
+			.carousel-speedo input[type="range"].speedo-range {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				cursor: pointer;
+				border-radius: 9999px;
+				z-index: 4;
+			}
+			.carousel-speedo input[type="range"].speedo-range:focus-visible {
+				outline: 2px solid rgba(184, 149, 46, 0.7);
+				outline-offset: 3px;
+			}
+
+			/* Profile avatar vertical carousel (3 visible at a time) */
+			.profile-avatar-carousel {
+				--avatar-size: 140px;
+				--avatar-gap: 14px;
+				--per-page: 6;
+				display: grid;
+				grid-template-columns: 52px auto 52px;
+				align-items: center;
+				justify-content: center;
+				column-gap: 12px;
+				width: 100%;
+			}
+			.profile-avatar-carousel .profile-avatar-viewport {
+				width: calc(
+					var(--avatar-size) * var(--per-page) + var(--avatar-gap) * (var(--per-page) - 1)
+				);
+				min-width: calc(
+					var(--avatar-size) * var(--per-page) + var(--avatar-gap) * (var(--per-page) - 1)
+				);
+				max-width: calc(
+					var(--avatar-size) * var(--per-page) + var(--avatar-gap) * (var(--per-page) - 1)
+				);
+				height: var(--avatar-size);
+				overflow: hidden;
+				border-radius: 9999px;
+				flex: 1 1 auto;
+			}
+			.profile-avatar-carousel .profile-avatar-track {
+				will-change: transform;
+				gap: var(--avatar-gap);
+				flex-direction: row !important;
+			}
+			.profile-avatar-carousel .profile-avatar-tile {
+				width: var(--avatar-size);
+				height: var(--avatar-size);
+				padding: 0;
+				margin: 0;
+				background: transparent;
+				border: 0;
+			}
+			.profile-avatar-carousel .profile-avatar-img {
+				width: 100%;
+				height: 100%;
+				border-radius: 9999px;
+			}
+			.profile-avatar-carousel .profile-avatar-nav {
+				width: 42px;
+				height: 42px;
+				border-radius: 9999px;
+				background: rgba(246, 243, 236, 0.68);
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				box-shadow: 0 10px 34px -18px rgba(18, 21, 28, 0.22);
+				backdrop-filter: blur(10px);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.profile-avatar-carousel .profile-avatar-nav svg {
+				width: 18px;
+				height: 18px;
+				color: #1a6b5c;
+			}
+
+			@media (max-width: 640px) {
+				.profile-avatar-carousel {
+					--avatar-size: 120px;
+					--avatar-gap: 12px;
+					--per-page: 3;
+					grid-template-columns: 46px auto 46px;
+				}
+			}
+
+			/* Hobbies tiles: overlapping + angled stack look */
+			.hobbies-tiles {
+				align-items: start;
+			}
+			.hobbies-tile {
+				position: relative;
+				overflow: hidden;
+				transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 0deg));
+				z-index: var(--z, 1);
+				transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease,
+					background-color 180ms ease;
+				/* Keep angled tiles readable */
+				backface-visibility: hidden;
+			}
+
+			/* Force equal tile width (override any responsive col-span-2 classes) */
+			.hobbies-tiles .hobbies-tile[class*="col-span-2"] {
+				grid-column: span 1 / span 1 !important;
+			}
+			.hobbies-tile:hover {
+				border-color: rgba(26, 107, 92, 0.35);
+				box-shadow: 0 22px 70px -32px rgba(18, 21, 28, 0.35);
+			}
+			.hobbies-tile__icon-wrap {
+				width: 48px;
+				height: 48px;
+				border-radius: 1.15rem;
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				background: rgba(26, 107, 92, 0.06);
+				display: grid;
+				place-items: center;
+				overflow: hidden;
+				flex: 0 0 auto;
+			}
+			.hobbies-tile__icon-img {
+				width: 36px;
+				height: 36px;
+				object-fit: contain;
+				display: block;
+			}
+			.hobbies-tile__icon-img--wide {
+				width: 54px;
+				height: 34px;
+				object-fit: contain;
+				display: block;
+			}
+			.hobbies-tile__icons-row {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+			.hobbies-tile__title {
+				font-size: 1.05rem;
+				line-height: 1.25;
+			}
+			/* Equal tile sizing: taller than wide */
+			.hobbies-tile--big,
+			.hobbies-tile--med,
+			.hobbies-tile--small {
+				padding: 0 !important;
+				min-height: 245px !important;
+				height: 245px;
+			}
+
+			/* Background artwork layer (behind text/icons) */
+			.hobbies-tile__bgart {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+				pointer-events: none;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 1.05rem;
+				opacity: 0.18;
+			}
+			/* Photo backgrounds (real images) */
+			.hobbies-tile__bgart--photo {
+				padding: 0;
+				opacity: 0.38;
+			}
+			.hobbies-tile__bgart--photo svg {
+				display: none;
+			}
+			/* Only the direct background image becomes a cover photo. */
+			.hobbies-tile__bgart--photo > img {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transform: scale(1.05);
+				filter: saturate(0.95) contrast(1.05);
+			}
+			.hobbies-tile__bgart-collage {
+				position: absolute;
+				inset: 0;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+			}
+			.hobbies-tile__bgart-collage img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				filter: saturate(0.95) contrast(1.05);
+			}
+			.hobbies-tile__bgart svg {
+				width: 100%;
+				height: auto;
+				max-height: 135px;
+			}
+			.hobbies-tile__bgart .hobbies-tile__bgart-logos {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 16px;
+				width: 100%;
+				transform: scale(1.04);
+			}
+			.hobbies-tile__bgart .hobbies-tile__bgart-logo {
+				max-height: 96px;
+				width: auto;
+				object-fit: contain;
+				filter: saturate(0.95);
+			}
+			/* Ensure everything else renders on top */
+			.hobbies-tile *:not(.hobbies-tile__bgart) {
+				position: relative;
+				z-index: 1;
+			}
+			@media (max-width: 768px) {
+				.hobbies-tile {
+					transform: none !important;
+					z-index: auto !important;
+				}
 			}
 		</style>
 	</head>
@@ -118,24 +766,272 @@
 			class="sticky top-0 z-50 border-b border-stone-200/70 bg-paper/85 backdrop-blur-xl shadow-soft"
 			aria-label="Primary"
 		>
-			<div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="flex items-center justify-between gap-4 py-3 sm:py-3.5">
+			<div class="mx-auto w-full max-w-7xl px-3 sm:px-4 lg:px-6">
+				<div class="flex min-w-0 flex-nowrap items-center justify-between gap-4 py-3 sm:py-3.5 relative">
 					<a
 						href="#top"
-						class="font-display shrink-0 text-lg font-semibold tracking-tight text-ink transition hover:text-accent"
+						class="font-display shrink-0 whitespace-nowrap text-lg font-semibold tracking-tight text-ink transition hover:text-accent"
 						>Supun Nimantha</a>
-					<ul
-						class="flex min-w-0 flex-1 flex-wrap justify-end gap-x-3 gap-y-2 text-right text-[15px] font-medium text-muted sm:gap-x-4"
+					<button
+						type="button"
+						id="nav-menu-toggle"
+						aria-label="Open navigation menu"
+						aria-controls="primary-nav-menu"
+						aria-expanded="false"
+						class="sm:hidden inline-flex items-center justify-center rounded-md border border-stone-200/70 bg-white/35 p-2 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40"
 					>
-						<li><a href="#profile" class="nav-link whitespace-nowrap hover:text-accent">Profile</a></li>
-						<li><a href="#experience" class="nav-link whitespace-nowrap hover:text-accent">Experience</a></li>
-						<li><a href="#tech-stack" class="nav-link whitespace-nowrap hover:text-accent">Tech Stack</a></li>
-						<li><a href="#education" class="nav-link whitespace-nowrap hover:text-accent">Education</a></li>
-						<li><a href="#certifications" class="nav-link whitespace-nowrap hover:text-accent">Certs</a></li>
-						<li><a href="#attributes" class="nav-link whitespace-nowrap hover:text-accent">Attributes</a></li>
-						<li><a href="#testimonials" class="nav-link whitespace-nowrap hover:text-accent">Testimonials</a></li>
-						<li><a href="#references" class="nav-link whitespace-nowrap hover:text-accent">References</a></li>
-						<li><a href="#contact" class="nav-link whitespace-nowrap hover:text-accent">Contact</a></li>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5"
+							aria-hidden="true"
+						>
+							<path d="M4 6h16" />
+							<path d="M4 12h16" />
+							<path d="M4 18h16" />
+						</svg>
+						<span class="sr-only">Menu</span>
+					</button>
+
+					<ul
+						id="primary-nav-menu"
+						class="hidden absolute right-0 top-full z-50 mt-3 w-64 max-w-[calc(100vw-2rem)] flex-col gap-y-2 overflow-x-hidden rounded-xl border border-stone-200/70 bg-paper/95 backdrop-blur-xl p-2 shadow-soft text-left text-[15px] font-medium text-muted sm:static sm:mt-0 sm:flex sm:flex-1 sm:flex-row sm:flex-nowrap sm:items-center sm:min-w-0 sm:justify-end sm:w-auto sm:overflow-x-hidden sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:text-right sm:gap-x-2 sm:gap-y-0"
+					>
+						<li>
+							<a
+								href="#profile"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+									<circle cx="12" cy="7" r="4" />
+								</svg>
+								<span>Profile</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="#experience"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+									<path d="M14 2v6h6" />
+									<path d="M8 13h8" />
+									<path d="M8 17h6" />
+								</svg>
+								<span>Experience</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="#tech-stack"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M16 18l6-6-6-6" />
+									<path d="M8 6l-6 6 6 6" />
+									<path d="M14 4l-4 16" />
+								</svg>
+								<span>Tech Stack</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="#education"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M22 10.5 12 5 2 10.5 12 16l10-5.5Z" />
+									<path d="M6 13v5c0 1 2.5 2 6 2s6-1 6-2v-5" />
+									<path d="M2 10.5v6" />
+								</svg>
+								<span>Education</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="#certifications"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z" />
+									<path d="M9 12l2 2 4-5" />
+								</svg>
+								<span>Certs</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="#attributes"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z" />
+									<path d="M4 14l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3z" />
+								</svg>
+								<span>Attributes</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="#hobbies"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+								</svg>
+								<span>Hobbies</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="#testimonials"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" />
+									<path d="M7 10h10" />
+									<path d="M7 14h6" />
+								</svg>
+								<span>Testimonials</span>
+							</a>
+						</li>
+						<li>
+							<a
+								href="#contact"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path d="M4 4h16v16H4z" />
+									<path d="m22 6-10 7L2 6" />
+								</svg>
+								<span>Contact</span>
+							</a>
+						</li>
+						<li>
+							<button
+								type="button"
+								id="customize-sections-btn"
+								aria-label="Customize sections"
+								class="nav-link inline-flex w-full items-center justify-start gap-2 whitespace-normal rounded-md border border-stone-200/70 bg-white/35 px-2 py-1.25 transition hover:bg-white/70 hover:border-accent/30 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 sm:w-auto sm:justify-center sm:whitespace-nowrap"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4 text-accent/90 flex-shrink-0"
+									aria-hidden="true"
+								>
+									<path
+										d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+									/>
+									<path
+										d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-1.41 3.41 2 2 0 0 1-1.41-.58l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 0 1 5.62 3.7a2 2 0 0 1 1.41.58l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06A2 2 0 0 1 20.3 5.62a2 2 0 0 1-.58 1.41l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"
+									/>
+								</svg>
+								<span class="sr-only">Customize</span>
+							</button>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -148,33 +1044,121 @@
 			<div
 				class="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-b-[2.5rem] bg-gradient-to-b from-white/50 to-transparent"
 			></div>
-			<div
-				class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[auto_1fr] md:gap-16 md:text-left hero-enter"
-			>
-				<div class="flex justify-center md:justify-start">
+			<div class="mx-auto grid max-w-5xl items-center gap-8 md:gap-16 md:text-left hero-enter">
+				<div class="flex justify-center md:justify-center order-2 mt-3 md:mt-0 w-full">
 					<div class="relative">
 						<div
-							class="absolute -inset-1 rounded-full bg-gradient-to-br from-accent/30 via-gold/20 to-accent/10 blur-sm"
+							class="absolute -inset-1 rounded-full bg-gradient-to-br from-accent/30 via-gold/20 to-accent/10 blur-sm z-10"
 						></div>
-						<img
-							src="./images/profile.png"
-							alt="Profile picture"
-							width="140"
-							height="140"
-							class="relative rounded-full border-[3px] border-white object-cover shadow-lift"
-						/>
+						<div
+							id="profile-avatar-carousel"
+							class="profile-avatar-carousel relative z-20"
+							aria-label="Profile image carousel"
+						>
+							<button
+								type="button"
+								data-profile-avatar-prev
+								aria-label="Previous profile images"
+								class="profile-avatar-nav"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+									<path d="M15 18l-6-6 6-6" />
+								</svg>
+							</button>
+
+							<div class="profile-avatar-viewport" data-profile-avatar-viewport>
+								<div
+									id="profile-avatar-track"
+									class="profile-avatar-track relative flex transition-transform duration-700 ease-out"
+									style="transform: translateX(0px)"
+								>
+									<!-- JS will replace these placeholders once it resolves your images in ./images/user/ -->
+									<button
+										type="button"
+										class="profile-avatar-tile"
+										data-avatar-thumb
+										data-avatar-src="./images/user/profile.png"
+										aria-label="Profile image 1"
+									>
+										<img
+											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
+											src="./images/user/profile.png"
+											alt="Profile image 1"
+											width="140"
+											height="140"
+											loading="eager"
+											decoding="async"
+											onerror="this.onerror=null;this.src='./images/user/profile.png';"
+										/>
+									</button>
+									<button
+										type="button"
+										class="profile-avatar-tile"
+										data-avatar-thumb
+										data-avatar-src="./images/user/profile.png"
+										aria-label="Profile image 2"
+									>
+										<img
+											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
+											src="./images/user/profile.png"
+											alt="Profile image 2"
+											width="140"
+											height="140"
+											loading="eager"
+											decoding="async"
+											onerror="this.onerror=null;this.src='./images/user/profile.png';"
+										/>
+									</button>
+									<button
+										type="button"
+										class="profile-avatar-tile"
+										data-avatar-thumb
+										data-avatar-src="./images/user/profile.png"
+										aria-label="Profile image 3"
+									>
+										<img
+											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
+											src="./images/user/profile.png"
+											alt="Profile image 3"
+											width="140"
+											height="140"
+											loading="eager"
+											decoding="async"
+											onerror="this.onerror=null;this.src='./images/user/profile.png';"
+										/>
+									</button>
+								</div>
+							</div>
+
+							<button
+								type="button"
+								data-profile-avatar-next
+								aria-label="Next profile images"
+								class="profile-avatar-nav"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+									<path d="M9 18l6-6-6-6" />
+								</svg>
+							</button>
+						</div>
 					</div>
 				</div>
-				<div class="text-center md:text-left">
+				<div
+					class="hero-text-panel order-1 text-center md:text-left rounded-2xl border border-stone-200/70 bg-white/50 p-8 backdrop-blur-sm"
+					style="background-image:url('./images/sl_nz.png'); background-size:cover; background-position:0% 90%; background-repeat:no-repeat;"
+				>
 					<p
-						class="mb-2 font-display text-base font-medium uppercase tracking-[0.35em] text-accent"
+						class="mb-1 inline-flex items-center flex-wrap gap-x-4 gap-y-2 font-display text-lg font-semibold uppercase tracking-[0.35em] text-accent sm:text-xl"
 					>
-						Full-Stack Software Engineer
+						<span>Full-Stack Software Engineer</span>
+						<span class="font-mono text-sm font-semibold uppercase tracking-[0.12em] text-muted">
+							(.Net / React / NextJs / Mobile)
+						</span>
 					</p>
 					<h1 class="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-[3.25rem] lg:leading-[1.1]">
 						Supun Nimantha
 					</h1>
-					<p class="mt-3 flex items-center justify-center gap-2 font-light text-muted md:justify-start">
+					<p class="mt-3 flex items-start justify-center gap-2 font-light text-muted md:justify-start">
 						<!-- Location icon -->
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +1174,11 @@
 							<path d="M12 21s8-4.5 8-11a8 8 0 0 0-16 0c0 6.5 8 11 8 11Z" />
 							<circle cx="12" cy="10" r="3" />
 						</svg>
-						New Lynn, Auckland
+						<span class="leading-snug">
+							Live: Auckland, New Zealand
+							<br />
+							from Malabe, Sri Lanka
+						</span>
 					</p>
 
 					<div
@@ -286,6 +1274,28 @@
 							GitHub
 						</a>
 						<a
+							href="https://www.facebook.com/supz123/"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="font-medium inline-flex items-center gap-2 text-accent underline decoration-accent/30 underline-offset-4 transition hover:decoration-accent"
+						>
+							<!-- Facebook icon -->
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="h-4 w-4"
+								aria-hidden="true"
+							>
+								<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+							</svg>
+							Facebook
+						</a>
+						<a
 							href="https://www.fiverr.com/peck_conyon"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -316,14 +1326,84 @@
 					>
 						<span aria-hidden="true">↓</span> Download CV
 					</a>
+					<a
+						href="./letters/fiverr/Fiverr Profile Page.pdf"
+						download
+						class="mt-10 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-7 py-2.5 text-sm font-medium text-white shadow-soft transition hover:border-accent hover:bg-[#155a4e]"
+						aria-label="Download client feedback (Fiverr reviews PDF)"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-4 w-4"
+							aria-hidden="true"
+						>
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<path d="M7 10l5 5 5-5" />
+							<path d="M12 15V3" />
+						</svg>
+						Download Client Feedback
+					</a>
+					<button
+						type="button"
+						id="download-profile-pdf"
+						aria-label="Download portfolio as PDF"
+						class="mt-10 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-7 py-2.5 text-sm font-medium text-white shadow-soft transition hover:border-accent hover:bg-[#155a4e] focus:outline-none focus:ring-2 focus:ring-accent/40"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-4 w-4"
+							aria-hidden="true"
+						>
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<path d="M7 10l5 5 5-5" />
+							<path d="M12 15V3" />
+						</svg>
+						Download Portfolio
+					</button>
+
+					<!-- (removed) Sri Lanka lion + New Zealand kiwi indicators -->
 				</div>
 			</div>
 		</header>
 
-		<main id="main-content" class="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8" tabindex="-1">
+					<main id="main-content" class="mx-auto w-full max-w-7xl px-3 py-16 sm:px-4 lg:px-6" tabindex="-1">
+			<div class="mx-auto -mt-6 mb-6 max-w-4xl px-1 text-center">
+				<p class="font-script text-2xl leading-relaxed text-accent/90 sm:text-4xl">
+					Life is an undeniable challenge; whether we like it or not, we have to face it. To the minds
+					with great determination, the word 'impossible' doesn't make any sense.
+				</p>
+			</div>
 			<section id="profile" class="mb-24 scroll-mt-24">
 				<div class="mb-8 sm:text-left text-center">
-					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Profile</h2>
+					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+							<circle cx="12" cy="7" r="4" />
+						</svg>
+						<span>Profile</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
 				<div class="space-y-5 text-[17px] leading-relaxed text-muted max-w-3xl">
@@ -331,7 +1411,7 @@
 						Senior Full-Stack Software Engineer with over 10 years of experience designing and delivering scalable web, mobile, and enterprise systems across domains including clinical trials, ERP, fleet management, and SaaS platforms.
 					</p>
 					<p>
-						Currently pursuing a Master of Software Engineering in Auckland, with recent hands-on experience building AI-assisted data pipelines, web scraping systems, and real-world product mapping solutions.
+						Currently pursuing a Master of Software Engineering in Auckland, New Zealand, with recent hands-on experience building AI-assisted data pipelines, web scraping systems, and real-world product mapping solutions.
 					</p>
 					<p>
 						Strong in system architecture, full-stack development, and team leadership, with a proven ability to deliver end-to-end solutions for complex real-world problems.
@@ -341,7 +1421,27 @@
 
 			<section id="tech-stack" class="mb-24 scroll-mt-24" aria-labelledby="tech-stack-heading">
 				<div class="mb-8 sm:text-left text-center">
-					<h2 id="tech-stack-heading" class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Tech Stack</h2>
+					<h2
+						id="tech-stack-heading"
+						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M16 18l6-6-6-6" />
+							<path d="M8 6l-6 6 6 6" />
+							<path d="M14 4l-4 16" />
+						</svg>
+						<span>Tech Stack</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
 				<div class="grid gap-6 sm:grid-cols-2">
@@ -432,8 +1532,6 @@
 							<span class="pill-tech">AWS CloudWatch</span>
 							<span class="pill-tech">AWS SNS</span>
 							<span class="pill-tech">Cloudflare</span>
-							<span class="pill-tech">Docker</span>
-							<span class="pill-tech">Jenkins</span>
 							<span class="pill-tech">NGINX</span>
 							<span class="pill-tech">IIS</span>
 							<span class="pill-tech">Plesk</span>
@@ -468,9 +1566,11 @@
 						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">CI/CD</h3>
 						<div class="flex flex-wrap gap-2">
 							<span class="pill-tech">GitHub Actions</span>
-							<span class="pill-tech">GitLab CI</span>
 							<span class="pill-tech">Azure DevOps</span>
 							<span class="pill-tech">Jenkins</span>
+							<span class="pill-tech">Docker</span>
+							<span class="pill-tech">Orchestration</span>
+							<span class="pill-tech">Docker Desktop</span>
 						</div>
 					</div>
 
@@ -500,31 +1600,54 @@
 
 			<section id="experience" class="mb-24 scroll-mt-24">
 				<div class="mb-10 sm:text-left text-center">
-					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Work Experience</h2>
+					<h2
+						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+							<path d="M14 2v6h6" />
+							<path d="M8 13h8" />
+							<path d="M8 17h6" />
+						</svg>
+						<span>Work Experience</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
 				<div class="space-y-8">
-					<article
+						<article
 						class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8"
 					>
 						<div class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
 							<div>
-								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer Intern</h3>
-								<p class="text-muted">FoodME Ltd (DIY Meal Kit Favour), Auckland, NZ</p>
+								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer (Intern  - Master of S/W Engineering Capstone)</h3>
+								<p class="text-muted">FoodME Ltd (DIY Meal Kit Favour), Auckland, New Zealand</p>
 							</div>
-							<div
-								class="flex h-[110px] w-full max-w-[220px] items-center justify-center rounded-2xl border border-stone-200/70 bg-white/45 p-3 shadow-soft sm:shrink-0"
-								aria-hidden="true"
-							>
-								<img
-										src="./images/kiwi-bird.svg"
-										alt="Kiwi bird for New Zealand"
-									loading="lazy"
-										data-work-location-icon="1"
-									class="h-full w-full object-contain"
-								/>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">Nov 2025 – Mar 2026</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Hybrid
+									</span>
+								</div>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">Nov 2025 – Mar 2026</p>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Built multi-retailer integration (Woolworths, New World) enabling recipe-to-product mapping with store-specific pricing</li>
@@ -544,7 +1667,32 @@
 								<h3 class="font-display text-xl font-semibold text-ink">Team Lead Software Engineer / Offshore Manager</h3>
 								<p class="text-muted">AvanSight Inc., USA</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">Apr 2020 – Apr 2025</p>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">Apr 2020 – Apr 2025</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											class="h-4 w-4"
+											aria-hidden="true"
+										>
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Remote
+									</span>
+								</div>
+							</div>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Architected and developed a clinical trial management system, scaling from prototype to a multi-company platform</li>
@@ -560,10 +1708,33 @@
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
 						<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
 							<div>
-								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer (Remote)</h3>
-								<p class="text-muted">Fajar Agung Group, Indonesia (Multiple Contracts)</p>
+								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer</h3>
+								<p class="text-muted">Fajar Agung Group, Indonesia</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2017 – 2025</p>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2017 – 2025</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Office
+									</span>
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+											<polyline points="21 3 21 9 15 9"></polyline>
+											<path d="M12 7v5l4 2"></path>
+										</svg>
+										Worked multiple occasions
+									</span>
+								</div>
+							</div>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Led development of real-time field staff tracking system with GPS logging, attendance, and task management</li>
@@ -577,10 +1748,33 @@
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
 						<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
 							<div>
-								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer (Remote)</h3>
-								<p class="text-muted">HostGSM LLC, USA (Multiple Contracts)</p>
+								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer</h3>
+								<p class="text-muted">HostGSM LLC, USA</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2017 – 2025</p>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2017 – 2025</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Office
+									</span>
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+											<polyline points="21 3 21 9 15 9"></polyline>
+											<path d="M12 7v5l4 2"></path>
+										</svg>
+										Worked multiple occasions
+									</span>
+								</div>
+							</div>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Developed Transport Reservation &amp; Dispatch SaaS platform with VOIP/SMS integration and dashboards</li>
@@ -594,10 +1788,33 @@
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
 						<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
 							<div>
-								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer (Remote)</h3>
-								<p class="text-muted">Andere Corporation, USA (Multiple Contracts)</p>
+								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer</h3>
+								<p class="text-muted">Andere Corporation, USA</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2017 – 2019</p>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2017 – 2019</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Remote
+									</span>
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+											<polyline points="21 3 21 9 15 9"></polyline>
+											<path d="M12 7v5l4 2"></path>
+										</svg>
+										Worked multiple occasions
+									</span>
+								</div>
+							</div>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Enhanced Employee Handbook Creator to support compliance across 49 U.S. states</li>
@@ -610,10 +1827,25 @@
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
 						<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
 							<div>
-								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer (Remote)</h3>
+								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer</h3>
 								<p class="text-muted">NewGLink Corp, USA</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2019</p>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2019</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Remote
+									</span>
+								</div>
+							</div>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Developed BCBA web portal for tracking student behavioral data</li>
@@ -626,9 +1858,32 @@
 						<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
 							<div>
 								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer / Trainee</h3>
-								<p class="text-muted">EmetSoft, Sri Lanka (Multiple Contracts)</p>
+								<p class="text-muted">EmetSoft, Sri Lanka</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2016 – 2019</p>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2016 – 2019</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Office
+									</span>
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+											<polyline points="21 3 21 9 15 9"></polyline>
+											<path d="M12 7v5l4 2"></path>
+										</svg>
+										Worked multiple occasions
+									</span>
+								</div>
+							</div>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Developed and modernized ERP modules (finance, HR, tax, licensing)</li>
@@ -643,10 +1898,25 @@
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
 						<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
 							<div>
-								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer (Remote)</h3>
+								<h3 class="font-display text-xl font-semibold text-ink">Full-Stack Software Engineer</h3>
 								<p class="text-muted">WorkInDK, Denmark</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2017</p>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2017</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Remote
+									</span>
+								</div>
+							</div>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Built recruitment web portal with profile management, resume builder, notifications, and reporting</li>
@@ -661,7 +1931,22 @@
 								<h3 class="font-display text-xl font-semibold text-ink">Programming Instructor</h3>
 								<p class="text-muted">National School of Business Management</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">Nov 2014 – Apr 2015</p>
+							<div class="flex flex-col items-start sm:items-end">
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">Nov 2014 – Apr 2015</p>
+								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
+									<span class="pill-meta flex items-center gap-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+											<path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+											<path d="M9 22h6"></path>
+											<path d="M12 18v4"></path>
+											<path d="M8 9h.01"></path>
+											<path d="M12 9h.01"></path>
+											<path d="M16 9h.01"></path>
+										</svg>
+										Office
+									</span>
+								</div>
+							</div>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Taught programming fundamentals and practical coding</li>
@@ -676,7 +1961,7 @@
 								<h3 class="font-display text-xl font-semibold text-ink">Freelance Software Developer &amp; Tutor</h3>
 								<p class="text-muted">Fiverr (peck_conyon)</p>
 							</div>
-							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">Jan 2014 – Present</p>
+							<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">Jan 2014 – Paused</p>
 						</div>
 						<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60">
 							<li>Completed 650+ projects across web, mobile, and enterprise applications</li>
@@ -691,25 +1976,375 @@
 
 			<section id="education" class="mb-24 scroll-mt-24">
 				<div class="mb-8 sm:text-left text-center">
-					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Education</h2>
+					<h2
+						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M22 10.5 12 5 2 10.5 12 16l10-5.5Z" />
+							<path d="M6 13v5c0 1 2.5 2 6 2s6-1 6-2v-5" />
+							<path d="M2 10.5v6" />
+						</svg>
+						<span>Education</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
-				<ul class="max-w-3xl space-y-4 text-muted">
-					<li class="rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition hover:border-accent/20">
-						<p class="font-display text-lg font-semibold text-ink">Master of Software Engineering</p>
-						<p class="mt-1 text-sm">Yoobee Colleges, Auckland · 2025 – 2026</p>
+				<ul class="edu-timeline max-w-3xl text-muted">
+					<li class="edu-step edu-step--left">
+						<div class="edu-card rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition hover:border-accent/20">
+							<div class="edu-icon-badge" aria-hidden="true">
+								<svg viewBox="0 0 24 24" fill="none" stroke="#1a6b5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="9" cy="8" r="3" />
+									<path d="M6.5 20c.6-3.3 1.9-5 2.8-5h1.4c1 0 2.2 1.7 2.8 5" />
+									<circle cx="16" cy="10" r="2" />
+									<path d="M14.5 20c.5-2.7 1.1-4 1.6-4h1.0c.7 0 1.3 1.3 1.7 4" />
+									<path d="M11.3 12.2l4.0 2.2" />
+									<polyline points="15.6 13.0 15.3 15.0 13.4 14.7" />
+									<path d="M4.8 20h14.4" />
+								</svg>
+							</div>
+						<p class="font-display text-lg font-semibold text-ink pr-12">
+							<a
+								href="https://www.google.com/maps/search/?api=1&query=Kularathne+College+Ambalangoda+Sri+Lanka"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="hover:text-accent"
+							>
+								Kularathne College
+							</a>
+						</p>
+						<p class="mt-1 text-sm text-muted">Ambalangoda, Sri Lanka · 1997 – 2005</p>
+
+						<div class="edu-extra">
+							<button
+								type="button"
+								class="edu-extra-trigger inline-flex items-center gap-2 rounded-full border border-accent/25 bg-white/70 px-4 py-2 text-sm font-medium text-accent shadow-soft transition hover:bg-accent hover:text-white hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M8 21h8" />
+									<path d="M12 17v4" />
+									<path d="M7 4h10v4a5 5 0 0 1-10 0V4z" />
+									<path d="M5 8h-1a2 2 0 0 0 2 2" />
+									<path d="M19 8h1a2 2 0 0 1-2 2" />
+								</svg>
+								<span>Extra Curricular Activities</span>
+							</button>
+
+							<div
+								class="edu-extra-menu"
+								data-extra-activities="chess,volleyball,scouting,swimming"
+								role="presentation"
+								aria-hidden="true"
+							>
+								<div class="edu-extra-center" aria-hidden="true"></div>
+								<div class="edu-extra-items" aria-hidden="true"></div>
+							</div>
+						</div>
+						</div>
 					</li>
-					<li class="rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition hover:border-accent/20">
-						<p class="font-display text-lg font-semibold text-ink">BSc in Management Information Systems</p>
+					<li class="edu-step edu-step--right">
+						<div class="edu-card rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition hover:border-accent/20">
+						<div class="edu-icon-badge" aria-hidden="true">
+							<svg viewBox="0 0 24 24" fill="none" stroke="#1a6b5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M4.5 6.5c3-1.3 6-1.3 9 0 3-1.3 6-1.3 9 0v13c-3-1.3-6-1.3-9 0-3-1.3-6-1.3-9 0v-13Z" />
+								<path d="M12 6.6v13.1" />
+								<path d="M7 15h2.2" />
+								<path d="M7.8 12.2h2" />
+							</svg>
+						</div>
+						<p class="font-display text-lg font-semibold text-ink pr-12">
+							<a
+								href="https://www.google.com/maps/search/?api=1&query=Boys+Models+School+Malabe+Sri+Lanka"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="hover:text-accent"
+							>
+								Boys Models School
+							</a>
+						</p>
+						<p class="mt-1 text-sm text-muted">Malabe · 2005 – 2007</p>
+						<p class="mt-2 text-sm">GCE Ordinary Level (O/L)</p>
+						<button
+							type="button"
+							class="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							data-education-pdf="./education/ol/ol.pdf"
+							data-education-title="O/L Transcript"
+							data-education-meta="Viewing: O/L Transcript"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="16" y1="13" x2="8" y2="13"></line>
+								<line x1="16" y1="17" x2="8" y2="17"></line>
+								<line x1="10" y1="9" x2="8" y2="9"></line>
+							</svg>
+							<span>View O/L Transcript</span>
+						</button>
+
+						<div class="edu-extra">
+							<button
+								type="button"
+								class="edu-extra-trigger inline-flex items-center gap-2 rounded-full border border-accent/25 bg-white/70 px-4 py-2 text-sm font-medium text-accent shadow-soft transition hover:bg-accent hover:text-white hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M8 21h8" />
+									<path d="M12 17v4" />
+									<path d="M7 4h10v4a5 5 0 0 1-10 0V4z" />
+									<path d="M5 8h-1a2 2 0 0 0 2 2" />
+									<path d="M19 8h1a2 2 0 0 1-2 2" />
+								</svg>
+								<span>Extra Curricular Activities</span>
+							</button>
+
+							<div
+								class="edu-extra-menu"
+								data-extra-activities="chess,cadeting,quiz team,prefect,member ict club,treasurer buddhist club,athletics"
+								role="presentation"
+								aria-hidden="true"
+							>
+								<div class="edu-extra-center" aria-hidden="true"></div>
+								<div class="edu-extra-items" aria-hidden="true"></div>
+							</div>
+						</div>
+						</div>
+					</li>
+					<li class="edu-step edu-step--left">
+						<div class="edu-card rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition hover:border-accent/20">
+						<div class="edu-icon-badge" aria-hidden="true">
+							<svg viewBox="0 0 24 24" fill="none" stroke="#1a6b5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="12" r="2.2" />
+								<path d="M19.5 9.5c-1.2-2.1-3.8-3.7-7.1-3.7S6.5 7.4 5.3 9.5" />
+								<path d="M5.3 14.5c1.2 2.1 3.8 3.7 7.1 3.7s5.9-1.6 7.1-3.7" />
+								<path d="M9.5 5.6c-2.2 1-4 3.4-4 6.4s1.8 5.4 4 6.4" />
+								<path d="M14.5 5.6c2.2 1 4 3.4 4 6.4s-1.8 5.4-4 6.4" />
+							</svg>
+						</div>
+						<p class="font-display text-lg font-semibold text-ink pr-12">
+							<a
+								href="https://www.google.com/maps/search/?api=1&query=Ananda+College+Colombo+10+Sri+Lanka"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="hover:text-accent"
+							>
+								Ananda College
+							</a>
+						</p>
+						<p class="mt-1 text-sm text-muted">Colombo 10 · 2008 – 2010</p>
+						<p class="mt-2 text-sm">GCE Advanced Level (A/L) — Science (Biology - Chemistry - Physics)</p>
+						<button
+							type="button"
+							class="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							data-education-pdf="./education/al/al.pdf"
+							data-education-title="A/L Transcript"
+							data-education-meta="Viewing: A/L Transcript"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="16" y1="13" x2="8" y2="13"></line>
+								<line x1="16" y1="17" x2="8" y2="17"></line>
+								<line x1="10" y1="9" x2="8" y2="9"></line>
+							</svg>
+							<span>View A/L Transcript</span>
+						</button>
+
+						<div class="edu-extra">
+							<button
+								type="button"
+								class="edu-extra-trigger inline-flex items-center gap-2 rounded-full border border-accent/25 bg-white/70 px-4 py-2 text-sm font-medium text-accent shadow-soft transition hover:bg-accent hover:text-white hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M8 21h8" />
+									<path d="M12 17v4" />
+									<path d="M7 4h10v4a5 5 0 0 1-10 0V4z" />
+									<path d="M5 8h-1a2 2 0 0 0 2 2" />
+									<path d="M19 8h1a2 2 0 0 1-2 2" />
+								</svg>
+								<span>Extra Curricular Activities</span>
+							</button>
+
+							<div
+								class="edu-extra-menu"
+								data-extra-activities="athletics,ict club,treasurer biological association"
+								role="presentation"
+								aria-hidden="true"
+							>
+								<div class="edu-extra-center" aria-hidden="true"></div>
+								<div class="edu-extra-items" aria-hidden="true"></div>
+							</div>
+						</div>
+						</div>
+					</li>
+					<li class="edu-step edu-step--right">
+						<div class="edu-card rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition hover:border-accent/20">
+						<div class="edu-icon-badge" aria-hidden="true">
+							<svg viewBox="0 0 24 24" fill="none" stroke="#1a6b5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M3.5 8.5 12 4l8.5 4.5L12 13 3.5 8.5Z" />
+								<path d="M6.5 10.2v5.2c2 1.4 4.2 2.1 5.5 2.1s3.5-.7 5.5-2.1v-5.2" />
+								<path d="M21 8.5v7" />
+							</svg>
+						</div>
+						<p class="font-display text-lg font-semibold text-ink pr-12">BSc in Management Information Systems</p>
 						<p class="mt-1 text-sm">University College Dublin, Ireland · 2012 – 2015</p>
 						<p class="mt-2 text-sm text-muted">GPA: 3.58</p>
+						<p class="mt-3 text-sm">Transcript</p>
+						<button
+							type="button"
+							class="mt-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							data-education-pdf="./education/bsc/bsc.pdf"
+							data-education-title="BSc Transcript"
+							data-education-meta="Viewing: BSc Transcript"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="16" y1="13" x2="8" y2="13"></line>
+								<line x1="16" y1="17" x2="8" y2="17"></line>
+								<line x1="10" y1="9" x2="8" y2="9"></line>
+							</svg>
+							<span>View BSc Transcript</span>
+						</button>
+
+						<div class="edu-extra">
+							<button
+								type="button"
+								class="edu-extra-trigger inline-flex items-center gap-2 rounded-full border border-accent/25 bg-white/70 px-4 py-2 text-sm font-medium text-accent shadow-soft transition hover:bg-accent hover:text-white hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M8 21h8" />
+									<path d="M12 17v4" />
+									<path d="M7 4h10v4a5 5 0 0 1-10 0V4z" />
+									<path d="M5 8h-1a2 2 0 0 0 2 2" />
+									<path d="M19 8h1a2 2 0 0 1-2 2" />
+								</svg>
+								<span>Extra Curricular Activities</span>
+							</button>
+
+							<div
+								class="edu-extra-menu"
+								data-extra-activities="instructor"
+								role="presentation"
+								aria-hidden="true"
+							>
+								<div class="edu-extra-center" aria-hidden="true"></div>
+								<div class="edu-extra-items" aria-hidden="true"></div>
+							</div>
+						</div>
+						</div>
+					</li>
+					<li class="edu-step edu-step--left">
+						<div class="edu-card rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition hover:border-accent/20">
+						<div class="edu-icon-badge" aria-hidden="true">
+							<svg viewBox="0 0 24 24" fill="none" stroke="#1a6b5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M5.5 11.5v9h13v-9" />
+								<path d="M4 7.5 12 3.5l8 4" />
+								<path d="M8 15h8" />
+								<path d="M6.8 21h10.4" />
+								<path d="M18 9.2 21 8" />
+							</svg>
+						</div>
+						<p class="font-display text-lg font-semibold text-ink pr-12">Master of Software Engineering</p>
+						<p class="mt-1 text-sm">Yoobee Colleges, Auckland, New Zealand · 2025 – 2026</p>
+						<p class="mt-3 text-sm">Transcript</p>
+						<button
+							type="button"
+							class="mt-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							data-education-pdf="./education/msc/msc.pdf"
+							data-education-title="MSc Transcript"
+							data-education-meta="Viewing: MSc Transcript"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="16" y1="13" x2="8" y2="13"></line>
+								<line x1="16" y1="17" x2="8" y2="17"></line>
+								<line x1="10" y1="9" x2="8" y2="9"></line>
+							</svg>
+							<span>View MSc Transcript</span>
+						</button>
+
+						<div class="edu-extra">
+							<button
+								type="button"
+								class="edu-extra-trigger inline-flex items-center gap-2 rounded-full border border-accent/25 bg-white/70 px-4 py-2 text-sm font-medium text-accent shadow-soft transition hover:bg-accent hover:text-white hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M8 21h8" />
+									<path d="M12 17v4" />
+									<path d="M7 4h10v4a5 5 0 0 1-10 0V4z" />
+									<path d="M5 8h-1a2 2 0 0 0 2 2" />
+									<path d="M19 8h1a2 2 0 0 1-2 2" />
+								</svg>
+								<span>Extra Curricular Activities</span>
+							</button>
+
+							<div
+								class="edu-extra-menu"
+								data-extra-activities="internship for favour"
+								role="presentation"
+								aria-hidden="true"
+							>
+								<div class="edu-extra-center" aria-hidden="true"></div>
+								<div class="edu-extra-items" aria-hidden="true"></div>
+							</div>
+						</div>
+						</div>
+					</li>
+					<li class="edu-step edu-step--right edu-think-end">
+						<div class="edu-think-bubble-wrap" aria-hidden="true">
+							<div class="edu-think-bubble">
+								<svg
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="rgba(26,107,92,0.95)"
+									stroke-width="1.8"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<!-- User head + shoulders -->
+									<circle cx="12" cy="7" r="3" />
+									<path d="M4.5 21c.7-4.2 3.5-6.3 7.5-6.3s6.8 2.1 7.5 6.3" />
+									<!-- Thought bubble -->
+									<path d="M18.3 3.9c1.7 0 3.2 1.3 3.2 3 0 1.8-1.6 3.2-3.4 3.2-.3 0-.6 0-.9-.1l-1.8.5.4-1.8c-.4-.5-.6-1.2-.6-1.8 0-1.7 1.4-3 3.1-3z" />
+								</svg>
+								<div>PhD&nbsp;?</div>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
 
 			<section id="certifications" class="mb-24 scroll-mt-24">
 				<div class="mb-6 sm:text-left text-center">
-					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Certifications</h2>
+					<h2
+						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z" />
+							<path d="M9 12l2 2 4-5" />
+						</svg>
+						<span>Certifications</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
 				<p class="max-w-3xl text-muted">OCPJP (Oracle Certified Professional Java Programmer) — 2014</p>
@@ -717,7 +2352,25 @@
 
 			<section id="attributes" class="mb-24 scroll-mt-24">
 				<div class="mb-6 sm:text-left text-center">
-					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Skills &amp; Attributes</h2>
+					<h2
+						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z" />
+							<path d="M4 14l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3z" />
+						</svg>
+						<span>Skills &amp; Attributes</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
 				<ul class="max-w-2xl list-inside list-disc space-y-2 text-[17px] text-muted marker:text-accent/60">
@@ -730,17 +2383,603 @@
 				</ul>
 			</section>
 
-			<section id="references" class="mb-24 scroll-mt-24">
-				<div class="mb-4 sm:text-left text-center">
-					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">References</h2>
+			<section id="hobbies" class="mb-24 scroll-mt-24" aria-labelledby="hobbies-heading">
+				<div class="mb-6 sm:text-left text-center">
+					<h2
+						id="hobbies-heading"
+						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+						</svg>
+						<span>Hobbies &amp; Interests</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
-				<p class="text-sm text-muted italic">Available upon request</p>
+
+				<div class="hobbies-tiles mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+					<div
+						class="hobbies-tile hobbies-tile--big sm:col-span-2 rounded-2xl border border-stone-200/80 bg-white/65 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:-4deg; --tx:-10px; --ty:-16px; --z:5"
+						aria-label="Dogs lover and Golden Retrievers"
+					>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M88 86c0-38 24-64 58-64s58 26 58 64c0 46-24 70-58 70S88 132 88 86Z"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M94 70 62 40l4 58"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M172 70 198 42l-4 58"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<circle cx="123" cy="89" r="12" fill="none" stroke="#1a6b5c" stroke-width="8" />
+								<circle cx="157" cy="89" r="12" fill="none" stroke="#1a6b5c" stroke-width="8" />
+								<path
+									d="M134 108c8 7 16 7 24 0"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+								/>
+							</svg>
+							<img
+								src="https://source.unsplash.com/900x700/?golden-retriever,dog"
+								alt=""
+								loading="lazy"
+							/>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-6">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Dogs Lover</p>
+								<p class="mt-1 text-sm text-muted">Especially Golden Retrievers</p>
+							</div>
+							<div class="hobbies-tile__icon-wrap bg-accent/10 text-3xl" aria-hidden="true">🐕</div>
+						</div>
+					</div>
+
+					<div
+						class="hobbies-tile hobbies-tile--med lg:col-span-2 rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:3deg; --tx:10px; --ty:-10px; --z:4"
+						aria-label="Gaming: Dota 2 and Call of Duty"
+					>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<div class="hobbies-tile__bgart-logos">
+								<img
+									class="hobbies-tile__bgart-logo"
+									src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Dota-2-simplified-logo.svg"
+									alt=""
+									loading="lazy"
+								/>
+								<img
+									class="hobbies-tile__bgart-logo"
+									src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Call_of_Duty_logo.svg"
+									alt=""
+									loading="lazy"
+								/>
+							</div>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-6">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Gaming Nights</p>
+								<p class="mt-1 text-sm text-muted">Dota 2 + Call of Duty</p>
+							</div>
+							<div class="hobbies-tile__icons-row" aria-hidden="true">
+								<img
+									class="hobbies-tile__icon-img"
+									src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Dota-2-simplified-logo.svg"
+									alt=""
+									loading="lazy"
+								/>
+								<img
+									class="hobbies-tile__icon-img--wide"
+									src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Call_of_Duty_logo.svg"
+									alt=""
+									loading="lazy"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:2deg; --tx:-6px; --ty:-6px; --z:3"
+						aria-label="Chess"
+					>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M110 30h40l-10 28h-20l-10-28Z"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M90 70h80v22H90V70Z"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M105 92v54h50V92"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M80 146h100"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+								/>
+							</svg>
+							<img
+								src="https://source.unsplash.com/900x700/?chess"
+								alt=""
+								loading="lazy"
+							/>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-5">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Chess</p>
+								<p class="mt-1 text-sm text-muted">Strategy, patience, focus</p>
+							</div>
+							<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl" aria-hidden="true">♟</div>
+						</div>
+					</div>
+
+					<div
+						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:-3deg; --tx:8px; --ty:-6px; --z:4"
+						aria-label="Cars and bikes"
+					>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+								<!-- Car -->
+								<path
+									d="M45 110h115l18-38h34l18 38v20H45v-20Z"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M100 70h55"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+								/>
+								<circle cx="92" cy="130" r="16" fill="none" stroke="#1a6b5c" stroke-width="8" />
+								<circle cx="185" cy="130" r="16" fill="none" stroke="#1a6b5c" stroke-width="8" />
+								<!-- Bike -->
+								<circle cx="75" cy="122" r="13" fill="none" stroke="#1a6b5c" stroke-width="8" opacity="0.9" />
+								<circle cx="125" cy="122" r="13" fill="none" stroke="#1a6b5c" stroke-width="8" opacity="0.9" />
+								<path
+									d="M75 122l28-46h18"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									opacity="0.9"
+								/>
+								<path
+									d="M97 76l34 46"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.9"
+								/>
+							</svg>
+							<div class="hobbies-tile__bgart-collage" aria-hidden="true">
+								<img
+									src="https://source.unsplash.com/900x700/?sports-car"
+									alt=""
+									loading="lazy"
+								/>
+								<img
+									src="https://source.unsplash.com/900x700/?motorcycle,sport-bike"
+									alt=""
+									loading="lazy"
+								/>
+							</div>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-5">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Sport Cars & Bikes</p>
+								<p class="mt-1 text-sm text-muted">Curves, speed, engineering</p>
+							</div>
+							<div class="hobbies-tile__icons-row" aria-hidden="true">
+								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🏎️</div>
+								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🏍️</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:4deg; --tx:-8px; --ty:-2px; --z:3"
+						aria-label="Swimming"
+					>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M40 120c20 10 40 10 60 0s40-10 60 0 40 10 60 0"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+								/>
+								<path
+									d="M40 98c20 10 40 10 60 0s40-10 60 0 40 10 60 0"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.85"
+								/>
+								<circle cx="150" cy="70" r="12" fill="none" stroke="#1a6b5c" stroke-width="8" />
+								<path
+									d="M150 82c-10 16-20 26-34 34"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+								/>
+								<path
+									d="M160 94c14 4 26 12 36 22"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.85"
+								/>
+							</svg>
+							<img
+								src="https://source.unsplash.com/900x700/?swimming,swimmer"
+								alt=""
+								loading="lazy"
+							/>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-5">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Swimming</p>
+								<p class="mt-1 text-sm text-muted">Reset mode—quiet laps</p>
+							</div>
+							<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl" aria-hidden="true">🏊</div>
+						</div>
+					</div>
+
+					<div
+						class="hobbies-tile hobbies-tile--med lg:col-span-2 rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:-2deg; --tx:12px; --ty:-8px; --z:4"
+						aria-label="Singing and music"
+					>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+								<!-- microphone -->
+								<path
+									d="M130 40c18 0 32 14 32 32v22c0 18-14 32-32 32s-32-14-32-32V72c0-18 14-32 32-32Z"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M100 98c10 20 60 20 70 0"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.95"
+								/>
+								<path
+									d="M130 124v18"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+								/>
+								<!-- notes -->
+								<path
+									d="M70 92c12-6 22-6 34 0"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.9"
+								/>
+								<path
+									d="M60 70c16-8 30-8 46 0"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.7"
+								/>
+								<path
+									d="M160 70c20-10 40-10 60 0"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.7"
+								/>
+							</svg>
+							<img
+								src="https://source.unsplash.com/900x700/?singing,microphone"
+								alt=""
+								loading="lazy"
+							/>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-6">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Singing &amp; Music</p>
+								<p class="mt-1 text-sm text-muted">Melodies that keep me grounded</p>
+							</div>
+							<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl" aria-hidden="true">🎶</div>
+						</div>
+					</div>
+
+					<div
+						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:3deg; --tx:-6px; --ty:-4px; --z:3"
+						aria-label="Dancing and party with friends"
+					>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+								<!-- male head -->
+								<circle cx="130" cy="48" r="18" fill="none" stroke="#1a6b5c" stroke-width="8" />
+								<!-- torso -->
+								<path
+									d="M110 78c12-10 28-10 40 0"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+								/>
+								<path
+									d="M122 90c8 34 8 40 8 56"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.9"
+								/>
+								<path
+									d="M138 90c-6 36-6 42-6 56"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.9"
+								/>
+								<!-- arms -->
+								<path
+									d="M88 90l-20-14"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.85"
+								/>
+								<path
+									d="M172 90l20-14"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.85"
+								/>
+								<!-- dance spark -->
+								<path
+									d="M206 70l10-8"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.6"
+								/>
+								<path
+									d="M54 70l-10-8"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.6"
+								/>
+							</svg>
+							<img
+								src="https://source.unsplash.com/900x700/?man,dancing"
+								alt=""
+								loading="lazy"
+							/>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-5">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Dancing &amp; Parties</p>
+								<p class="mt-1 text-sm text-muted">With friends, good vibes</p>
+							</div>
+							<div class="hobbies-tile__icons-row" aria-hidden="true">
+								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🕺</div>
+								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🥂</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:-4deg; --tx:10px; --ty:-2px; --z:2"
+						aria-label="Travelling"
+					>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+								<!-- compass ring -->
+								<circle cx="130" cy="78" r="48" fill="none" stroke="#1a6b5c" stroke-width="8" />
+								<path
+									d="M130 78l28-36"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+								/>
+								<path
+									d="M130 78l-16 26"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.9"
+								/>
+								<!-- plane -->
+								<path
+									d="M66 112l40-18 24 12-12 12-52-6Z"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linejoin="round"
+									opacity="0.85"
+								/>
+								<path
+									d="M106 94l42-50 20 34-62 16Z"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linejoin="round"
+									opacity="0.85"
+								/>
+							</svg>
+							<img
+								src="https://source.unsplash.com/900x700/?travel,luggage"
+								alt=""
+								loading="lazy"
+							/>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-5">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Travelling</p>
+								<p class="mt-1 text-sm text-muted">New places, new perspectives</p>
+							</div>
+							<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl" aria-hidden="true">🧳</div>
+						</div>
+					</div>
+
+					<div
+						class="hobbies-tile hobbies-tile--med lg:col-span-2 rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						style="--rot:2deg; --tx:-12px; --ty:-10px; --z:3"
+						aria-label="Helping teaching and beer with friends"
+					>
+						<div class="hobbies-tile__bgart" aria-hidden="true">
+							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+								<!-- book -->
+								<path
+									d="M74 82c0-18 14-30 30-30h70c0 0 20 0 20 22v78c0 0-20 0-20-12H104c-18 0-30 10-30 20V82Z"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M114 52v92"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.85"
+								/>
+								<!-- cap -->
+								<path
+									d="M90 58l40-22 40 22"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M130 68V36"
+									fill="none"
+									stroke="#1a6b5c"
+									stroke-width="8"
+									stroke-linecap="round"
+									opacity="0.85"
+								/>
+							</svg>
+							<img
+								src="https://source.unsplash.com/900x700/?teaching,mentor,classroom"
+								alt=""
+								loading="lazy"
+							/>
+						</div>
+						<div class="flex h-full items-start justify-between gap-5 p-6">
+							<div class="min-w-0">
+								<p class="hobbies-tile__title font-display font-semibold text-ink">Helping &amp; Teaching</p>
+								<p class="mt-1 text-sm text-muted">Knowledge + beer with friends</p>
+							</div>
+							<div class="hobbies-tile__icons-row" aria-hidden="true">
+								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🤝</div>
+								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🍺</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</section>
 
 			<section id="testimonials" class="mb-24 scroll-mt-24" aria-labelledby="testimonials-heading">
 				<div class="mb-6 sm:text-left text-center">
-					<h2 id="testimonials-heading" class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Testimonials</h2>
+					<h2
+						id="testimonials-heading"
+						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" />
+							<path d="M7 10h10" />
+							<path d="M7 14h6" />
+						</svg>
+						<span>Testimonials</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
 				<p class="mb-8 max-w-2xl text-xs leading-relaxed text-muted">
@@ -806,10 +3045,36 @@
 				<h3 class="font-display mb-6 text-2xl font-semibold text-ink">Client reviews</h3>
 				<div
 					id="client-reviews-carousel"
-					class="reviews-carousel flex flex-col gap-4 w-full"
+					class="reviews-carousel relative flex flex-col gap-4 w-full"
 					data-autoplay-ms="9000"
 					data-per-page="3"
 				>
+					<!-- Speed control dial (top-middle) -->
+					<div
+						class="pointer-events-auto absolute left-1/2 top-2 -translate-x-1/2 z-10 carousel-speedo"
+						role="group"
+						aria-label="Client reviews carousel speed control"
+					>
+						<div class="speedo-dial" data-carousel-speed-dial style="--pct: 0.4">
+							<div class="speedo-ring" aria-hidden="true"></div>
+							<div class="speedo-needle" aria-hidden="true"></div>
+							<div class="speedo-center" aria-hidden="true">
+								<div class="speedo-heading">Speed</div>
+								<div class="speedo-value" data-carousel-speed-value>9</div>
+							</div>
+							<input
+								data-carousel-speed-input
+								class="speedo-range"
+								type="range"
+								min="5"
+								max="15"
+								step="1"
+								value="9"
+								aria-label="Carousel autoplay speed"
+							/>
+						</div>
+					</div>
+
 					<div class="flex items-center justify-between gap-4">
 						<button
 							type="button"
@@ -821,7 +3086,6 @@
 								<path d="M15 18l-6-6 6-6" />
 							</svg>
 						</button>
-						<p class="text-sm text-muted font-mono">Client reviews</p>
 						<button
 							type="button"
 							data-carousel-next
@@ -847,7 +3111,25 @@
 
 			<section id="contact" class="mb-16 scroll-mt-24">
 				<div class="mb-8 sm:text-left text-center">
-					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Contact</h2>
+					<h2
+						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M4 4h16v16H4z" />
+							<path d="m22 6-10 7L2 6" />
+						</svg>
+						<span>Contact</span>
+					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
 				<div class="mx-auto grid max-w-5xl items-start gap-8 md:grid-cols-[1fr_420px]">
@@ -959,6 +3241,33 @@
 							</div>
 							<div>
 								<dt class="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
+									<!-- Facebook icon -->
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="h-4 w-4"
+										aria-hidden="true"
+									>
+										<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+									</svg>
+									Facebook
+								</dt>
+								<dd class="mt-1">
+									<a
+										href="https://www.facebook.com/supz123/"
+										class="font-medium text-accent underline decoration-accent/30 underline-offset-4 transition hover:decoration-accent"
+										target="_blank"
+										rel="noopener noreferrer"
+										>facebook.com/supz123</a>
+								</dd>
+							</div>
+							<div>
+								<dt class="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
 									<!-- Fiverr icon -->
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -1008,9 +3317,10 @@
 						</div>
 
 						<div class="mt-4 flex justify-end">
-							<div
-								class="relative w-full max-w-[360px] aspect-[7/4] overflow-hidden rounded-3xl border border-gold/35 bg-gradient-to-br from-[#0b3a34] to-[#134e48] shadow-lift"
-							>
+								<div
+									id="business-card-preview"
+									class="relative w-full max-w-[360px] aspect-[7/4] overflow-hidden rounded-3xl border border-gold/35 bg-gradient-to-br from-[#0b3a34] to-[#134e48] shadow-lift"
+								>
 								<div class="absolute inset-0 opacity-25 [background-image:radial-gradient(circle_at_10%_15%,rgba(184,149,46,0.55),transparent_50%),radial-gradient(circle_at_90%_80%,rgba(26,107,92,0.5),transparent_55%),repeating-linear-gradient(135deg,rgba(255,255,255,0.10)_0,rgba(255,255,255,0.10)_1px,transparent_1px,transparent_18px)]"></div>
 								<div class="absolute left-0 top-0 h-[54px] w-full bg-gradient-to-r from-gold/40 via-gold/15 to-transparent"></div>
 								<div class="absolute inset-x-6 top-[66px] h-px bg-gold/25"></div>
@@ -1019,11 +3329,11 @@
 									<div class="flex h-[96px] w-[96px] items-center justify-center rounded-full border border-white/20 bg-white/10 p-2 shadow-soft">
 										<img
 											id="business-card-avatar"
-											src="./user.png"
+											src="./images/user/photo1.png"
 											alt="ID image"
 											class="h-full w-full rounded-full object-cover"
 											loading="lazy"
-											onerror="this.onerror=null;this.src='./images/profile.png';"
+											onerror="this.onerror=null;this.src='./images/user/photo1.png';"
 										/>
 									</div>
 								</div>
@@ -1034,7 +3344,7 @@
 
 									<div class="mt-4 h-px w-24 bg-gold/35"></div>
 
-									<div class="mt-4 space-y-2 text-[13px] text-white/90">
+									<div class="mt-4 space-y-1 text-[12px] text-white/90">
 										<div class="flex items-baseline gap-4 min-w-0">
 											<span class="font-mono text-[11px] uppercase tracking-[0.14em] text-gold/90">Phone</span>
 											<span class="min-w-0 flex-1 truncate text-right font-medium text-white/95">022-029-0157</span>
@@ -1052,6 +3362,10 @@
 											<span class="min-w-0 flex-1 truncate text-right font-medium text-white/95">github.com/PeckConyon</span>
 										</div>
 										<div class="flex items-baseline gap-4 min-w-0">
+											<span class="font-mono text-[11px] uppercase tracking-[0.14em] text-gold/90">Facebook</span>
+											<span class="min-w-0 flex-1 truncate text-right font-medium text-white/95">facebook.com/supz123</span>
+										</div>
+										<div class="flex items-baseline gap-4 min-w-0">
 											<span class="font-mono text-[11px] uppercase tracking-[0.14em] text-gold/90">Fiverr</span>
 											<span class="min-w-0 flex-1 truncate text-right font-medium text-white/95">fiverr.com/peck_conyon</span>
 										</div>
@@ -1059,7 +3373,7 @@
 								</div>
 
 								<div class="absolute bottom-5 left-7 right-7 flex items-end justify-between">
-									<p class="font-mono text-[11px] uppercase tracking-[0.14em] text-white/65">New Lynn, Auckland</p>
+									<p class="font-mono text-[11px] uppercase tracking-[0.14em] text-white/65">Live: Auckland, New Zealand · from Malabe, Sri Lanka</p>
 									<p class="font-mono text-[11px] uppercase tracking-[0.14em] text-gold/80">Supun Nimantha</p>
 								</div>
 							</div>
@@ -1140,10 +3454,459 @@
 			</div>
 		</div>
 
+		<!-- Sections customization modal -->
+		<div
+			id="sections-customize-modal"
+			class="fixed inset-0 z-[101] hidden"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="sections-customize-title"
+		>
+			<div
+				id="sections-customize-overlay"
+				class="absolute inset-0 bg-ink/60 backdrop-blur-sm"
+				data-close-sections-customize
+			></div>
+			<div
+				class="relative mx-auto mt-12 max-w-md w-[calc(100%-2rem)] rounded-2xl border border-stone-200/70 bg-paper/95 shadow-soft overflow-hidden"
+			>
+				<div class="flex items-center justify-between gap-4 px-6 py-4 border-b border-stone-200/60">
+					<h3 id="sections-customize-title" class="font-display text-lg font-semibold text-ink">
+						Customize Sections
+					</h3>
+					<button
+						type="button"
+						id="sections-customize-close"
+						class="inline-flex items-center justify-center rounded-full p-2 text-muted transition hover:bg-stone-200/60 hover:text-ink focus:outline-none focus:ring-2 focus:ring-accent/40"
+						aria-label="Close"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+							<path d="M18 6 6 18" />
+							<path d="m6 6 12 12" />
+						</svg>
+					</button>
+				</div>
+
+				<div class="px-6 py-5">
+					<p class="text-sm text-muted">
+						Drag to reorder the main sections vertically. Your choice is saved for this browser.
+					</p>
+
+					<ol
+						id="sections-customize-list"
+						class="mt-4 max-h-[52vh] overflow-auto space-y-2 pr-1"
+						aria-label="Sections order"
+					></ol>
+
+					<div class="mt-5 flex items-center justify-between gap-3">
+						<button
+							type="button"
+							id="sections-customize-reset"
+							class="inline-flex items-center justify-center rounded-full border border-stone-200/70 bg-white/50 px-4 py-2 text-sm font-medium text-ink shadow-soft transition hover:border-accent/40 hover:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-accent/40"
+						>
+							Reset
+						</button>
+						<button
+							type="button"
+							id="sections-customize-done"
+							class="inline-flex items-center justify-center rounded-full border border-accent/25 bg-accent px-5 py-2 text-sm font-medium text-white shadow-soft transition hover:border-accent hover:bg-[#155a4e] focus:outline-none focus:ring-2 focus:ring-accent/40"
+						>
+							Done
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Profile avatar preview modal (hover popup) -->
+		<div
+			id="avatar-preview-modal"
+			class="fixed inset-0 z-[102] hidden"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="avatar-preview-title"
+		>
+			<div
+				id="avatar-preview-overlay"
+				class="absolute inset-0 bg-ink/70 backdrop-blur-sm"
+				data-close-avatar-preview
+			></div>
+			<div class="relative mx-auto mt-10 max-w-2xl w-[calc(100%-2rem)]">
+				<div class="rounded-2xl border border-stone-200/70 bg-paper/95 shadow-soft overflow-hidden">
+					<div class="flex items-center justify-between gap-4 px-6 py-4 border-b border-stone-200/60">
+							<div class="flex items-center gap-3 min-w-0">
+								<h3 id="avatar-preview-title" class="font-display text-lg font-semibold text-ink">
+									Profile Photo
+								</h3>
+
+								<div class="flex items-center gap-2">
+									<button
+										type="button"
+										id="avatar-preview-prev"
+										aria-label="Previous profile photo"
+										class="inline-flex items-center justify-center rounded-full p-2 text-muted transition hover:bg-stone-200/60 hover:text-ink focus:outline-none focus:ring-2 focus:ring-accent/40"
+									>
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+											<path d="M15 18l-6-6 6-6" />
+										</svg>
+									</button>
+									<button
+										type="button"
+										id="avatar-preview-next"
+										aria-label="Next profile photo"
+										class="inline-flex items-center justify-center rounded-full p-2 text-muted transition hover:bg-stone-200/60 hover:text-ink focus:outline-none focus:ring-2 focus:ring-accent/40"
+									>
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+											<path d="M9 18l6-6-6-6" />
+										</svg>
+									</button>
+								</div>
+							</div>
+
+						<button
+							type="button"
+							id="avatar-preview-close"
+							class="inline-flex items-center justify-center rounded-full p-2 text-muted transition hover:bg-stone-200/60 hover:text-ink focus:outline-none focus:ring-2 focus:ring-accent/40"
+							aria-label="Close preview"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+								<path d="M18 6 6 18" />
+								<path d="m6 6 12 12" />
+							</svg>
+						</button>
+					</div>
+					<div class="p-6">
+						<img
+							id="avatar-preview-img"
+							src="./images/user/profile.png"
+							alt="Profile preview"
+							class="w-full max-h-[70vh] object-contain rounded-2xl border border-stone-200/70 bg-white/60 shadow-soft"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<footer class="border-t border-stone-200/70 bg-white/40 py-10 text-center text-sm font-medium tracking-wide text-muted backdrop-blur-sm">
 			<p class="font-display text-base font-semibold text-ink">Supun Nimantha</p>
 			<p class="mt-2">© 2026 · All rights reserved</p>
 		</footer>
+
+		<script>
+			(() => {
+				const STORAGE_KEY = 'portfolio_section_order_v1';
+
+				const nav = document.querySelector('nav[aria-label="Primary"]');
+				const main = document.getElementById('main-content');
+				if (!nav || !main) return;
+
+				const navLinks = Array.from(nav.querySelectorAll('a[href^="#"]'));
+				const sectionIdsInNav = navLinks
+					.map((a) => (a.getAttribute('href') || '').slice(1))
+					.filter(Boolean);
+
+				const sectionSet = new Set(sectionIdsInNav);
+
+				// Mobile nav toggle.
+				const navToggleBtn = document.getElementById('nav-menu-toggle');
+				const navMenu = document.getElementById('primary-nav-menu');
+				const isMobileNav = () => window.matchMedia('(max-width: 639px)').matches;
+
+				const setNavOpen = (open) => {
+					if (!navToggleBtn || !navMenu) return;
+					navToggleBtn.setAttribute('aria-expanded', String(Boolean(open)));
+					navMenu.classList.toggle('hidden', !open);
+				};
+
+				if (navToggleBtn && navMenu) {
+					setNavOpen(false);
+
+					navToggleBtn.addEventListener('click', () => {
+						const isOpen = navToggleBtn.getAttribute('aria-expanded') === 'true';
+						setNavOpen(!isOpen);
+					});
+
+					navLinks.forEach((a) => {
+						a.addEventListener('click', () => {
+							if (!isMobileNav()) return;
+							setNavOpen(false);
+						});
+					});
+
+					document.addEventListener('click', (e) => {
+						if (!isMobileNav()) return;
+						const target = e.target;
+						if (navMenu.contains(target) || navToggleBtn.contains(target)) return;
+						setNavOpen(false);
+					});
+
+					window.addEventListener('resize', () => {
+						if (!isMobileNav()) setNavOpen(false);
+					});
+
+					window.addEventListener('keydown', (e) => {
+						if (e.key !== 'Escape') return;
+						setNavOpen(false);
+					});
+				}
+
+				// Default order is whatever is currently rendered in the HTML.
+				const defaultOrder = Array.from(main.querySelectorAll(':scope > section[id]'))
+					.map((s) => s.id)
+					.filter((id) => sectionSet.has(id));
+
+				// Section label comes from the nav text (Profile/Experience/etc).
+				const labelById = {};
+				navLinks.forEach((a) => {
+					const id = (a.getAttribute('href') || '').slice(1);
+					if (!id) return;
+					labelById[id] = (a.textContent || '').trim() || id;
+				});
+
+				let currentOrder = defaultOrder.slice();
+
+				const normalizeOrder = (raw) => {
+					if (!Array.isArray(raw)) return null;
+					const filtered = raw.filter((id) => sectionSet.has(id));
+					const filteredSet = new Set(filtered);
+
+					// Must contain exactly the same sections as default.
+					if (filteredSet.size !== defaultOrder.length) return null;
+					for (const id of defaultOrder) if (!filteredSet.has(id)) return null;
+
+					// Keep stored order (but filtered).
+					return filtered.slice(0, defaultOrder.length);
+				};
+
+				try {
+					const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+					const normalized = normalizeOrder(stored);
+					if (normalized) currentOrder = normalized;
+				} catch {
+					// Ignore localStorage errors (private mode, blocked storage, etc.).
+				}
+
+				const escapeForCssSelector = (value) => {
+					try {
+						return CSS.escape(value);
+					} catch {
+						return String(value).replace(/["\\]/g, '\\$&');
+					}
+				};
+
+				const applyOrder = (order) => {
+					// Reorder main sections.
+					const byId = {};
+					defaultOrder.forEach((id) => {
+						const el = document.getElementById(id);
+						if (el) byId[id] = el;
+					});
+
+					order.forEach((id) => {
+						const el = byId[id] || document.getElementById(id);
+						if (el) main.appendChild(el);
+					});
+
+					// Reorder navigation links to match the new vertical order.
+					const navUl = nav.querySelector('ul');
+					if (!navUl) return;
+
+					const customizeBtn = document.getElementById('customize-sections-btn');
+					const customizeLi = customizeBtn ? customizeBtn.closest('li') : null;
+
+					const liById = {};
+					sectionIdsInNav.forEach((id) => {
+						const a = nav.querySelector(`a[href="#${escapeForCssSelector(id)}"]`);
+						liById[id] = a ? a.closest('li') : null;
+					});
+
+					const sectionLis = order.map((id) => liById[id]).filter(Boolean);
+					const allLis = Array.from(navUl.querySelectorAll(':scope > li'));
+					const included = new Set([...sectionLis, customizeLi].filter(Boolean));
+					const otherLis = allLis.filter((li) => !included.has(li));
+
+					navUl.innerHTML = '';
+					sectionLis.forEach((li) => navUl.appendChild(li));
+					if (customizeLi) navUl.appendChild(customizeLi);
+					otherLis.forEach((li) => navUl.appendChild(li));
+				};
+
+				// Apply the saved order immediately on load.
+				{
+					// Enforce stable order regardless of previous localStorage changes:
+					// 1) "hobbies" must be after "testimonials"
+					// 2) keep "hobbies" before "contact" when it doesn't conflict
+					const hobbiesId = 'hobbies';
+					const testimonialsId = 'testimonials';
+					const contactId = 'contact';
+
+					// Move hobbies to be after testimonials.
+					{
+						const idxT = currentOrder.indexOf(testimonialsId);
+						const idxH = currentOrder.indexOf(hobbiesId);
+						if (idxT !== -1 && idxH !== -1 && idxH < idxT) {
+							currentOrder.splice(idxH, 1);
+							const idxT2 = currentOrder.indexOf(testimonialsId);
+							if (idxT2 !== -1) currentOrder.splice(idxT2 + 1, 0, hobbiesId);
+						}
+					}
+
+					// If possible, ensure hobbies are before contact too.
+					{
+						const idxT = currentOrder.indexOf(testimonialsId);
+						const idxH = currentOrder.indexOf(hobbiesId);
+						const idxC = currentOrder.indexOf(contactId);
+						if (idxT !== -1 && idxH !== -1 && idxC !== -1 && idxT < idxC && idxH > idxC) {
+							currentOrder.splice(idxH, 1);
+							const idxC2 = currentOrder.indexOf(contactId);
+							if (idxC2 !== -1) currentOrder.splice(idxC2, 0, hobbiesId);
+						}
+					}
+				}
+				applyOrder(currentOrder);
+
+				// If the modal markup isn't present, we are done.
+				const openBtn = document.getElementById('customize-sections-btn');
+				const modal = document.getElementById('sections-customize-modal');
+				const overlay = document.getElementById('sections-customize-overlay');
+				const closeBtn = document.getElementById('sections-customize-close');
+				const doneBtn = document.getElementById('sections-customize-done');
+				const resetBtn = document.getElementById('sections-customize-reset');
+				const list = document.getElementById('sections-customize-list');
+				if (!openBtn || !modal || !list) return;
+
+				let draggedEl = null;
+
+				const rebuildList = (order) => {
+					list.innerHTML = '';
+					order.forEach((id, idx) => {
+						const item = document.createElement('li');
+						item.dataset.sectionItem = id;
+						item.draggable = true;
+						item.className =
+							'group flex items-center justify-between gap-4 rounded-xl border border-stone-200/80 bg-white/60 p-3 shadow-soft backdrop-blur-sm cursor-grab select-none';
+						item.setAttribute('aria-label', `Section ${idx + 1}: ${labelById[id] || id}`);
+
+						const titleWrap = document.createElement('div');
+						titleWrap.className = 'flex items-center gap-3 min-w-0';
+
+						const icon = document.createElement('span');
+						icon.className = 'text-muted group-hover:text-ink font-mono';
+						icon.setAttribute('aria-hidden', 'true');
+						icon.textContent = '⇅';
+
+						const textWrap = document.createElement('div');
+						textWrap.className = 'min-w-0';
+
+						const p1 = document.createElement('p');
+						p1.className = 'font-display text-[15px] font-semibold text-ink truncate';
+						p1.textContent = labelById[id] || id;
+
+						const p2 = document.createElement('p');
+						p2.className = 'text-xs text-muted font-mono';
+						p2.textContent = `#${idx + 1}`;
+
+						textWrap.appendChild(p1);
+						textWrap.appendChild(p2);
+						titleWrap.appendChild(icon);
+						titleWrap.appendChild(textWrap);
+
+						const dragHint = document.createElement('span');
+						dragHint.className = 'text-muted font-mono text-xs';
+						dragHint.setAttribute('aria-hidden', 'true');
+						dragHint.textContent = 'drag';
+
+						item.appendChild(titleWrap);
+						item.appendChild(dragHint);
+
+						item.addEventListener('dragstart', (e) => {
+							draggedEl = item;
+							e.dataTransfer.effectAllowed = 'move';
+							try {
+								e.dataTransfer.setData('text/plain', id);
+							} catch {
+								// Ignore.
+							}
+							item.classList.add('opacity-40');
+						});
+
+						item.addEventListener('dragend', () => {
+							item.classList.remove('opacity-40');
+							draggedEl = null;
+
+							// Persist after the user finishes dragging.
+							const newOrder = Array.from(list.querySelectorAll('[data-section-item]')).map(
+								(el) => el.dataset.sectionItem
+							);
+							if (!newOrder.length) return;
+
+							currentOrder = newOrder;
+							try {
+								localStorage.setItem(STORAGE_KEY, JSON.stringify(currentOrder));
+							} catch {
+								// Ignore.
+							}
+
+							applyOrder(currentOrder);
+							// Refresh preview numbering after the DOM reorder.
+							rebuildList(currentOrder);
+						});
+
+						list.appendChild(item);
+					});
+				};
+
+				list.addEventListener('dragover', (e) => {
+					if (!draggedEl) return;
+					e.preventDefault();
+
+					const overLi = e.target.closest('[data-section-item]');
+					if (!overLi || overLi === draggedEl) return;
+
+					const rect = overLi.getBoundingClientRect();
+					const placeAfter = e.clientY > rect.top + rect.height / 2;
+					if (placeAfter) overLi.after(draggedEl);
+					else overLi.before(draggedEl);
+				});
+
+				list.addEventListener('drop', (e) => e.preventDefault());
+
+				const openModal = () => {
+					rebuildList(currentOrder);
+					modal.classList.remove('hidden');
+					document.body.style.overflow = 'hidden';
+					closeBtn && closeBtn.focus();
+				};
+
+				const closeModal = () => {
+					modal.classList.add('hidden');
+					document.body.style.overflow = '';
+				};
+
+				openBtn.addEventListener('click', openModal);
+				closeBtn && closeBtn.addEventListener('click', closeModal);
+				doneBtn && doneBtn.addEventListener('click', closeModal);
+				overlay && overlay.addEventListener('click', closeModal);
+
+				resetBtn &&
+					resetBtn.addEventListener('click', () => {
+						currentOrder = defaultOrder.slice();
+						try {
+							localStorage.removeItem(STORAGE_KEY);
+						} catch {
+							// ignore
+						}
+						applyOrder(currentOrder);
+						rebuildList(currentOrder);
+					});
+
+				window.addEventListener('keydown', (e) => {
+					if (e.key !== 'Escape') return;
+					if (!modal || modal.classList.contains('hidden')) return;
+					closeModal();
+				});
+			})();
+		</script>
 
 		<script>
 			(() => {
@@ -1153,6 +3916,7 @@
 				const frame = document.getElementById('letter-frame');
 				const download = document.getElementById('letter-download');
 				const meta = document.getElementById('letter-meta');
+				const modalTitle = document.getElementById('letter-modal-title');
 				const pickerWrap = document.getElementById('letter-picker-wrap');
 				const picker = document.getElementById('letter-picker');
 
@@ -1174,6 +3938,51 @@
 							setPdf(currentLetterList[idx]);
 						}
 					});
+
+				const openPdfList = (pdfList, { title, metaText } = {}) => {
+					if (!modal || !frame) return;
+
+					currentLetterList = (pdfList || []) || [];
+					modal.classList.remove('hidden');
+					document.body.style.overflow = 'hidden';
+					closeBtn && closeBtn.focus();
+
+					if (modalTitle && title) modalTitle.textContent = title;
+					pickerWrap && pickerWrap.classList.add('hidden');
+
+					if (!currentLetterList.length) {
+						meta.textContent = metaText || 'No document found';
+						if (download) {
+							download.href = '#';
+							download.classList.add('hidden');
+						}
+						frame.src = '';
+						return;
+					}
+
+					meta.textContent = metaText || 'Viewing document';
+					if (download) download.classList.remove('hidden');
+
+					if (currentLetterList.length > 1) {
+						if (pickerWrap) pickerWrap.classList.remove('hidden');
+
+						// Populate picker with indexes to avoid dealing with weird filenames.
+						picker.innerHTML =
+							`<option value="" disabled selected>Select a PDF</option>` +
+							currentLetterList
+								.map((p, idx) => {
+									const name = p.split('/').pop();
+									return `<option value="${idx}">${name}</option>`;
+								})
+								.join('');
+						picker.value = '0';
+					} else if (pickerWrap) {
+						pickerWrap.classList.add('hidden');
+					}
+
+					setPdf(currentLetterList[0]);
+					modal.classList.remove('hidden');
+				};
 
 				// Letter mapping: folder name => list of PDFs inside that folder.
 				// (This is generated from your current `letters/*/*.pdf` files.)
@@ -1224,49 +4033,15 @@
 					if (!modal || !frame) return;
 
 					const key =
-						(firstWordKey && letterMap[firstWordKey] && letterMap[firstWordKey].length ? firstWordKey : toAcronymKey(companyRaw));
+						firstWordKey && letterMap[firstWordKey] && letterMap[firstWordKey].length
+							? firstWordKey
+							: toAcronymKey(companyRaw);
 
-					currentLetterList = (key && letterMap[key] ? letterMap[key] : []) || [];
-
-					modal.classList.remove('hidden');
-					document.body.style.overflow = 'hidden';
-					closeBtn && closeBtn.focus();
-
-					pickerWrap && pickerWrap.classList.add('hidden');
-
-					if (!currentLetterList.length) {
-						meta.textContent = `No letter found for: ${companyRaw}`;
-						if (download) {
-							download.href = '#';
-							download.classList.add('hidden');
-						}
-						frame.src = '';
-						return;
-					}
-
-					meta.textContent = `Viewing: ${companyRaw}`;
-
-					if (download) {
-						download.classList.remove('hidden');
-					}
-
-					if (currentLetterList.length > 1) {
-						if (pickerWrap) pickerWrap.classList.remove('hidden');
-
-						// Populate picker with indexes to avoid dealing with weird filenames.
-						picker.innerHTML = `<option value="" disabled selected>Select a PDF</option>` + currentLetterList
-							.map((p, idx) => {
-								const name = p.split('/').pop();
-								return `<option value="${idx}">${name}</option>`;
-							})
-							.join('');
-						picker.value = '0';
-					} else if (pickerWrap) {
-						pickerWrap.classList.add('hidden');
-					}
-
-					setPdf(currentLetterList[0]);
-					modal.classList.remove('hidden');
+					const pdfList = (key && letterMap[key] ? letterMap[key] : []) || [];
+					openPdfList(pdfList, {
+						title: 'Service Letter',
+						metaText: pdfList.length ? `Viewing: ${companyRaw}` : `No letter found for: ${companyRaw}`,
+					});
 				};
 
 				const closeLetter = () => {
@@ -1301,10 +4076,14 @@
 					const base = toFileBase(companyRaw);
 					const folderKey = base;
 
+					// Prevent duplicate injections if this script runs more than once.
+					if (article.querySelector('button[data-service-letter="1"]')) return;
+
 					const btn = document.createElement('button');
 					btn.type = 'button';
+					btn.dataset.serviceLetter = '1';
 					btn.className =
-						'mt-4 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40';
+						'mt-2 mb-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40';
 					btn.innerHTML = `
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
 							<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -1317,46 +4096,304 @@
 					`;
 
 					btn.addEventListener('click', () => openLetter(companyRaw, folderKey));
+
+					// Insert right below the company name (left column) to avoid
+					// touching the horizontal separator above the "Tech" section.
 					companyEl.insertAdjacentElement('afterend', btn);
 				});
 
-				// Add a location-based bird icon to each experience card (between company line and date).
-				const iconForLocation = (companyRaw) => {
+				// Add O/L and A/L transcript buttons to the Education section.
+				const edu = document.getElementById('education');
+				if (edu) {
+					edu.querySelectorAll('button[data-education-pdf]').forEach((btn) => {
+						const pdfPath = btn.dataset.educationPdf;
+						if (!pdfPath) return;
+
+						btn.addEventListener('click', () => {
+							openPdfList([pdfPath], {
+								title: btn.dataset.educationTitle || 'Education Transcript',
+								metaText: btn.dataset.educationMeta || 'Viewing document',
+							});
+						});
+					});
+				}
+
+				// Render Extra Curricular Activities radial menus for education cards.
+				if (edu) {
+					const iconForActivity = (raw) => {
+						const t = (raw || '').toLowerCase();
+						if (t.includes('chess')) return '♟';
+						if (t.includes('volley')) return '🏐';
+						// Supports common spelling variants like "souting" / "scouting".
+						if (t.includes('scout') || t.includes('sout')) return '🧭';
+						if (t.includes('swim')) return '🏊';
+						if (t.includes('cadet')) return '🎖️';
+						if (t.includes('quiz')) return '🧠';
+						if (t.includes('prefect')) return '👑';
+						if (t.includes('ict')) return '💻';
+						if (t.includes('buddhist')) return '🛕';
+						if (t.includes('biolog')) return '🧬';
+						if (t.includes('athlet')) return '🏃';
+						if (t.includes('instructor')) return '🧑‍🏫';
+						if (t.includes('internship')) return '💼';
+						if (t.includes('treasurer')) return '💰';
+						return '⭐';
+					};
+
+					const anglesForCount = (count) => {
+						if (count <= 1) return [0];
+						const start = -70;
+						const end = 70;
+						const step = (end - start) / (count - 1);
+						return Array.from({ length: count }, (_, i) => start + step * i);
+					};
+
+					edu.querySelectorAll('.edu-extra-menu[data-extra-activities]').forEach((menu) => {
+						const itemsWrap = menu.querySelector('.edu-extra-items');
+						if (!itemsWrap) return;
+
+						let tooltip = menu.querySelector('.edu-extra-tooltip');
+						if (!tooltip) {
+							tooltip = document.createElement('div');
+							tooltip.className = 'edu-extra-tooltip';
+							tooltip.setAttribute('aria-hidden', 'true');
+							tooltip.dataset.visible = 'false';
+							menu.appendChild(tooltip);
+						}
+
+						const rawActivities = menu.dataset.extraActivities || '';
+						const activities = rawActivities
+							.split(',')
+							.map((s) => s.trim())
+							.filter(Boolean);
+
+						itemsWrap.innerHTML = '';
+
+						const angles = anglesForCount(activities.length);
+						activities.forEach((label, idx) => {
+							const angle = angles[idx] ?? 0;
+
+							const connector = document.createElement('span');
+							connector.className = 'edu-extra-connector';
+							connector.style.setProperty('--angle', `${angle}deg`);
+							connector.setAttribute('aria-hidden', 'true');
+							itemsWrap.appendChild(connector);
+
+							const node = document.createElement('div');
+							node.className = 'edu-extra-node';
+							node.style.setProperty('--angle', `${angle}deg`);
+							node.setAttribute('role', 'img');
+							node.setAttribute('aria-label', label);
+							node.tabIndex = 0;
+
+							const emoji = document.createElement('span');
+							emoji.className = 'edu-extra-emoji';
+							emoji.setAttribute('aria-hidden', 'true');
+							emoji.textContent = iconForActivity(label);
+
+							node.appendChild(emoji);
+
+							itemsWrap.appendChild(node);
+
+							const showTooltip = () => {
+								tooltip.textContent = label;
+								const menuRect = menu.getBoundingClientRect();
+								const nodeRect = node.getBoundingClientRect();
+
+								// Position tooltip above the hovered circle, relative to the menu.
+								const x = nodeRect.left + nodeRect.width / 2 - menuRect.left;
+								const y = nodeRect.top - menuRect.top;
+
+								tooltip.style.left = `${x}px`;
+								tooltip.style.top = `${y}px`;
+								tooltip.dataset.visible = 'true';
+							};
+
+							const hideTooltip = () => {
+								tooltip.dataset.visible = 'false';
+							};
+
+							// Use mouseover/mouseout so hovering anywhere inside the circle
+							// (including over the icon) triggers the tooltip immediately.
+							node.addEventListener('mouseover', (e) => {
+								// Ignore transitions within the same node.
+								if (e.relatedTarget && node.contains(e.relatedTarget)) return;
+								showTooltip();
+							});
+							node.addEventListener('mouseout', (e) => {
+								if (e.relatedTarget && node.contains(e.relatedTarget)) return;
+								hideTooltip();
+							});
+
+							node.addEventListener('focus', showTooltip);
+							node.addEventListener('blur', hideTooltip);
+						});
+					});
+				}
+
+				// Add a country flag next to the company name for each experience card.
+				// Uses flagcdn.com so we show actual flag images (not emoji).
+				const flagForCompany = (companyRaw) => {
 					const raw = (companyRaw || '').toLowerCase();
-					if (/\b(nz|new zealand)\b/.test(raw)) return './images/kiwi-bird.svg';
-					return './images/bird-generic.svg';
+					if (/\b(nz|new zealand)\b/.test(raw)) return 'https://flagcdn.com/w20/nz.png';
+					if (/\b(usa|united states|u\\.s\\.|u\\.s\\.a\\.|america)\b/.test(raw)) return 'https://flagcdn.com/w20/us.png';
+					if (/\b(sri lanka|srilanka)\b/.test(raw)) return 'https://flagcdn.com/w20/lk.png';
+					if (/\b(denmark)\b/.test(raw)) return 'https://flagcdn.com/w20/dk.png';
+					if (/\b(indonesia|jakarta)\b/.test(raw)) return 'https://flagcdn.com/w20/id.png';
+					return null;
+				};
+
+				// Company website URLs for the "global/web" icon.
+				// If a company has no known website, return null (we still show a disabled icon).
+				const webUrlForCompany = (companyRaw) => {
+					const raw = (companyRaw || '').toLowerCase();
+					if (raw.includes('foodme') || raw.includes('tryfavour') || raw.includes('favour')) return 'https://www.tryfavour.com/';
+					if (raw.includes('avansight')) return 'https://www.avansightinc.com/';
+					if (raw.includes('hostgsm')) return 'https://www.hostgsm.com/';
+					if (raw.includes('newglink')) return 'https://newglink.com/';
+					if (raw.includes('emetsoft')) return 'https://emetsoft.com/';
+					if (raw.includes('andere')) return 'https://helpdesksuites.com/';
+					if (raw.includes('fajar agung') || raw.includes('fajaragung')) return 'https://fajaragungjaya.co.id/';
+					// WorkInDK has no website per your note.
+					if (raw.includes('workindk')) return null;
+					return null;
+				};
+
+				const createGlobeIcon = () => {
+					const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+					svg.setAttribute('viewBox', '0 0 24 24');
+					svg.setAttribute('fill', 'none');
+					svg.setAttribute('stroke', 'currentColor');
+					svg.setAttribute('stroke-width', '2');
+					svg.setAttribute('stroke-linecap', 'round');
+					svg.setAttribute('stroke-linejoin', 'round');
+
+					const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+					circle.setAttribute('cx', '12');
+					circle.setAttribute('cy', '12');
+					circle.setAttribute('r', '10');
+
+					const meridian = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+					// Minimal meridian lines for a globe look.
+					meridian.setAttribute('d', 'M2 12h20');
+
+					const parallel = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+					parallel.setAttribute('d', 'M12 2a15 15 0 0 1 0 20');
+
+					const parallel2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+					parallel2.setAttribute('d', 'M12 2a15 15 0 0 0 0 20');
+
+					svg.appendChild(circle);
+					svg.appendChild(meridian);
+					svg.appendChild(parallel);
+					svg.appendChild(parallel2);
+					return svg;
 				};
 
 				exp.querySelectorAll('article').forEach((article) => {
 					const companyEl = article.querySelector('p.text-muted');
 					if (!companyEl) return;
 
-					const header = article.querySelector('div.mb-4.flex');
-					if (!header) return;
-
-					// Skip if already injected (e.g., the first card we manually added earlier).
-					if (header.querySelector('img[data-work-location-icon="1"]')) return;
-
-					const dateEl = header.querySelector('p.font-mono');
-					if (!dateEl) return;
-
 					const companyRaw = (companyEl.textContent || '').trim();
-					const iconSrc = iconForLocation(companyRaw);
+					const flagUrl = flagForCompany(companyRaw);
+					if (!flagUrl) return;
+					const webUrl = webUrlForCompany(companyRaw);
 
-					const iconBox = document.createElement('div');
-					iconBox.className =
-						'flex h-[110px] w-full max-w-[220px] items-center justify-center rounded-2xl border border-stone-200/70 bg-white/45 p-3 shadow-soft sm:shrink-0';
-					iconBox.setAttribute('aria-hidden', 'true');
+					// If a wrapper already exists, update its flag (helps with hot reload).
+					const existingWrapper = companyEl.closest('.company-with-flag');
+					if (existingWrapper) {
+						const existingImg = existingWrapper.querySelector('span.flag-meta img');
+						if (existingImg) {
+							existingImg.src = flagUrl;
+						}
 
-					const img = document.createElement('img');
-					img.src = iconSrc;
-					img.alt = `Location icon for ${companyRaw}`;
-					img.loading = 'lazy';
-					img.dataset.workLocationIcon = '1';
-					img.className = 'h-full w-full object-contain';
+						// Ensure the website icon/link is present and correct.
+						let existingWeb = existingWrapper.querySelector('[data-company-website="1"]');
+						if (existingWeb) {
+							if (webUrl && existingWeb.tagName.toLowerCase() !== 'a') {
+								const newA = document.createElement('a');
+								newA.href = webUrl;
+								newA.target = '_blank';
+								newA.rel = 'noopener noreferrer';
+								newA.className = 'company-web-meta';
+								newA.dataset.companyWebsite = '1';
+								newA.setAttribute('aria-label', `Visit ${companyRaw} website`);
+								newA.appendChild(createGlobeIcon());
+								existingWeb.replaceWith(newA);
+								existingWeb = newA;
+							} else if (!webUrl && existingWeb.tagName.toLowerCase() !== 'span') {
+								const newSpan = document.createElement('span');
+								newSpan.className = 'company-web-meta company-web-meta--disabled';
+								newSpan.dataset.companyWebsite = '1';
+								newSpan.setAttribute('aria-hidden', 'true');
+								newSpan.appendChild(createGlobeIcon());
+								existingWeb.replaceWith(newSpan);
+								existingWeb = newSpan;
+							} else if (webUrl && existingWeb.tagName.toLowerCase() === 'a') {
+								// Update href if needed.
+								existingWeb.href = webUrl;
+							}
+						} else {
+							if (webUrl) {
+								const a = document.createElement('a');
+								a.href = webUrl;
+								a.target = '_blank';
+								a.rel = 'noopener noreferrer';
+								a.className = 'company-web-meta';
+								a.dataset.companyWebsite = '1';
+								a.setAttribute('aria-label', `Visit ${companyRaw} website`);
+								a.appendChild(createGlobeIcon());
+								existingWrapper.appendChild(a);
+							} else {
+								const span = document.createElement('span');
+								span.className = 'company-web-meta company-web-meta--disabled';
+								span.dataset.companyWebsite = '1';
+								span.setAttribute('aria-hidden', 'true');
+								span.appendChild(createGlobeIcon());
+								existingWrapper.appendChild(span);
+							}
+						}
+						return;
+					}
 
-					iconBox.appendChild(img);
-					dateEl.insertAdjacentElement('beforebegin', iconBox);
+					const flagSpan = document.createElement('span');
+					flagSpan.className = 'flag-meta';
+					flagSpan.setAttribute('aria-hidden', 'true');
+
+					const flagImg = document.createElement('img');
+					flagImg.src = flagUrl;
+					flagImg.alt = `Flag for ${companyRaw}`;
+					flagImg.loading = 'lazy';
+
+					flagSpan.appendChild(flagImg);
+
+					const wrapper = document.createElement('div');
+					wrapper.className = 'company-with-flag flex items-center gap-2';
+
+					// Replace the company <p> with a flex wrapper so the flag sits on the right.
+					companyEl.parentElement?.insertBefore(wrapper, companyEl);
+					wrapper.appendChild(companyEl);
+					wrapper.appendChild(flagSpan);
+
+					// Add the website icon/link.
+					if (webUrl) {
+						const a = document.createElement('a');
+						a.href = webUrl;
+						a.target = '_blank';
+						a.rel = 'noopener noreferrer';
+						a.className = 'company-web-meta';
+						a.dataset.companyWebsite = '1';
+						a.setAttribute('aria-label', `Visit ${companyRaw} website`);
+						a.appendChild(createGlobeIcon());
+						wrapper.appendChild(a);
+					} else {
+						const span = document.createElement('span');
+						span.className = 'company-web-meta company-web-meta--disabled';
+						span.dataset.companyWebsite = '1';
+						span.setAttribute('aria-hidden', 'true');
+						span.appendChild(createGlobeIcon());
+						wrapper.appendChild(span);
+					}
 				});
 
 				// Convert the inline "Tech: a, b, c" line into pill tags for readability.
@@ -1454,6 +4491,9 @@
 					if (t.includes('entity framework') || t === 'ef core' || t === 'ef') return './icons/entity-framework.svg';
 					if (t.includes('dapper')) return './icons/dapper.svg';
 					if (t.includes('ado.net')) return 'dotnet';
+					if (t.includes('docker desktop')) return './icons/docker-desktop.svg';
+					if (t.includes('orchestration')) return './icons/orchestration.svg';
+					if (t === 'docker') return './icons/docker.svg';
 					if (t.includes('docker')) return 'docker';
 					if (t.includes('jenkins')) return 'jenkins';
 					if (t.includes('nginx')) return 'nginx';
@@ -1500,7 +4540,7 @@
 						const img = document.createElement('img');
 						img.alt = label;
 						img.loading = 'lazy';
-						img.className = 'h-7 w-7 flex-shrink-0';
+						img.className = 'h-9 w-9 flex-shrink-0';
 
 						if (lower === 'hotchocolate') {
 							img.src =
@@ -1525,7 +4565,7 @@
 						const img = document.createElement('img');
 						img.alt = label;
 						img.loading = 'lazy';
-						img.className = 'h-7 w-7 flex-shrink-0';
+						img.className = 'h-9 w-9 flex-shrink-0';
 						// If `key` is a local relative path or a direct URL, use it as-is.
 						// Otherwise, treat it as a skillicons key.
 						img.src =
@@ -1542,7 +4582,7 @@
 					});
 				};
 
-				// Business card: generate a downloadable SVG with the ID image.
+					// Business card: generate an SVG with the ID image, then download it as a PDF.
 				const downloadBtn = document.getElementById('download-business-card');
 				if (downloadBtn) {
 					const escapeXml = (v) =>
@@ -1553,8 +4593,75 @@
 							.replace(/"/g, '&quot;')
 							.replace(/'/g, '&apos;');
 
-					const fetchAsDataUrl = async (url) => {
+					const waitForImageWithNaturalSize = async (imgEl, timeoutMs = 5000) => {
+						if (!imgEl) return false;
+
+						const start = Date.now();
+						while (Date.now() - start < timeoutMs) {
+							// naturalWidth > 0 ensures the final image (after any onerror src swap) is loaded.
+							if (imgEl.complete && imgEl.naturalWidth > 0) return true;
+							await new Promise((r) => setTimeout(r, 100));
+						}
+
+						return Boolean(imgEl.complete && imgEl.naturalWidth > 0);
+					};
+
+					const imageElementToDataUrl = async (imgEl) => {
+						if (!imgEl || !imgEl.complete || !imgEl.naturalWidth || !imgEl.naturalHeight) return null;
 						try {
+							const canvas = document.createElement('canvas');
+							canvas.width = imgEl.naturalWidth;
+							canvas.height = imgEl.naturalHeight;
+							const ctx = canvas.getContext('2d');
+							if (!ctx) return null;
+							ctx.drawImage(imgEl, 0, 0);
+							return canvas.toDataURL('image/png', 1.0);
+						} catch {
+							return null;
+						}
+					};
+
+					// Convert an image URL into a base64 data URL so it can be embedded inside the generated SVG.
+					// We try a few approaches because PDF/SVG rendering differs by browser and server setup.
+					const imageUrlToDataUrl = async (url) => {
+						try {
+							if (!url) return null;
+							if (String(url).startsWith('data:')) return url;
+
+							const img = new Image();
+							// Only set crossOrigin for remote URLs. For local assets, it can cause unnecessary CORS/canvas issues.
+							const isRemote = /^https?:\/\//i.test(String(url));
+							if (isRemote) img.crossOrigin = 'anonymous';
+							img.decoding = 'async';
+
+							await new Promise((resolve) => {
+								img.onload = () => resolve(true);
+								img.onerror = () => resolve(false);
+								img.src = url;
+							});
+
+							// If the image failed to load, canvas conversion won't work.
+							if (!img.naturalWidth || !img.naturalHeight) return null;
+
+							const canvas = document.createElement('canvas');
+							canvas.width = img.naturalWidth;
+							canvas.height = img.naturalHeight;
+							const ctx = canvas.getContext('2d');
+							if (!ctx) return null;
+
+							ctx.drawImage(img, 0, 0);
+
+							// toDataURL can throw if the canvas is tainted.
+							return canvas.toDataURL('image/png', 1.0);
+						} catch {
+							return null;
+						}
+					};
+
+					const fetchUrlToDataUrl = async (url) => {
+						try {
+							if (!url) return null;
+							if (String(url).startsWith('data:')) return url;
 							const res = await fetch(url, { cache: 'no-store' });
 							if (!res.ok) return null;
 							const blob = await res.blob();
@@ -1569,6 +4676,11 @@
 						}
 					};
 
+					const urlToDataUrl = async (url) => {
+						// Order matters: data URLs first, then fetch, then canvas.
+						return (await fetchUrlToDataUrl(url)) || (await imageUrlToDataUrl(url));
+					};
+
 					const buildCardSvg = ({ avatarDataUrl }) => {
 						const name = 'Supun Nimantha';
 						const role = 'Full-Stack Software Engineer';
@@ -1576,20 +4688,21 @@
 						const email = 'supunnimantha.edu@gmail.com';
 						const linkedin = 'linkedin.com/in/supun-nimantha';
 						const github = 'github.com/PeckConyon';
+						const facebook = 'facebook.com/supz123';
 						const fiverr = 'fiverr.com/peck_conyon';
-						const location = 'New Lynn, Auckland';
+						const location = 'Live: Auckland, New Zealand · from Malabe, Sri Lanka';
 
 						// SVG card size (landscape).
 						const W = 900;
 						const H = 540;
 
 						const avatar = avatarDataUrl
-							? `<image href="${avatarDataUrl}" x="104" y="131" width="192" height="192" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)" />`
+							? `<g clip-path="url(#avatarClip)"><image href="${avatarDataUrl}" xlink:href="${avatarDataUrl}" x="104" y="131" width="192" height="192" preserveAspectRatio="xMidYMid slice" /></g>`
 							: `<circle cx="200" cy="227" r="96" fill="rgba(255,255,255,0.10)" />
 							<text x="200" y="238" text-anchor="middle" font-family="Outfit, ui-sans-serif, system-ui, sans-serif" font-size="46" fill="rgba(184,149,46,0.95)" font-weight="700">SN</text>`;
 
 						return `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
 	<defs>
 		<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
 			<stop offset="0" stop-color="#0b3a34"/>
@@ -1602,7 +4715,7 @@
 		<pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse">
 			<path d="M18 0H0V18" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
 		</pattern>
-		<clipPath id="avatarClip">
+		<clipPath id="avatarClip" clipPathUnits="userSpaceOnUse">
 			<circle cx="200" cy="227" r="96"/>
 		</clipPath>
 	</defs>
@@ -1627,11 +4740,12 @@
 
 	<g font-family="Outfit, ui-sans-serif, system-ui, sans-serif">
 		${[
-					{ label: 'Phone', value: phone, y: 316 },
-					{ label: 'Email', value: email, y: 352 },
-					{ label: 'LinkedIn', value: linkedin, y: 388 },
-					{ label: 'GitHub', value: github, y: 424 },
-					{ label: 'Fiverr', value: fiverr, y: 460 },
+					{ label: 'Phone', value: phone, y: 306 },
+					{ label: 'Email', value: email, y: 338 },
+					{ label: 'LinkedIn', value: linkedin, y: 370 },
+					{ label: 'GitHub', value: github, y: 402 },
+					{ label: 'Facebook', value: facebook, y: 434 },
+					{ label: 'Fiverr', value: fiverr, y: 466 },
 				]
 					.map(
 						({ label, value, y }) => `
@@ -1655,22 +4769,222 @@
 					downloadBtn.addEventListener('click', async () => {
 						downloadBtn.disabled = true;
 						const oldText = downloadBtn.textContent;
+
 						try {
-							const avatarDataUrl = (await fetchAsDataUrl('./user.png')) || (await fetchAsDataUrl('./images/profile.png'));
+							const jsPDFCtor = window.jspdf && window.jspdf.jsPDF;
+							const previewEl = document.getElementById('business-card-preview');
+
+							// Primary approach: rasterize the actual preview (guarantees the photo is included).
+							if (window.html2canvas && previewEl && jsPDFCtor) {
+								const avatarEl = document.getElementById('business-card-avatar');
+								// Ensure the avatar is fully loaded before html2canvas snapshots the preview.
+								// This matters because the <img> can fail and then swap to `images/user/photo1.png`.
+								await waitForImageWithNaturalSize(avatarEl);
+
+								// html2canvas can sometimes omit <img> pixels depending on how the page is served.
+								// To make it deterministic, we swap the already-loaded <img> into a base64 data URL
+								// right before the snapshot.
+								const originalAvatarSrc = avatarEl ? avatarEl.src : null;
+								const originalLoading = avatarEl ? avatarEl.getAttribute('loading') : null;
+								const originalDecoding = avatarEl ? avatarEl.getAttribute('decoding') : null;
+								if (avatarEl) {
+									avatarEl.setAttribute('loading', 'eager');
+									avatarEl.setAttribute('decoding', 'sync');
+								}
+								const avatarDataUrlFromElement = await imageElementToDataUrl(avatarEl);
+								if (avatarEl && avatarDataUrlFromElement) {
+									avatarEl.src = avatarDataUrlFromElement;
+									// Data URLs typically load instantly, but give the browser a beat.
+									await new Promise((r) => setTimeout(r, 30));
+								}
+
+								// Restore original image so the UI doesn't end up with base64-src.
+								try {
+									if (avatarEl && originalAvatarSrc) avatarEl.src = originalAvatarSrc;
+									if (avatarEl && originalLoading !== null) avatarEl.setAttribute('loading', originalLoading);
+									if (avatarEl && originalDecoding !== null) avatarEl.setAttribute('decoding', originalDecoding);
+								} catch {}
+							}
+						} catch {
+							// Fallback to SVG->PNG path below.
+						}
+
+						const SVG_W = 900;
+						const SVG_H = 540;
+						// Typical business card aspect for a small landscape PDF (keeps layout crisp).
+						const PDF_W_MM = 90;
+						const PDF_H_MM = 54;
+						const CANVAS_SCALE = 2.2; // Higher = sharper PNG-in-PDF, but larger download.
+						let svgUrl = null;
+
+						try {
+							// Always embed whatever the on-page avatar actually loaded.
+							const avatarEl = document.getElementById('business-card-avatar');
+							await waitForImageWithNaturalSize(avatarEl);
+								const avatarSrc = avatarEl ? avatarEl.currentSrc || avatarEl.src : './images/user/photo1.png';
+								// Prefer converting the already-loaded <img> element into a base64 data URL.
+								const avatarDataUrlFromElement = await imageElementToDataUrl(avatarEl);
+								const avatarDataUrl =
+									avatarDataUrlFromElement ||
+									(await urlToDataUrl(avatarSrc)) ||
+										(await urlToDataUrl('./images/user/photo1.png'));
 							const svg = buildCardSvg({ avatarDataUrl });
 
-							const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-							const url = URL.createObjectURL(blob);
-							const a = document.createElement('a');
-							a.href = url;
-							a.download = 'Supun_Nimantha_Business_Card.svg';
-							document.body.appendChild(a);
-							a.click();
-							a.remove();
-							URL.revokeObjectURL(url);
+							// If jsPDF isn't available for some reason, fall back to SVG download.
+							const jsPDFCtor = window.jspdf && window.jspdf.jsPDF;
+							const svgBlob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+							svgUrl = URL.createObjectURL(svgBlob);
+
+							const svgToPngDataUrl = async () => {
+								const canvas = document.createElement('canvas');
+								canvas.width = Math.round(SVG_W * CANVAS_SCALE);
+								canvas.height = Math.round(SVG_H * CANVAS_SCALE);
+								const ctx = canvas.getContext('2d');
+								if (!ctx) return null;
+
+								const img = new Image();
+								img.decoding = 'async';
+
+								await new Promise((resolve) => {
+									img.onload = () => resolve(true);
+									img.onerror = () => resolve(false);
+									img.src = svgUrl;
+								});
+
+								// If loading failed, ensure we still have a working fallback.
+								if (!img.width || !img.height) return null;
+
+								// Give the SVG renderer a moment to resolve nested images.
+								await new Promise((r) => setTimeout(r, 60));
+
+								ctx.clearRect(0, 0, canvas.width, canvas.height);
+								ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+								return canvas.toDataURL('image/png', 1.0);
+							};
+
+							const pngDataUrl = await svgToPngDataUrl();
+							if (!pngDataUrl || !jsPDFCtor) {
+								const a = document.createElement('a');
+								a.href = svgUrl;
+								a.download = 'Supun_Nimantha_Business_Card.svg';
+								document.body.appendChild(a);
+								a.click();
+								a.remove();
+								return;
+							}
+
+							const { jsPDF } = window.jspdf;
+							const doc = new jsPDF({
+								orientation: 'landscape',
+								unit: 'mm',
+								format: [PDF_W_MM, PDF_H_MM],
+							});
+
+							doc.addImage(pngDataUrl, 'PNG', 0, 0, PDF_W_MM, PDF_H_MM, undefined, 'FAST');
+							doc.save('Supun_Nimantha_Business_Card.pdf');
 						} finally {
 							downloadBtn.disabled = false;
 							downloadBtn.textContent = oldText;
+							// Revoke any outstanding object URL to avoid memory leaks.
+							try {
+								if (svgUrl) URL.revokeObjectURL(svgUrl);
+							} catch {}
+						}
+					});
+				}
+
+				// Profile section: export the visible "Profile" section as a PDF (HTML -> canvas -> PDF).
+				const profileDownloadBtn = document.getElementById('download-profile-pdf');
+				if (profileDownloadBtn) {
+					profileDownloadBtn.addEventListener('click', async () => {
+						profileDownloadBtn.disabled = true;
+							try {
+								if (!window.html2canvas) {
+									throw new Error('Missing html2canvas library.');
+								}
+
+								// Full-page capture (including below the fold).
+								// We stitch viewport-height "slices" together into one big canvas.
+								const docEl = document.documentElement;
+								const totalWidth = Math.max(docEl.scrollWidth, window.innerWidth);
+								const totalHeight = Math.max(
+									docEl.scrollHeight,
+									docEl.offsetHeight,
+									document.body ? document.body.scrollHeight : 0
+								);
+
+								// Lower scale to avoid memory issues for very tall pages.
+								const SCALE = 1.5;
+								const viewportHeight = window.innerHeight;
+								const slices = Math.ceil(totalHeight / viewportHeight);
+
+								const originalScrollY = window.scrollY;
+								const nav = document.querySelector('nav[aria-label="Primary"]');
+								const prevNavVisibility = nav ? nav.style.visibility : null;
+
+								let fullCanvas = document.createElement('canvas');
+								let ctx = fullCanvas.getContext('2d');
+								const fullWidthPx = Math.floor(totalWidth * SCALE);
+								const fullHeightPx = Math.floor(totalHeight * SCALE);
+								fullCanvas.width = fullWidthPx;
+								fullCanvas.height = fullHeightPx;
+
+								if (!ctx) throw new Error('Could not create canvas context.');
+
+								try {
+									window.scrollTo(0, 0);
+									await new Promise((r) => setTimeout(r, 50));
+
+									let y = 0;
+									for (let i = 0; i < slices; i++) {
+										const sliceHeight = Math.min(viewportHeight, totalHeight - y);
+
+										// Hide sticky header on subsequent slices to avoid duplication.
+										if (nav) nav.style.visibility = i === 0 ? prevNavVisibility || 'visible' : 'hidden';
+
+										window.scrollTo(0, y);
+										await new Promise((r) => setTimeout(r, 80));
+
+										const sliceCanvas = await window.html2canvas(document.body, {
+											scale: SCALE,
+											useCORS: true,
+											allowTaint: true,
+											backgroundColor: '#f6f3ec',
+											windowWidth: totalWidth,
+											windowHeight: sliceHeight
+										});
+
+										const destY = Math.round(y * SCALE);
+										// Draw using the slice canvas' own pixel size (more resilient to rounding).
+										ctx.drawImage(sliceCanvas, 0, 0, sliceCanvas.width, sliceCanvas.height, 0, destY, fullWidthPx, sliceCanvas.height);
+
+										y += sliceHeight;
+									}
+								} finally {
+									if (nav && prevNavVisibility !== null) nav.style.visibility = prevNavVisibility;
+									window.scrollTo(0, originalScrollY);
+								}
+
+								// Download stitched image as PNG.
+								fullCanvas.toBlob(
+									(blob) => {
+										if (!blob) return;
+										const url = URL.createObjectURL(blob);
+										const a = document.createElement('a');
+										a.href = url;
+										a.download = 'Supun_Nimantha_FullPage.png';
+										document.body.appendChild(a);
+										a.click();
+										a.remove();
+										setTimeout(() => URL.revokeObjectURL(url), 2000);
+									},
+									'image/png',
+									1.0
+								);
+						} catch (e) {
+							console.error(e);
+						} finally {
+							profileDownloadBtn.disabled = false;
 						}
 					});
 				}
@@ -1690,7 +5004,16 @@
 				const nextBtn = carousel.querySelector('[data-carousel-next]');
 				const dotsWrap = carousel.querySelector('[data-carousel-dots]');
 
-				const autoplayMs = Number(carousel.getAttribute('data-autoplay-ms')) || 9000;
+				const speedInput = carousel.querySelector('[data-carousel-speed-input]');
+				const speedDial = carousel.querySelector('[data-carousel-speed-dial]');
+				const speedValueEl = carousel.querySelector('[data-carousel-speed-value]');
+
+				const baseAutoplayMs = Number(carousel.getAttribute('data-autoplay-ms')) || 9000;
+				const speedDefault = 9;
+				const speedMin = 5;
+				const speedMax = 15;
+
+				let autoplayMs = baseAutoplayMs; // updated based on the speed dial
 				const perPage = Number(carousel.getAttribute('data-per-page')) || 3;
 
 				// Replace/edit review text below as needed.
@@ -1791,6 +5114,27 @@
 				let pageIndex = 0;
 				let timeoutId = null;
 
+				const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+
+				const applySpeed = (rawSpeed, resetTimer = true) => {
+					const speed = clamp(Number(rawSpeed) || speedDefault, speedMin, speedMax);
+					// Treat dial value as "seconds per slide" (default 9 => baseAutoplayMs).
+					autoplayMs = baseAutoplayMs * (speed / speedDefault);
+
+					if (speedValueEl) speedValueEl.textContent = String(speed);
+					if (speedDial) {
+						const pct = (speed - speedMin) / (speedMax - speedMin);
+						speedDial.style.setProperty('--pct', String(pct));
+					}
+
+					// Keep the input clamped if the user drags/selects out of bounds.
+					if (speedInput && String(speedInput.value) !== String(speed)) {
+						speedInput.value = String(speed);
+					}
+
+					if (resetTimer) scheduleNext();
+				};
+
 				const buildDots = () => {
 					if (!dotsWrap) return;
 					dotsWrap.innerHTML = '';
@@ -1836,8 +5180,8 @@
 
 							card.innerHTML = `
 								<div class="flex items-start justify-between gap-4">
-									<p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">Client</p>
-									<p class="text-[12px] leading-none text-accent" aria-label="5 out of 5 stars">★★★★★</p>
+									<p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">5 Star Ratings</p>
+									<p class="text-[12px] leading-none text-accent" aria-label="5 Star Ratings">★★★★★</p>
 								</div>
 								<p class="mt-3 text-sm font-semibold text-ink font-display">${name}</p>
 								<p class="mt-3 text-sm text-ink/90 leading-relaxed">${quote}</p>
@@ -1879,6 +5223,15 @@
 						scheduleNext();
 					}, autoplayMs);
 				};
+
+				// Speed dial interactions (updates autoplay timing).
+				if (speedInput) {
+					speedInput.addEventListener('input', () => applySpeed(speedInput.value, true));
+					// Ensure we start with the correct speed and dial position.
+					applySpeed(speedInput.value || speedDefault, false);
+				} else {
+					applySpeed(speedDefault, false);
+				}
 
 				// Prev/Next buttons.
 				prevBtn?.addEventListener('click', () => {
@@ -1922,6 +5275,309 @@
 				buildDots();
 				goTo(0);
 				scheduleNext();
+			})();
+		</script>
+
+		<script>
+			(() => {
+				const carouselEl = document.getElementById('profile-avatar-carousel');
+				if (!carouselEl) return;
+
+				const track = document.getElementById('profile-avatar-track');
+				const prevBtn = carouselEl.querySelector('[data-profile-avatar-prev]');
+				const nextBtn = carouselEl.querySelector('[data-profile-avatar-next]');
+				const viewportEl = carouselEl.querySelector('[data-profile-avatar-viewport]');
+
+				const modal = document.getElementById('avatar-preview-modal');
+				const overlay = document.getElementById('avatar-preview-overlay');
+				const modalPrevBtn = document.getElementById('avatar-preview-prev');
+				const modalNextBtn = document.getElementById('avatar-preview-next');
+				const closeBtn = document.getElementById('avatar-preview-close');
+				const previewImg = document.getElementById('avatar-preview-img');
+
+				let modalOpen = false;
+				let closeTimer = null;
+				let hoverOpenTimer = null;
+
+				let index = 0;
+				let perPage = window.matchMedia('(max-width: 640px)').matches ? 3 : 6;
+				let sources = [];
+				let maxIndex = 0;
+				let stepPx = 0;
+				let selectedIdx = 0;
+
+				let autoTimer = null;
+				const autoplayMs = 4200;
+
+				let isHorizontal = true;
+				const syncOrientation = () => {
+					// Always horizontal (requested).
+					isHorizontal = true;
+				};
+
+				const hideAutoplay = () => {
+					if (autoTimer) window.clearInterval(autoTimer);
+					autoTimer = null;
+				};
+
+				const applyTransform = () => {
+					if (!track) return;
+					if (maxIndex <= 0) {
+						track.style.transform = isHorizontal ? 'translateX(0px)' : 'translateY(0px)';
+						return;
+					}
+					track.style.transform = isHorizontal
+						? `translateX(-${index * stepPx}px)`
+						: `translateY(-${index * stepPx}px)`;
+				};
+
+				const showAutoplay = () => {
+					if (!track || maxIndex <= 0) return;
+					if (modalOpen) return;
+
+					hideAutoplay();
+					autoTimer = window.setInterval(() => {
+						if (modalOpen) return;
+						if (maxIndex <= 0) return;
+						index = (index + 1) % (maxIndex + 1);
+						applyTransform();
+					}, autoplayMs);
+				};
+
+				const showModal = (src, alt) => {
+					if (!modal || !previewImg) return;
+					if (closeTimer) window.clearTimeout(closeTimer);
+					closeTimer = null;
+
+					if (previewImg && src) previewImg.src = src;
+
+					const titleEl = document.getElementById('avatar-preview-title');
+					if (titleEl && alt) titleEl.textContent = alt;
+
+					modalOpen = true;
+					modal.classList.remove('hidden');
+				};
+
+				const hideModal = () => {
+					if (!modal) return;
+					modalOpen = false;
+					modal.classList.add('hidden');
+					showAutoplay();
+				};
+
+				const scheduleHideModal = () => {
+					if (closeTimer) window.clearTimeout(closeTimer);
+					closeTimer = window.setTimeout(() => {
+						hideModal();
+					}, 200);
+				};
+
+				const measureStep = () => {
+					if (!track) return;
+					const thumbs = track.querySelectorAll('[data-avatar-thumb]');
+					if (thumbs.length >= 2) {
+						stepPx = isHorizontal
+							? thumbs[1].offsetLeft - thumbs[0].offsetLeft
+							: thumbs[1].offsetTop - thumbs[0].offsetTop;
+						return;
+					}
+					if (thumbs.length === 1) {
+						stepPx = isHorizontal
+							? thumbs[0].getBoundingClientRect().width + 14
+							: thumbs[0].getBoundingClientRect().height + 14;
+						return;
+					}
+					stepPx = 154;
+				};
+
+				const setIndex = (nextIdx) => {
+					if (maxIndex <= 0) {
+						index = 0;
+						applyTransform();
+						return;
+					}
+					const size = maxIndex + 1;
+					index = ((nextIdx % size) + size) % size;
+					applyTransform();
+				};
+
+				const attachHoverHandlers = () => {
+					const thumbs = track.querySelectorAll('[data-avatar-thumb]');
+					thumbs.forEach((btn) => {
+						const src = btn.getAttribute('data-avatar-src') || '';
+						const alt = btn.getAttribute('aria-label') || 'Profile image';
+						const avatarIdx = Number(btn.getAttribute('data-avatar-idx') || '0');
+
+						const clearHoverTimer = () => {
+							if (hoverOpenTimer) window.clearTimeout(hoverOpenTimer);
+							hoverOpenTimer = null;
+						};
+
+						btn.addEventListener('mouseenter', () => {
+							if (!src) return;
+							hideAutoplay();
+
+							// Delay modal open until the user hovers for 2 seconds.
+							clearHoverTimer();
+							hoverOpenTimer = window.setTimeout(() => {
+								selectedIdx = Number.isFinite(avatarIdx) ? avatarIdx : 0;
+								index = Math.min(selectedIdx, maxIndex);
+								applyTransform();
+								showModal(src, alt);
+							}, 2000);
+						});
+
+						btn.addEventListener('mouseleave', () => {
+							clearHoverTimer();
+							scheduleHideModal();
+							showAutoplay();
+						});
+
+						btn.addEventListener('focus', () => {
+							if (!src) return;
+							clearHoverTimer();
+							hideAutoplay();
+							selectedIdx = Number.isFinite(avatarIdx) ? avatarIdx : 0;
+							index = Math.min(selectedIdx, maxIndex);
+							applyTransform();
+							showModal(src, alt);
+						});
+						btn.addEventListener('blur', () => scheduleHideModal());
+					});
+
+					if (overlay) overlay.addEventListener('click', hideModal);
+					if (closeBtn) closeBtn.addEventListener('click', hideModal);
+
+					document.addEventListener('keydown', (e) => {
+						if (e.key === 'Escape' && modalOpen) hideModal();
+					});
+
+					if (modal) {
+						modal.addEventListener('mouseenter', () => {
+							if (closeTimer) window.clearTimeout(closeTimer);
+							closeTimer = null;
+						});
+					}
+
+					const canNav = () => sources && sources.length > 1;
+					const navBy = (dir) => {
+						if (!canNav()) return;
+						hideAutoplay();
+						if (!sources.length) return;
+						selectedIdx = ((selectedIdx + dir) % sources.length + sources.length) % sources.length;
+						index = Math.min(selectedIdx, maxIndex);
+						applyTransform();
+						showModal(sources[selectedIdx], `Profile image ${selectedIdx + 1}`);
+					};
+
+					modalPrevBtn?.addEventListener('click', () => navBy(-1));
+					modalNextBtn?.addEventListener('click', () => navBy(1));
+				};
+
+				const loadImageOk = (src) =>
+					new Promise((resolve) => {
+						const img = new Image();
+						img.decoding = 'async';
+						img.loading = 'eager';
+						img.onload = () => resolve(true);
+						img.onerror = () => resolve(false);
+						img.src = src;
+					});
+
+				const firstExisting = async (candidates) => {
+					for (const src of candidates) {
+						// eslint-disable-next-line no-await-in-loop
+						if (await loadImageOk(src)) return src;
+					}
+					return null;
+				};
+
+				const buildCarousel = async () => {
+					const defaultAvatarSrc = './images/user/profile.png';
+					const baseDir = './images/user/';
+					const extCandidates = ['png', 'jpg', 'jpeg', 'webp'];
+					const totalSlots = 9;
+					perPage = window.matchMedia('(max-width: 640px)').matches ? 3 : 6;
+
+					const resolved = [];
+					for (let i = 1; i <= totalSlots; i++) {
+						const candidates = extCandidates.map((ext) => `${baseDir}photo${i}.${ext}`);
+						// eslint-disable-next-line no-await-in-loop
+						const existing = await firstExisting(candidates);
+						if (existing) resolved.push(existing);
+					}
+
+					sources = resolved.length ? resolved : [defaultAvatarSrc];
+
+					// Ensure we always show at least 3 circles.
+					while (sources.length < perPage) sources.push(defaultAvatarSrc);
+					maxIndex = Math.max(0, sources.length - perPage);
+
+					track.innerHTML = sources
+						.map((src, idx) => {
+							const alt = `Profile image ${idx + 1}`;
+							return `
+								<button
+									type="button"
+									class="profile-avatar-tile"
+									data-avatar-thumb
+									data-avatar-src="${src}"
+									data-avatar-idx="${idx}"
+									aria-label="${alt}"
+								>
+									<img
+										class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
+										src="${src}"
+										alt="${alt}"
+										width="140"
+										height="140"
+										loading="eager"
+										decoding="async"
+										onerror="this.onerror=null;this.src='${defaultAvatarSrc}';"
+									/>
+								</button>
+							`;
+						})
+						.join('');
+
+					measureStep();
+					index = 0;
+					applyTransform();
+
+					if (prevBtn && nextBtn) {
+						const disable = maxIndex <= 0;
+						prevBtn.disabled = disable;
+						nextBtn.disabled = disable;
+						prevBtn.style.opacity = disable ? '0.4' : '1';
+						nextBtn.style.opacity = disable ? '0.4' : '1';
+					}
+
+					attachHoverHandlers();
+					showAutoplay();
+				};
+
+				if (prevBtn) prevBtn.disabled = true;
+				if (nextBtn) nextBtn.disabled = true;
+
+				buildCarousel().catch(() => {});
+
+				window.addEventListener('resize', () => {
+					syncOrientation();
+					measureStep();
+					applyTransform();
+				});
+				prevBtn?.addEventListener('click', () => {
+					if (prevBtn.disabled) return;
+					hideAutoplay();
+					setIndex(index - 1);
+					showAutoplay();
+				});
+				nextBtn?.addEventListener('click', () => {
+					if (nextBtn.disabled) return;
+					hideAutoplay();
+					setIndex(index + 1);
+					showAutoplay();
+				});
 			})();
 		</script>
 
