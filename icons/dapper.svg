@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Dapper">
+  <defs>
+    <linearGradient id="d" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#94a3b8"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="96" height="96" rx="18" fill="#0f172a"/>
+  <circle cx="48" cy="42" r="26" fill="url(#d)" opacity=".95"/>
+  <path d="M38 30h12c7 0 12 5 12 12s-5 12-12 12H38V30Z" fill="none" stroke="#0f172a" stroke-width="8" stroke-linejoin="round" opacity=".55"/>
+  <path d="M38 30h12c7 0 12 5 12 12s-5 12-12 12H38V30Z" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-linejoin="round"/>
+  <text x="48" y="84" text-anchor="middle" font-family="system-ui, Segoe UI, Arial" font-size="12" font-weight="700" fill="#e2e8f0">Dapper</text>
+</svg>

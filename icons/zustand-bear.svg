@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Zustand bear face">
+	<defs>
+		<linearGradient id="bearGrad" x1="18" y1="8" x2="78" y2="90" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#1a6b5c" />
+			<stop offset="0.6" stop-color="#1f7f6a" />
+			<stop offset="1" stop-color="#b8952e" />
+		</linearGradient>
+	</defs>
+
+	<!-- Head -->
+	<path
+		d="M48 14
+		   C36 14 26 23 26 34
+		   C26 36 26 38 27 40
+		   C23 45 22 51 22 58
+		   C22 74 32 82 48 82
+		   C64 82 74 74 74 58
+		   C74 51 73 45 69 40
+		   C70 38 70 36 70 34
+		   C70 23 60 14 48 14 Z"
+		fill="url(#bearGrad)"
+		opacity="0.98"
+	/>
+
+	<!-- Ears -->
+	<path d="M30 24 C24 24 20 32 22 40 C26 39 30 35 32 30 C33 28 32 26 30 24 Z" fill="#1a6b5c" opacity="0.9"/>
+	<path d="M66 24 C72 24 76 32 74 40 C70 39 66 35 64 30 C63 28 64 26 66 24 Z" fill="#1a6b5c" opacity="0.9"/>
+
+	<!-- Eyes -->
+	<circle cx="38" cy="52" r="6" fill="#ffffff" opacity="0.8"/>
+	<circle cx="58" cy="52" r="6" fill="#ffffff" opacity="0.8"/>
+	<circle cx="38" cy="52" r="3" fill="#12151c" opacity="0.7"/>
+	<circle cx="58" cy="52" r="3" fill="#12151c" opacity="0.7"/>
+
+	<!-- Nose -->
+	<path d="M48 60 C44 60 42 63 42 66 C42 70 45 72 48 72 C51 72 54 70 54 66 C54 63 52 60 48 60 Z" fill="#12151c" opacity="0.65"/>
+
+	<!-- Smile -->
+	<path d="M40 70 C44 74 52 74 56 70" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="4" stroke-linecap="round"/>
+</svg>
+

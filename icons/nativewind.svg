@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Native Wind icon">
+	<defs>
+		<linearGradient id="nwGrad" x1="12" y1="10" x2="86" y2="90" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#1a6b5c" />
+			<stop offset="1" stop-color="#b8952e" />
+		</linearGradient>
+	</defs>
+
+	<!-- Wind swirl -->
+	<path
+		d="M20 32
+		   C30 22 46 22 56 30
+		   C63 35 72 35 76 29"
+		fill="none"
+		stroke="url(#nwGrad)"
+		stroke-width="8"
+		stroke-linecap="round"
+	/>
+	<path
+		d="M14 46
+		   C27 35 45 35 57 44
+		   C66 51 78 50 84 42"
+		fill="none"
+		stroke="#1f7f6a"
+		stroke-opacity="0.95"
+		stroke-width="8"
+		stroke-linecap="round"
+	/>
+	<path
+		d="M12 60
+		   C26 50 44 50 57 58
+		   C68 65 82 63 88 54"
+		fill="none"
+		stroke="#b8952e"
+		stroke-opacity="0.9"
+		stroke-width="8"
+		stroke-linecap="round"
+	/>
+
+	<!-- Tiny 'N' anchor -->
+	<path d="M34 70 L34 32 L45 70 L56 32 L56 70" fill="none" stroke="#12151c" stroke-opacity="0.55" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Android">
+  <rect x="0" y="0" width="96" height="96" rx="18" fill="#0f172a"/>
+  <g fill="#3ddc84">
+    <path d="M30 42c0-10 8-18 18-18s18 8 18 18v20c0 8-6 14-14 14H44c-8 0-14-6-14-14V42Z"/>
+    <rect x="22" y="44" width="8" height="20" rx="4"/>
+    <rect x="66" y="44" width="8" height="20" rx="4"/>
+    <rect x="36" y="70" width="8" height="12" rx="4"/>
+    <rect x="52" y="70" width="8" height="12" rx="4"/>
+  </g>
+  <g stroke="#3ddc84" stroke-width="3" stroke-linecap="round">
+    <path d="M38 24l-6-8"/>
+    <path d="M58 24l6-8"/>
+  </g>
+  <g fill="#0f172a">
+    <circle cx="42" cy="40" r="3"/>
+    <circle cx="54" cy="40" r="3"/>
+  </g>
+  <text x="48" y="84" text-anchor="middle" font-family="system-ui, Segoe UI, Arial" font-size="12" font-weight="700" fill="#e2e8f0">Android</text>
+</svg>

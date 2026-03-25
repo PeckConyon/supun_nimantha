@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="GitHub Actions">
+  <defs>
+    <linearGradient id="ga" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f97316"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="96" height="96" rx="18" fill="#0f172a"/>
+  <path d="M30 55c0-9 7-16 16-16h4c9 0 16 7 16 16v11H30V55Z" fill="url(#ga)" opacity=".95"/>
+  <path d="M37 55c0-5 4-9 9-9h4c5 0 9 4 9 9v5H37v-5Z" fill="#0f172a" opacity=".25"/>
+  <g fill="#0f172a">
+    <circle cx="40" cy="58" r="3"/>
+    <circle cx="48" cy="58" r="3"/>
+    <circle cx="56" cy="58" r="3"/>
+  </g>
+  <path d="M35 41l-5-10 10 5" fill="none" stroke="#ffd1d1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/>
+  <text x="48" y="84" text-anchor="middle" font-family="system-ui, Segoe UI, Arial" font-size="12" font-weight="700" fill="#e2e8f0">Actions</text>
+</svg>

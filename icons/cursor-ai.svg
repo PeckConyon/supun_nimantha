@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Cursor AI icon">
+	<defs>
+		<linearGradient id="cGrad" x1="12" y1="10" x2="86" y2="90" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#1a6b5c" />
+			<stop offset="1" stop-color="#b8952e" />
+		</linearGradient>
+	</defs>
+
+	<!-- Cursor -->
+	<path
+		d="M34 22 L72 46 L54 52 L64 74 L50 72 L42 50 Z"
+		fill="url(#cGrad)"
+		opacity="0.98"
+	/>
+
+	<!-- Spark -->
+	<path d="M22 56 L26 60 L22 64 L18 60 Z" fill="#1f7f6a" opacity="0.95"/>
+	<path d="M26 34 L30 38 L26 42 L22 38 Z" fill="#b8952e" opacity="0.95"/>
+</svg>
+

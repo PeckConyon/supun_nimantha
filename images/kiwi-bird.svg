@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 320" role="img" aria-label="Kiwi bird icon">
+	<defs>
+		<linearGradient id="kiwiGrad" x1="70" y1="20" x2="445" y2="300" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#1a6b5c" />
+			<stop offset="0.55" stop-color="#1f7f6a" />
+			<stop offset="1" stop-color="#b8952e" />
+		</linearGradient>
+		<filter id="kiwiShadow" x="-20%" y="-20%" width="140%" height="140%">
+			<feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#12151c" flood-opacity="0.14" />
+		</filter>
+	</defs>
+
+	<!-- Body (stylized kiwi silhouette) -->
+	<path
+		filter="url(#kiwiShadow)"
+		fill="url(#kiwiGrad)"
+		opacity="0.98"
+		d="M272 54
+		   C220 52 166 92 152 146
+		   C138 198 162 252 208 268
+		   C252 283 310 266 344 230
+		   C380 192 394 140 380 106
+		   C370 80 330 58 272 54 Z"
+	/>
+
+	<!-- Wings / feather texture -->
+	<path d="M188 166
+		 C210 150 240 144 272 146
+		 C304 148 334 160 358 180"
+		fill="none"
+		stroke="#ffffff"
+		stroke-opacity="0.35"
+		stroke-width="10"
+		stroke-linecap="round"
+	/>
+	<path d="M198 204
+		 C236 186 284 186 322 204"
+		fill="none"
+		stroke="#ffffff"
+		stroke-opacity="0.22"
+		stroke-width="12"
+		stroke-linecap="round"
+	/>
+
+	<!-- Long beak -->
+	<path
+		fill="#b8952e"
+		opacity="0.95"
+		d="M372 158
+		   C405 140 430 150 440 176
+		   C448 198 434 219 408 220
+		   C400 220 392 218 384 214
+		   C379 212 375 208 372 202
+		   C366 190 364 170 372 158 Z"
+	/>
+	<path d="M388 170 C416 168 426 184 426 196" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="7" stroke-linecap="round"/>
+
+	<!-- Eye dot -->
+	<circle cx="300" cy="134" r="9" fill="#ffffff" fill-opacity="0.7" />
+</svg>
+

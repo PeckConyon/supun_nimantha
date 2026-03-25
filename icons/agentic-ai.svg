@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Agentic AI icon">
+	<defs>
+		<linearGradient id="aGrad" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#1a6b5c" />
+			<stop offset="0.6" stop-color="#1f7f6a" />
+			<stop offset="1" stop-color="#b8952e" />
+		</linearGradient>
+	</defs>
+
+	<!-- Hub -->
+	<circle cx="48" cy="48" r="18" fill="url(#aGrad)" opacity="0.95" />
+
+	<!-- Nodes -->
+	<circle cx="24" cy="34" r="6" fill="#ffffff" fill-opacity="0.35" />
+	<circle cx="70" cy="28" r="6" fill="#ffffff" fill-opacity="0.35" />
+	<circle cx="70" cy="68" r="6" fill="#ffffff" fill-opacity="0.35" />
+	<circle cx="24" cy="62" r="6" fill="#ffffff" fill-opacity="0.35" />
+
+	<!-- Links -->
+	<path d="M30 38 L39 44" stroke="#ffffff" stroke-opacity="0.4" stroke-width="5" stroke-linecap="round"/>
+	<path d="M54 43 L66 32" stroke="#ffffff" stroke-opacity="0.4" stroke-width="5" stroke-linecap="round"/>
+	<path d="M66 62 L54 53" stroke="#ffffff" stroke-opacity="0.4" stroke-width="5" stroke-linecap="round"/>
+	<path d="M40 52 L30 58" stroke="#ffffff" stroke-opacity="0.4" stroke-width="5" stroke-linecap="round"/>
+
+	<!-- Motion arrow -->
+	<path d="M48 30 C56 30 62 36 62 44" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="5" stroke-linecap="round"/>
+	<path d="M62 44 L62 52 L54 46" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+

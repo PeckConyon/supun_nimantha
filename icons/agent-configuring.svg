@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Agent configuring icon">
+	<defs>
+		<linearGradient id="acG" x1="10" y1="10" x2="86" y2="90" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#1f7f6a" />
+			<stop offset="1" stop-color="#b8952e" />
+		</linearGradient>
+	</defs>
+
+	<!-- Cog -->
+	<path
+		d="M48 26
+		   C42 26 40 30 40 30
+		   L35 34
+		   C35 34 33 36 33 40
+		   V42
+		   L27 44
+		   C27 44 24 45 24 48
+		   C24 51 27 52 27 52
+		   L33 54
+		   V56
+		   C33 60 35 62 35 62
+		   L40 66
+		   C40 66 42 70 48 70
+		   C54 70 56 66 56 66
+		   L61 62
+		   C61 62 63 60 63 56
+		   V54
+		   L69 52
+		   C69 52 72 51 72 48
+		   C72 45 69 44 69 44
+		   L63 42
+		   V40
+		   C63 36 61 34 61 34
+		   L56 30
+		   C56 30 54 26 48 26 Z"
+		fill="url(#acG)"
+		opacity="0.98"
+	/>
+
+	<!-- Center dot -->
+	<circle cx="48" cy="48" r="10" fill="#ffffff" opacity="0.75"/>
+</svg>
+

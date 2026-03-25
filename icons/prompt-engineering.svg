@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Prompt engineering icon">
+	<defs>
+		<linearGradient id="peG" x1="10" y1="10" x2="86" y2="90" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#1a6b5c" />
+			<stop offset="1" stop-color="#b8952e" />
+		</linearGradient>
+	</defs>
+
+	<!-- Prompt bubble -->
+	<path
+		d="M22 28
+		   C22 22 27 17 33 17
+		   H64
+		   C70 17 75 22 75 28
+		   V52
+		   C75 58 70 63 64 63
+		   H45
+		   L30 76
+		   V63
+		   H33
+		   C27 63 22 58 22 52
+		   V28 Z"
+		fill="url(#peG)"
+		opacity="0.98"
+	/>
+
+	<!-- Lines -->
+	<path d="M34 35 H63" stroke="#ffffff" stroke-opacity="0.65" stroke-width="6" stroke-linecap="round"/>
+	<path d="M34 45 H58" stroke="#ffffff" stroke-opacity="0.45" stroke-width="6" stroke-linecap="round"/>
+	<path d="M34 55 H50" stroke="#ffffff" stroke-opacity="0.30" stroke-width="6" stroke-linecap="round"/>
+</svg>
+
