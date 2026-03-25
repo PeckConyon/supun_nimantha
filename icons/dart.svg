@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Dart">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#00B4AB"/>
+      <stop offset="1" stop-color="#0175C2"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="52" height="52" rx="14" fill="#0B1220"/>
+  <path d="M38 14h-9c-1.6 0-3.1.6-4.2 1.7L14 26.5v9c0 1.6.6 3.1 1.7 4.2L26.5 50c1.1 1.1 2.6 1.7 4.2 1.7h9c1.6 0 3.1-.6 4.2-1.7L50 44.5V26.5L38 14Z" fill="url(#g)"/>
+  <path d="M14 26.5 29 41.5c1.2 1.2 2.9 1.9 4.6 1.9H50v1.1c0 1.6-.6 3.1-1.7 4.2L44 50.9c-1.1 1.1-2.6 1.7-4.2 1.7h-9c-1.6 0-3.1-.6-4.2-1.7L15.7 39.7c-1.1-1.1-1.7-2.6-1.7-4.2v-9Z" fill="#ffffff" opacity=".14"/>
+</svg>
