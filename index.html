@@ -292,6 +292,65 @@
 				height: 0.55rem;
 				bottom: -0.98rem;
 			}
+			/* Skills & Attributes — filled panel (avoids a “blank” strip under the heading) */
+			.attributes-board {
+				position: relative;
+				overflow: hidden;
+				border-radius: 1.25rem;
+				border: 1px solid rgba(231, 220, 205, 0.9);
+				box-shadow: 0 4px 28px -6px rgba(18, 21, 28, 0.1);
+				background:
+					radial-gradient(ellipse 95% 75% at 0% -10%, rgba(26, 107, 92, 0.13), transparent 58%),
+					radial-gradient(ellipse 75% 60% at 100% 110%, rgba(184, 149, 46, 0.09), transparent 52%),
+					linear-gradient(165deg, rgba(255, 255, 255, 0.94) 0%, rgba(246, 243, 236, 0.9) 100%);
+			}
+			.attributes-board::before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				background-image: url("data:image/svg+xml,%3Csvg width='72' height='72' viewBox='0 0 72 72' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231a6b5c' fill-opacity='0.055' d='M0 0h36v36H0V0zm36 36h36v36H36V36z'/%3E%3C/svg%3E");
+				opacity: 0.9;
+				pointer-events: none;
+			}
+			.attributes-board::after {
+				content: "";
+				position: absolute;
+				inset: -1px;
+				border-radius: inherit;
+				background: linear-gradient(
+					125deg,
+					rgba(26, 107, 92, 0.06) 0%,
+					transparent 35%,
+					transparent 65%,
+					rgba(184, 149, 46, 0.05) 100%
+				);
+				pointer-events: none;
+				mix-blend-mode: multiply;
+			}
+			.attributes-board__inner {
+				position: relative;
+				z-index: 1;
+			}
+			.attributes-chip {
+				display: inline-flex;
+				align-items: center;
+				border-radius: 9999px;
+				border: 1px solid rgba(26, 107, 92, 0.18);
+				background: rgba(255, 255, 255, 0.72);
+				padding: 0.5rem 0.9rem;
+				font-size: 0.9375rem;
+				font-weight: 500;
+				line-height: 1.4;
+				color: rgba(18, 21, 28, 0.9);
+				box-shadow: 0 1px 2px rgba(18, 21, 28, 0.05);
+				backdrop-filter: blur(8px);
+				transition: border-color 0.2s ease, background 0.2s ease;
+			}
+			.attributes-chip:hover {
+				border-color: rgba(26, 107, 92, 0.32);
+				background: rgba(255, 255, 255, 0.95);
+			}
+
 			/* Extra Curricular hover radial menu (inside each education card) */
 			.edu-extra {
 				margin-top: 1.05rem;
@@ -2138,22 +2197,40 @@
 							<span class="inline-flex items-center rounded-full border border-stone-200/70 bg-white/60 px-2 py-0.5 font-mono text-[12px]">2007</span>
 							<span>Malabe, Sri Lanka</span>
 						</p>
-						<button
-							type="button"
-							class="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
-							data-education-pdf="./education/ol/OL-2007.pdf"
-							data-education-title="O/L Transcript"
-							data-education-meta="Viewing: O/L Transcript"
-						>
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
-								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-								<polyline points="14 2 14 8 20 8"></polyline>
-								<line x1="16" y1="13" x2="8" y2="13"></line>
-								<line x1="16" y1="17" x2="8" y2="17"></line>
-								<line x1="10" y1="9" x2="8" y2="9"></line>
-							</svg>
-							<span>View O/L Transcript</span>
-						</button>
+						<div class="mt-4 flex flex-wrap gap-2">
+							<button
+								type="button"
+								class="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+								data-education-pdf="./education/ol/OL-2007.pdf"
+								data-education-title="O/L Transcript"
+								data-education-meta="Viewing: O/L Transcript"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+									<polyline points="14 2 14 8 20 8"></polyline>
+									<line x1="16" y1="13" x2="8" y2="13"></line>
+									<line x1="16" y1="17" x2="8" y2="17"></line>
+									<line x1="10" y1="9" x2="8" y2="9"></line>
+								</svg>
+								<span>View O/L Transcript</span>
+							</button>
+							<button
+								type="button"
+								class="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-white/70 px-4 py-2 text-sm font-medium text-accent shadow-soft transition hover:bg-accent hover:text-white hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+								data-education-pdf="./education/ol/Character_Certificate_Boys_Model_School.pdf"
+								data-education-title="O/L Character Certificate"
+								data-education-meta="Viewing: O/L Character Certificate"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+									<polyline points="14 2 14 8 20 8"></polyline>
+									<line x1="16" y1="13" x2="8" y2="13"></line>
+									<line x1="16" y1="17" x2="8" y2="17"></line>
+									<line x1="10" y1="9" x2="8" y2="9"></line>
+								</svg>
+								<span>Character Certificate</span>
+							</button>
+						</div>
 
 						<div class="edu-extra">
 							<button
@@ -2210,22 +2287,40 @@
 							<span class="inline-flex items-center rounded-full border border-stone-200/70 bg-white/60 px-2 py-0.5 font-mono text-[12px]">2010</span>
 							<span>Colombo 10, Sri Lanka</span>
 						</p>
-						<button
-							type="button"
-							class="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
-							data-education-pdf="./education/al/AL-2011.pdf"
-							data-education-title="A/L Transcript"
-							data-education-meta="Viewing: A/L Transcript"
-						>
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
-								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-								<polyline points="14 2 14 8 20 8"></polyline>
-								<line x1="16" y1="13" x2="8" y2="13"></line>
-								<line x1="16" y1="17" x2="8" y2="17"></line>
-								<line x1="10" y1="9" x2="8" y2="9"></line>
-							</svg>
-							<span>View A/L Transcript</span>
-						</button>
+						<div class="mt-4 flex flex-wrap gap-2">
+							<button
+								type="button"
+								class="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+								data-education-pdf="./education/al/AL-2011.pdf"
+								data-education-title="A/L Transcript"
+								data-education-meta="Viewing: A/L Transcript"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+									<polyline points="14 2 14 8 20 8"></polyline>
+									<line x1="16" y1="13" x2="8" y2="13"></line>
+									<line x1="16" y1="17" x2="8" y2="17"></line>
+									<line x1="10" y1="9" x2="8" y2="9"></line>
+								</svg>
+								<span>View A/L Transcript</span>
+							</button>
+							<button
+								type="button"
+								class="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-white/70 px-4 py-2 text-sm font-medium text-accent shadow-soft transition hover:bg-accent hover:text-white hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+								data-education-pdf="./education/al/Character_Certificate_Ananda_College.pdf"
+								data-education-title="A/L Character Certificate"
+								data-education-meta="Viewing: A/L Character Certificate"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+									<polyline points="14 2 14 8 20 8"></polyline>
+									<line x1="16" y1="13" x2="8" y2="13"></line>
+									<line x1="16" y1="17" x2="8" y2="17"></line>
+									<line x1="10" y1="9" x2="8" y2="9"></line>
+								</svg>
+								<span>Character Certificate</span>
+							</button>
+						</div>
 
 						<div class="edu-extra">
 							<button
@@ -2427,7 +2522,30 @@
 					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
-				<p class="max-w-3xl text-muted">OCPJP (Oracle Certified Professional Java Programmer) — 2014</p>
+				<article
+					class="max-w-2xl rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition hover:border-accent/20 sm:p-8"
+				>
+					<h3 class="font-display text-lg font-semibold text-ink">
+						OCPJP / OCJP — Oracle Certified Professional Java Programmer
+					</h3>
+					<p class="mt-2 text-sm text-muted">Oracle Certified Professional Java Programmer — Java SE, 2014.</p>
+					<button
+						type="button"
+						class="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
+						data-education-pdf="./certifications/ocjp-certificate.pdf"
+						data-education-title="OCJP / OCPJP Certificate"
+						data-education-meta="Viewing: OCJP Certificate"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+							<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+							<polyline points="14 2 14 8 20 8"></polyline>
+							<line x1="16" y1="13" x2="8" y2="13"></line>
+							<line x1="16" y1="17" x2="8" y2="17"></line>
+							<line x1="10" y1="9" x2="8" y2="9"></line>
+						</svg>
+						<span>View OCJP certificate</span>
+					</button>
+				</article>
 			</section>
 
 			<section id="attributes" class="mb-24 scroll-mt-24">
@@ -2453,17 +2571,21 @@
 					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
-				<ul class="max-w-2xl list-inside list-disc space-y-2 text-[17px] text-muted marker:text-accent/60">
-					<li>Fast Learner and Fast Adopter</li>
-					<li>Leadership Skills and Teamwork</li>
-					<li>Team Player</li>
-					<li>Self-Motivated and Dedicated</li>
-					<li>Time Management</li>
-					<li>Effective Communication</li>
-					<li>Problem Solving and Critical Thinking</li>
-					<li>Minimal Supervision</li>
-					<li>Mentoring</li>
-				</ul>
+				<div class="attributes-board mx-auto max-w-4xl p-6 sm:p-8">
+					<div class="attributes-board__inner">
+						<ul class="m-0 flex list-none flex-wrap gap-2.5 p-0 sm:gap-3">
+							<li class="attributes-chip">Fast Learner and Fast Adopter</li>
+							<li class="attributes-chip">Leadership Skills and Teamwork</li>
+							<li class="attributes-chip">Team Player</li>
+							<li class="attributes-chip">Self-Motivated and Dedicated</li>
+							<li class="attributes-chip">Time Management</li>
+							<li class="attributes-chip">Effective Communication</li>
+							<li class="attributes-chip">Problem Solving and Critical Thinking</li>
+							<li class="attributes-chip">Minimal Supervision</li>
+							<li class="attributes-chip">Mentoring</li>
+						</ul>
+					</div>
+				</div>
 			</section>
 
 			<section id="hobbies" class="mb-24 scroll-mt-24" aria-labelledby="hobbies-heading">
@@ -3740,21 +3862,20 @@
 					else companyEl.insertAdjacentElement('afterend', btn);
 				});
 
-				// Add O/L and A/L transcript buttons to the Education section.
-				const edu = document.getElementById('education');
-				if (edu) {
-					edu.querySelectorAll('button[data-education-pdf]').forEach((btn) => {
-						const pdfPath = btn.dataset.educationPdf;
-						if (!pdfPath) return;
+				// Education + certifications: open PDFs in the same viewer.
+				document.querySelectorAll('#education button[data-education-pdf], #certifications button[data-education-pdf]').forEach((btn) => {
+					const pdfPath = btn.dataset.educationPdf;
+					if (!pdfPath) return;
 
-						btn.addEventListener('click', () => {
-							openPdfList([pdfPath], {
-								title: btn.dataset.educationTitle || 'Education Transcript',
-								metaText: btn.dataset.educationMeta || 'Viewing document',
-							});
+					btn.addEventListener('click', () => {
+						openPdfList([pdfPath], {
+							title: btn.dataset.educationTitle || 'Document',
+							metaText: btn.dataset.educationMeta || 'Viewing document',
 						});
 					});
-				}
+				});
+
+				const edu = document.getElementById('education');
 
 				// Render Extra Curricular Activities radial menus for education cards.
 				if (edu) {
