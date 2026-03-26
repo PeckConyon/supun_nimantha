@@ -646,7 +646,7 @@
 				outline-offset: 3px;
 			}
 
-			/* Profile avatar vertical carousel (3 visible at a time) */
+			/* Profile avatar strip (6 on desktop; 2 on narrow screens) */
 			.profile-avatar-carousel {
 				--avatar-size: 140px;
 				--avatar-gap: 14px;
@@ -709,12 +709,12 @@
 				color: #1a6b5c;
 			}
 
-			/* Tablet / phone: show 3 avatars in the strip (desktop keeps 6 in CSS var default) */
+			/* Phone / small tablet: show 2 avatars so each stays large enough (JS sets --per-page to match) */
 			@media (max-width: 768px) {
 				.profile-avatar-carousel {
-					--avatar-size: 120px;
+					--avatar-size: 136px;
 					--avatar-gap: 12px;
-					--per-page: 3;
+					--per-page: 2;
 					grid-template-columns: 46px minmax(0, 1fr) 46px;
 				}
 			}
@@ -5648,7 +5648,7 @@
 
 				let index = 0;
 				const mqAvatarMobile = window.matchMedia('(max-width: 768px)');
-				const getAvatarPerPage = () => (mqAvatarMobile.matches ? 3 : 6);
+				const getAvatarPerPage = () => (mqAvatarMobile.matches ? 2 : 6);
 				let perPage = getAvatarPerPage();
 				let sources = [];
 				let maxIndex = 0;
@@ -5859,7 +5859,7 @@
 
 					sources = resolved.length ? resolved : [defaultAvatarSrc];
 
-					// Ensure we always show at least 3 circles.
+					// Ensure we always fill at least one full viewport of circles.
 					while (sources.length < perPage) sources.push(defaultAvatarSrc);
 					maxIndex = Math.max(0, sources.length - perPage);
 
