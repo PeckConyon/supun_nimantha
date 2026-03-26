@@ -1674,6 +1674,13 @@
 						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Architecture &amp; Practices</h3>
 						<div class="flex flex-wrap gap-2">
 							<span class="pill-tech">Microservices</span>
+							<span class="pill-tech">N-Tier</span>
+							<span class="pill-tech">Onion Architecture</span>
+							<span class="pill-tech">Clean Architecture</span>
+							<span class="pill-tech">Factory</span>
+							<span class="pill-tech">Repository</span>
+							<span class="pill-tech">Singleton</span>
+							<span class="pill-tech">Dependency Injection</span>
 							<span class="pill-tech">OOP</span>
 							<span class="pill-tech">TDD</span>
 							<span class="pill-tech">Agile (Scrum)</span>
@@ -3742,7 +3749,6 @@
 					techone: ['./letters/techone/agreement.pdf'],
 					fiverr: [
 						'./letters/fiverr/Fiverr Analytics Page.pdf',
-						'./letters/fiverr/Fiverr Earnings Page.pdf',
 						'./letters/fiverr/Fiverr Profile Page.pdf',
 					],
 					hostgsm: ['./letters/hostgsm/service_letter.pdf'],
@@ -3760,8 +3766,6 @@
 					if (k === 'fiverr.com' || k === 'fiverr') return 'fiverr';
 					// Card says "HostgSim LLC" → first word `hostgsim`; letters live under `letters/hostgsm/`
 					if (k === 'hostgsim') return 'hostgsm';
-					// Agreement PDFs are stored under `letters/techone/`
-					if (k === 'avansight') return 'techone';
 					return k;
 				};
 
@@ -3835,7 +3839,27 @@
 					const folderKey = normalizeLetterKey(base);
 
 					// Prevent duplicate injections if this script runs more than once.
-					if (article.querySelector('button[data-service-letter="1"]')) return;
+					if (article.querySelector('[data-service-letter]')) return;
+
+					const companyCol = companyEl.parentElement;
+
+					if (folderKey === 'avansight') {
+						const pending = document.createElement('span');
+						pending.dataset.serviceLetter = 'pending';
+						pending.setAttribute('role', 'status');
+						pending.className =
+							'mt-2 mb-2 inline-flex items-center gap-2 rounded-full border border-amber-200/90 bg-amber-50/90 px-4 py-2 text-sm font-medium text-amber-900/85 shadow-sm';
+						pending.innerHTML = `
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 shrink-0 text-amber-700/90" aria-hidden="true">
+								<circle cx="12" cy="12" r="10"></circle>
+								<polyline points="12 6 12 12 16 14"></polyline>
+							</svg>
+							<span>Service letter pending</span>
+						`;
+						if (companyCol) companyCol.appendChild(pending);
+						else companyEl.insertAdjacentElement('afterend', pending);
+						return;
+					}
 
 					const btn = document.createElement('button');
 					btn.type = 'button';
@@ -3856,8 +3880,6 @@
 
 					btn.addEventListener('click', () => openLetter(companyRaw, folderKey));
 
-					// Append to the company column so subtitles (e.g. “Previously known as …”) stay above the button.
-					const companyCol = companyEl.parentElement;
 					if (companyCol) companyCol.appendChild(btn);
 					else companyEl.insertAdjacentElement('afterend', btn);
 				});
