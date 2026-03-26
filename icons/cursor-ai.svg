@@ -1,20 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Cursor AI icon">
-	<defs>
-		<linearGradient id="cGrad" x1="12" y1="10" x2="86" y2="90" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#1a6b5c" />
-			<stop offset="1" stop-color="#b8952e" />
-		</linearGradient>
-	</defs>
-
-	<!-- Cursor -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Cursor">
+	<title>Cursor</title>
+	<!-- Official-style mark: dark tile, hex frame, white pointer -->
+	<rect width="96" height="96" rx="22" fill="#000" />
 	<path
-		d="M34 22 L72 46 L54 52 L64 74 L50 72 L42 50 Z"
-		fill="url(#cGrad)"
-		opacity="0.98"
+		d="M48 22 70 35v26L48 74 26 61V35L48 22z"
+		fill="none"
+		stroke="#2a2a2a"
+		stroke-width="2"
 	/>
-
-	<!-- Spark -->
-	<path d="M22 56 L26 60 L22 64 L18 60 Z" fill="#1f7f6a" opacity="0.95"/>
-	<path d="M26 34 L30 38 L26 42 L22 38 Z" fill="#b8952e" opacity="0.95"/>
+	<path
+		d="M48 26 66 37v22L48 70 30 59V37L48 26z"
+		fill="#141414"
+		stroke="#3d3d3d"
+		stroke-width="1"
+	/>
+	<path d="M38 36 58 48 50 51 54 64 40 56 36 44Z" fill="#fafafa" />
 </svg>
-

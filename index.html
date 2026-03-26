@@ -456,6 +456,12 @@
 				width: 2.25rem !important; /* 36px */
 				height: 2.25rem !important;
 			}
+			/* Wordmark assets (e.g. OpenAI) already include the name — no separate label */
+			.pill-tech.pill-tech--wordmark img {
+				width: auto !important;
+				height: 2.25rem !important;
+				max-width: 6.5rem;
+			}
 			.pill-tech svg {
 				width: 2.25rem !important;
 				height: 2.25rem !important;
@@ -698,6 +704,17 @@
 			.hobbies-tile__bgart--photo {
 				padding: 0;
 				opacity: 0.38;
+			}
+			/* Full-bleed hobby art: no blur/frost; photo carries the whole card */
+			.hobbies-tile--image-only {
+				backdrop-filter: none !important;
+				background: transparent !important;
+			}
+			.hobbies-tile--image-only:hover {
+				background: transparent !important;
+			}
+			.hobbies-tile--image-only .hobbies-tile__bgart--photo {
+				opacity: 1;
 			}
 			.hobbies-tile__bgart--photo svg {
 				display: none;
@@ -1324,7 +1341,22 @@
 						download
 						class="mt-10 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-7 py-2.5 text-sm font-medium text-white shadow-soft transition hover:border-accent hover:bg-[#155a4e]"
 					>
-						<span aria-hidden="true">↓</span> Download CV
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-4 w-4"
+							aria-hidden="true"
+						>
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<path d="M7 10l5 5 5-5" />
+							<path d="M12 15V3" />
+						</svg>
+						Download CV
 					</a>
 					<a
 						href="./letters/fiverr/Fiverr Profile Page.pdf"
@@ -1349,29 +1381,6 @@
 						</svg>
 						Download Client Feedback
 					</a>
-					<button
-						type="button"
-						id="download-profile-pdf"
-						aria-label="Download portfolio as PDF"
-						class="mt-10 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-7 py-2.5 text-sm font-medium text-white shadow-soft transition hover:border-accent hover:bg-[#155a4e] focus:outline-none focus:ring-2 focus:ring-accent/40"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							class="h-4 w-4"
-							aria-hidden="true"
-						>
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-							<path d="M7 10l5 5 5-5" />
-							<path d="M12 15V3" />
-						</svg>
-						Download Portfolio
-					</button>
 
 					<!-- (removed) Sri Lanka lion + New Zealand kiwi indicators -->
 				</div>
@@ -1462,7 +1471,7 @@
 					</div>
 
 					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
-						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Frontend (Web)</h3>
+						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Frontend</h3>
 						<div class="flex flex-wrap gap-2">
 							<span class="pill-tech">React</span>
 							<span class="pill-tech">Next.js</span>
@@ -1473,33 +1482,10 @@
 							<span class="pill-tech">Tailwind CSS</span>
 							<span class="pill-tech">Bootstrap</span>
 							<span class="pill-tech">jQuery</span>
+							<span class="pill-tech">AJAX</span>
 							<span class="pill-tech">Webpack</span>
 							<span class="pill-tech">Gulp</span>
-						</div>
-					</div>
-
-					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
-						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Mobile</h3>
-						<div class="flex flex-wrap gap-2">
-							<span class="pill-tech">React Native</span>
-							<span class="pill-tech">Native Wind</span>
-							<span class="pill-tech">Native Android</span>
-						</div>
-					</div>
-
-					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
-						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Backend &amp; APIs</h3>
-						<div class="flex flex-wrap gap-2">
-							<span class="pill-tech">ASP.NET Core</span>
-							<span class="pill-tech">MVC</span>
-							<span class="pill-tech">Web API</span>
-							<span class="pill-tech">Django</span>
-							<span class="pill-tech">Identity Framework</span>
-							<span class="pill-tech">REST APIs</span>
-							<span class="pill-tech">GraphQL</span>
-							<span class="pill-tech">HotChocolate</span>
-							<span class="pill-tech">Banana Cake Pop</span>
-							<span class="pill-tech">OAuth / JWT</span>
+							<span class="pill-tech">Figma</span>
 						</div>
 					</div>
 
@@ -1515,6 +1501,32 @@
 					</div>
 
 					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
+						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Backend &amp; APIs</h3>
+						<div class="flex flex-wrap gap-2">
+							<span class="pill-tech">ASP.NET Core</span>
+							<span class="pill-tech">MVC</span>
+							<span class="pill-tech">Web API</span>
+							<span class="pill-tech">Django</span>
+							<span class="pill-tech">Identity Framework</span>
+							<span class="pill-tech">REST APIs</span>
+							<span class="pill-tech">GraphQL</span>
+							<span class="pill-tech">HotChocolate</span>
+							<span class="pill-tech">Banana Cake Pop</span>
+							<span class="pill-tech">OAuth</span>
+							<span class="pill-tech">JWT</span>
+						</div>
+					</div>
+
+					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
+						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Mobile</h3>
+						<div class="flex flex-wrap gap-2">
+							<span class="pill-tech">React Native</span>
+							<span class="pill-tech">Native Wind</span>
+							<span class="pill-tech">Native Android</span>
+						</div>
+					</div>
+
+					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
 						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">ORMS &amp; Data Access</h3>
 						<div class="flex flex-wrap gap-2">
 							<span class="pill-tech">Entity Framework</span>
@@ -1523,7 +1535,7 @@
 						</div>
 					</div>
 
-					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm sm:col-span-2">
+					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
 						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Cloud &amp; Infrastructure</h3>
 						<div class="flex flex-wrap gap-2">
 							<span class="pill-tech">AWS EC2</span>
@@ -1538,6 +1550,21 @@
 							<span class="pill-tech">NGINX</span>
 							<span class="pill-tech">IIS</span>
 							<span class="pill-tech">Plesk</span>
+						</div>
+					</div>
+
+					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
+						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Testing</h3>
+						<div class="flex flex-wrap gap-2">
+							<span class="pill-tech">Selenium</span>
+							<span class="pill-tech">Browser Console</span>
+							<span class="pill-tech">Browser Inspect</span>
+							<span class="pill-tech">Postman</span>
+							<span class="pill-tech">Insomnia</span>
+							<span class="pill-tech">Scalar</span>
+							<span class="pill-tech">Swagger</span>
+							<span class="pill-tech">Unit Testing</span>
+							<span class="pill-tech">TDD</span>
 						</div>
 					</div>
 
@@ -1560,20 +1587,6 @@
 						</div>
 					</div>
 
-					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm">
-						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">Testing</h3>
-						<div class="flex flex-wrap gap-2">
-							<span class="pill-tech">Selenium</span>
-							<span class="pill-tech">Browser Console</span>
-							<span class="pill-tech">Browser Inspect</span>
-							<span class="pill-tech">Postman</span>
-							<span class="pill-tech">Insomnia</span>
-							<span class="pill-tech">Scalar</span>
-							<span class="pill-tech">Swagger</span>
-							<span class="pill-tech">Unit Testing</span>
-							<span class="pill-tech">TDD</span>
-						</div>
-					</div>
 					<div class="rounded-2xl border border-stone-200/80 bg-white/60 p-5 shadow-soft backdrop-blur-sm sm:col-span-2">
 						<h3 class="mb-4 font-display text-sm font-semibold uppercase tracking-[0.2em] text-accent">CI/CD</h3>
 						<div class="flex flex-wrap gap-2">
@@ -1665,7 +1678,7 @@
 							<li>Implemented AI-assisted ingredient-to-product tagging using OpenAI with validation, filtering, and confidence scoring.</li>
 							<li>Designed supplier-aware workflows including caching, filtering, and New World cart integration with authentication handling.</li>
 						</ul>
-						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> React Native, Django, Python, Selenium, OpenAI, Redux, MySQL, AWS Lambda, Serverless, REST APIs</p>
+						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> React Native, Django, Python, Selenium, OpenAI, Redux, MySQL, AWS Lambda, Serverless Framework, REST APIs</p>
 					</article>
 
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
@@ -1831,7 +1844,7 @@
 								<p class="text-muted">NewGLink Corp, USA</p>
 							</div>
 							<div class="flex flex-col items-start sm:items-end">
-								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2019 - 2019</p>
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2019.02 - 2019.04</p>
 								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
 									<span class="pill-meta flex items-center gap-2">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
@@ -1858,9 +1871,10 @@
 							<div>
 								<h3 class="font-display text-xl font-semibold text-ink">Trainee / Full-Stack Software Engineer</h3>
 								<p class="text-muted">EmetSoft, Sri Lanka</p>
+								<p class="mt-0.5 text-xs text-stone-500">Previously known as Scienceland</p>
 							</div>
 							<div class="flex flex-col items-start sm:items-end">
-								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2016 - 2019</p>
+								<p class="shrink-0 font-mono text-xs font-medium uppercase tracking-wide text-accent">2016.02 - 2019.07</p>
 								<div class="mt-2 flex flex-col gap-2 items-start sm:items-end">
 									<span class="pill-meta flex items-center gap-2">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
@@ -1891,7 +1905,7 @@
 							<li>Built a Field Service Management System with a web-based back office and Android app for real-time tracking, job assignment, attendance, and leave management.</li>
 							<li>Delivered a Cemetery Management System for Colombo Municipal Council with Google Maps and DroneDeploy integration.</li>
 						</ul>
-						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC, Entity Framework, SQL Server, jQuery, Bootstrap, Android</p>
+						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC, VB.NET, VB6, Entity Framework, SQL Server, Crystal Reports, jQuery, Bootstrap, Android, kSOAP2, Payment Gateway, ASMX Web Services, Google Maps APIs, Drone Mapping</p>
 					</article>
 
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
@@ -2127,7 +2141,7 @@
 						<button
 							type="button"
 							class="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
-							data-education-pdf="./education/ol/ol.pdf"
+							data-education-pdf="./education/ol/OL-2007.pdf"
 							data-education-title="O/L Transcript"
 							data-education-meta="Viewing: O/L Transcript"
 						>
@@ -2199,7 +2213,7 @@
 						<button
 							type="button"
 							class="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
-							data-education-pdf="./education/al/al.pdf"
+							data-education-pdf="./education/al/AL-2011.pdf"
 							data-education-title="A/L Transcript"
 							data-education-meta="Viewing: A/L Transcript"
 						>
@@ -2251,7 +2265,7 @@
 						</div>
 						<p class="font-display text-lg font-semibold text-ink pr-12">BSc in Management Information Systems</p>
 						<p class="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted">
-							<span>University College Dublin</span>
+							<span>University College Dublin, National University of Ireland</span>
 							<span class="inline-flex items-center rounded-full border border-stone-200/70 bg-white/60 px-2 py-0.5 font-mono text-[12px]">2012</span>
 							<span class="font-mono text-[12px]">–</span>
 							<span class="inline-flex items-center rounded-full border border-stone-200/70 bg-white/60 px-2 py-0.5 font-mono text-[12px]">2015</span>
@@ -2261,7 +2275,7 @@
 						<button
 							type="button"
 							class="mt-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
-							data-education-pdf="./education/bsc/bsc.pdf"
+							data-education-pdf="./education/bsc/Degree Results,Transcripts,Certificate -Combined.pdf"
 							data-education-title="BSc Transcript"
 							data-education-meta="Viewing: BSc Transcript"
 						>
@@ -2324,7 +2338,7 @@
 						<button
 							type="button"
 							class="mt-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
-							data-education-pdf="./education/msc/msc.pdf"
+							data-education-pdf="./education/msc/msc_results.pdf"
 							data-education-title="MSc Transcript"
 							data-education-meta="Viewing: MSc Transcript"
 						>
@@ -2478,549 +2492,92 @@
 
 				<div class="hobbies-tiles mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
 					<div
-						class="hobbies-tile hobbies-tile--big sm:col-span-2 rounded-2xl border border-stone-200/80 bg-white/65 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--big hobbies-tile--image-only sm:col-span-2 rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:-4deg; --tx:-10px; --ty:-16px; --z:5"
 						aria-label="Dogs lover and Golden Retrievers"
 					>
 						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
-							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M88 86c0-38 24-64 58-64s58 26 58 64c0 46-24 70-58 70S88 132 88 86Z"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M94 70 62 40l4 58"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M172 70 198 42l-4 58"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<circle cx="123" cy="89" r="12" fill="none" stroke="#1a6b5c" stroke-width="8" />
-								<circle cx="157" cy="89" r="12" fill="none" stroke="#1a6b5c" stroke-width="8" />
-								<path
-									d="M134 108c8 7 16 7 24 0"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-								/>
-							</svg>
-							<img
-								src="https://source.unsplash.com/900x700/?golden-retriever,dog"
-								alt=""
-								loading="lazy"
-							/>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-6">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Dogs Lover</p>
-								<p class="mt-1 text-sm text-muted">Especially Golden Retrievers</p>
-							</div>
-							<div class="hobbies-tile__icon-wrap bg-accent/10 text-3xl" aria-hidden="true">🐕</div>
+							<img src="./hobbies/dogs.png" alt="" loading="lazy" />
 						</div>
 					</div>
 
 					<div
-						class="hobbies-tile hobbies-tile--med lg:col-span-2 rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--med hobbies-tile--image-only lg:col-span-2 rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:3deg; --tx:10px; --ty:-10px; --z:4"
 						aria-label="Gaming: Dota 2 and Call of Duty"
 					>
 						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
-							<div class="hobbies-tile__bgart-logos">
-								<img
-									class="hobbies-tile__bgart-logo"
-									src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Dota-2-simplified-logo.svg"
-									alt=""
-									loading="lazy"
-								/>
-								<img
-									class="hobbies-tile__bgart-logo"
-									src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Call_of_Duty_logo.svg"
-									alt=""
-									loading="lazy"
-								/>
-							</div>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-6">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Gaming Nights</p>
-								<p class="mt-1 text-sm text-muted">Dota 2 + Call of Duty</p>
-							</div>
-							<div class="hobbies-tile__icons-row" aria-hidden="true">
-								<img
-									class="hobbies-tile__icon-img"
-									src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Dota-2-simplified-logo.svg"
-									alt=""
-									loading="lazy"
-								/>
-								<img
-									class="hobbies-tile__icon-img--wide"
-									src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Call_of_Duty_logo.svg"
-									alt=""
-									loading="lazy"
-								/>
-							</div>
+							<img src="./hobbies/dota_cod.png" alt="" loading="lazy" />
 						</div>
 					</div>
 
 					<div
-						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--small hobbies-tile--image-only rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:2deg; --tx:-6px; --ty:-6px; --z:3"
 						aria-label="Chess"
 					>
 						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
-							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M110 30h40l-10 28h-20l-10-28Z"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M90 70h80v22H90V70Z"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M105 92v54h50V92"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M80 146h100"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-								/>
-							</svg>
-							<img
-								src="https://source.unsplash.com/900x700/?chess"
-								alt=""
-								loading="lazy"
-							/>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-5">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Chess</p>
-								<p class="mt-1 text-sm text-muted">Strategy, patience, focus</p>
-							</div>
-							<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl" aria-hidden="true">♟</div>
+							<img src="./hobbies/chess.png" alt="" loading="lazy" />
 						</div>
 					</div>
 
 					<div
-						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--small hobbies-tile--image-only rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:-3deg; --tx:8px; --ty:-6px; --z:4"
-						aria-label="Cars and bikes"
+						aria-label="Sport cars and bikes"
 					>
 						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
-							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
-								<!-- Car -->
-								<path
-									d="M45 110h115l18-38h34l18 38v20H45v-20Z"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M100 70h55"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-								/>
-								<circle cx="92" cy="130" r="16" fill="none" stroke="#1a6b5c" stroke-width="8" />
-								<circle cx="185" cy="130" r="16" fill="none" stroke="#1a6b5c" stroke-width="8" />
-								<!-- Bike -->
-								<circle cx="75" cy="122" r="13" fill="none" stroke="#1a6b5c" stroke-width="8" opacity="0.9" />
-								<circle cx="125" cy="122" r="13" fill="none" stroke="#1a6b5c" stroke-width="8" opacity="0.9" />
-								<path
-									d="M75 122l28-46h18"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									opacity="0.9"
-								/>
-								<path
-									d="M97 76l34 46"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.9"
-								/>
-							</svg>
-							<div class="hobbies-tile__bgart-collage" aria-hidden="true">
-								<img
-									src="https://source.unsplash.com/900x700/?sports-car"
-									alt=""
-									loading="lazy"
-								/>
-								<img
-									src="https://source.unsplash.com/900x700/?motorcycle,sport-bike"
-									alt=""
-									loading="lazy"
-								/>
-							</div>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-5">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Sport Cars & Bikes</p>
-								<p class="mt-1 text-sm text-muted">Curves, speed, engineering</p>
-							</div>
-							<div class="hobbies-tile__icons-row" aria-hidden="true">
-								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🏎️</div>
-								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🏍️</div>
-							</div>
+							<img src="./hobbies/cars_bikes.png" alt="" loading="lazy" />
 						</div>
 					</div>
 
 					<div
-						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--small hobbies-tile--image-only rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:4deg; --tx:-8px; --ty:-2px; --z:3"
 						aria-label="Swimming"
 					>
 						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
-							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M40 120c20 10 40 10 60 0s40-10 60 0 40 10 60 0"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-								/>
-								<path
-									d="M40 98c20 10 40 10 60 0s40-10 60 0 40 10 60 0"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.85"
-								/>
-								<circle cx="150" cy="70" r="12" fill="none" stroke="#1a6b5c" stroke-width="8" />
-								<path
-									d="M150 82c-10 16-20 26-34 34"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-								/>
-								<path
-									d="M160 94c14 4 26 12 36 22"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.85"
-								/>
-							</svg>
-							<img
-								src="https://source.unsplash.com/900x700/?swimming,swimmer"
-								alt=""
-								loading="lazy"
-							/>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-5">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Swimming</p>
-								<p class="mt-1 text-sm text-muted">Reset mode—quiet laps</p>
-							</div>
-							<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl" aria-hidden="true">🏊</div>
+							<img src="./hobbies/swimming.png" alt="" loading="lazy" />
 						</div>
 					</div>
 
 					<div
-						class="hobbies-tile hobbies-tile--med lg:col-span-2 rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--med hobbies-tile--image-only lg:col-span-2 rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:-2deg; --tx:12px; --ty:-8px; --z:4"
 						aria-label="Singing and music"
 					>
 						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
-							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
-								<!-- microphone -->
-								<path
-									d="M130 40c18 0 32 14 32 32v22c0 18-14 32-32 32s-32-14-32-32V72c0-18 14-32 32-32Z"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M100 98c10 20 60 20 70 0"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.95"
-								/>
-								<path
-									d="M130 124v18"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-								/>
-								<!-- notes -->
-								<path
-									d="M70 92c12-6 22-6 34 0"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.9"
-								/>
-								<path
-									d="M60 70c16-8 30-8 46 0"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.7"
-								/>
-								<path
-									d="M160 70c20-10 40-10 60 0"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.7"
-								/>
-							</svg>
-							<img
-								src="https://source.unsplash.com/900x700/?singing,microphone"
-								alt=""
-								loading="lazy"
-							/>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-6">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Singing &amp; Music</p>
-								<p class="mt-1 text-sm text-muted">Melodies that keep me grounded</p>
-							</div>
-							<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl" aria-hidden="true">🎶</div>
+							<img src="./hobbies/music.png" alt="" loading="lazy" />
 						</div>
 					</div>
 
 					<div
-						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--small hobbies-tile--image-only rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:3deg; --tx:-6px; --ty:-4px; --z:3"
-						aria-label="Dancing and party with friends"
+						aria-label="Dancing and parties"
 					>
 						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
-							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
-								<!-- male head -->
-								<circle cx="130" cy="48" r="18" fill="none" stroke="#1a6b5c" stroke-width="8" />
-								<!-- torso -->
-								<path
-									d="M110 78c12-10 28-10 40 0"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-								/>
-								<path
-									d="M122 90c8 34 8 40 8 56"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.9"
-								/>
-								<path
-									d="M138 90c-6 36-6 42-6 56"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.9"
-								/>
-								<!-- arms -->
-								<path
-									d="M88 90l-20-14"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.85"
-								/>
-								<path
-									d="M172 90l20-14"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.85"
-								/>
-								<!-- dance spark -->
-								<path
-									d="M206 70l10-8"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.6"
-								/>
-								<path
-									d="M54 70l-10-8"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.6"
-								/>
-							</svg>
-							<img
-								src="https://source.unsplash.com/900x700/?man,dancing"
-								alt=""
-								loading="lazy"
-							/>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-5">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Dancing &amp; Parties</p>
-								<p class="mt-1 text-sm text-muted">With friends, good vibes</p>
-							</div>
-							<div class="hobbies-tile__icons-row" aria-hidden="true">
-								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🕺</div>
-								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🥂</div>
-							</div>
+							<img src="./hobbies/parties.png" alt="" loading="lazy" />
 						</div>
 					</div>
 
 					<div
-						class="hobbies-tile hobbies-tile--small rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--small hobbies-tile--image-only rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:-4deg; --tx:10px; --ty:-2px; --z:2"
 						aria-label="Travelling"
 					>
 						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
-							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
-								<!-- compass ring -->
-								<circle cx="130" cy="78" r="48" fill="none" stroke="#1a6b5c" stroke-width="8" />
-								<path
-									d="M130 78l28-36"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-								/>
-								<path
-									d="M130 78l-16 26"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.9"
-								/>
-								<!-- plane -->
-								<path
-									d="M66 112l40-18 24 12-12 12-52-6Z"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linejoin="round"
-									opacity="0.85"
-								/>
-								<path
-									d="M106 94l42-50 20 34-62 16Z"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linejoin="round"
-									opacity="0.85"
-								/>
-							</svg>
-							<img
-								src="https://source.unsplash.com/900x700/?travel,luggage"
-								alt=""
-								loading="lazy"
-							/>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-5">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Travelling</p>
-								<p class="mt-1 text-sm text-muted">New places, new perspectives</p>
-							</div>
-							<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl" aria-hidden="true">🧳</div>
+							<img src="./hobbies/travelling.png" alt="" loading="lazy" />
 						</div>
 					</div>
 
 					<div
-						class="hobbies-tile hobbies-tile--med lg:col-span-2 rounded-2xl border border-stone-200/80 bg-white/60 shadow-soft backdrop-blur-sm hover:bg-white/85 p-0"
+						class="hobbies-tile hobbies-tile--med hobbies-tile--image-only lg:col-span-2 rounded-2xl border border-stone-200/80 shadow-soft p-0"
 						style="--rot:2deg; --tx:-12px; --ty:-10px; --z:3"
-						aria-label="Helping teaching and beer with friends"
+						aria-label="Helping and teaching"
 					>
-						<div class="hobbies-tile__bgart" aria-hidden="true">
-							<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
-								<!-- book -->
-								<path
-									d="M74 82c0-18 14-30 30-30h70c0 0 20 0 20 22v78c0 0-20 0-20-12H104c-18 0-30 10-30 20V82Z"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M114 52v92"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.85"
-								/>
-								<!-- cap -->
-								<path
-									d="M90 58l40-22 40 22"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M130 68V36"
-									fill="none"
-									stroke="#1a6b5c"
-									stroke-width="8"
-									stroke-linecap="round"
-									opacity="0.85"
-								/>
-							</svg>
-							<img
-								src="https://source.unsplash.com/900x700/?teaching,mentor,classroom"
-								alt=""
-								loading="lazy"
-							/>
-						</div>
-						<div class="flex h-full items-start justify-between gap-5 p-6">
-							<div class="min-w-0">
-								<p class="hobbies-tile__title font-display font-semibold text-ink">Helping &amp; Teaching</p>
-								<p class="mt-1 text-sm text-muted">Knowledge + beer with friends</p>
-							</div>
-							<div class="hobbies-tile__icons-row" aria-hidden="true">
-								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🤝</div>
-								<div class="hobbies-tile__icon-wrap bg-accent/10 text-2xl w-12 h-12" aria-hidden="true">🍺</div>
-							</div>
+						<div class="hobbies-tile__bgart hobbies-tile__bgart--photo" aria-hidden="true">
+							<img src="./hobbies/teaching.png" alt="" loading="lazy" />
 						</div>
 					</div>
 				</div>
@@ -3051,12 +2608,6 @@
 					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
-				<p class="mb-8 max-w-2xl text-xs leading-relaxed text-muted">
-					If videos show Error 153, open this site over http(s)—for example Live Server,
-					<code class="rounded-md bg-stone-100/90 px-1.5 py-0.5 font-mono text-[11px] text-ink">npx serve</code>, or GitHub
-					Pages—not as a
-					<code class="rounded-md bg-stone-100/90 px-1.5 py-0.5 font-mono text-[11px] text-ink">file://</code> path.
-				</p>
 
 				<div class="grid gap-8 sm:grid-cols-1 md:grid-cols-2 mb-12 w-full">
 					<div class="aspect-video w-full overflow-hidden rounded-2xl shadow-lift ring-1 ring-stone-200/60">
@@ -3099,15 +2650,19 @@
 							class="h-full w-full border-0"
 						></iframe>
 					</div>
-					<div class="aspect-video w-full overflow-hidden rounded-2xl shadow-lift ring-1 ring-stone-200/60 md:col-span-2">
-						<iframe
-							src="https://www.youtube-nocookie.com/embed/CA04yI-XYuA"
-							title="Review 1 of Russell Sebastian From United States"
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
-							class="h-full w-full border-0"
-						></iframe>
+					<div class="md:col-span-2 flex w-full justify-center">
+						<div
+							class="aspect-video w-full max-w-full overflow-hidden rounded-2xl shadow-lift ring-1 ring-stone-200/60 md:max-w-[calc(50%-1rem)]"
+						>
+							<iframe
+								src="https://www.youtube-nocookie.com/embed/CA04yI-XYuA"
+								title="Review 1 of Russell Sebastian From United States"
+								frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+								allowfullscreen
+								class="h-full w-full border-0"
+							></iframe>
+						</div>
 					</div>
 				</div>
 
@@ -4063,10 +3618,10 @@
 						'./letters/emetsoft/service_letter.pdf',
 					],
 					techone: ['./letters/techone/agreement.pdf'],
-					fivverr: [
-						'./letters/fivverr/Fiverr Analytics Page.pdf',
-						'./letters/fivverr/Fiverr Earnings Page.pdf',
-						'./letters/fivverr/Fiverr Profile Page.pdf',
+					fiverr: [
+						'./letters/fiverr/Fiverr Analytics Page.pdf',
+						'./letters/fiverr/Fiverr Earnings Page.pdf',
+						'./letters/fiverr/Fiverr Profile Page.pdf',
 					],
 					hostgsm: ['./letters/hostgsm/service_letter.pdf'],
 					foodme: ['./letters/foodme/service_letter.pdf'],
@@ -4075,6 +3630,17 @@
 					andere: ['./letters/andere/agreement.pdf'],
 					fajar: ['./letters/fajar/service_letter.pdf'],
 					newglink: ['./letters/newglink/service_letter.pdf'],
+				};
+
+				const normalizeLetterKey = (k) => {
+					if (!k) return k;
+					// Company line is "Fiverr.com" → first-word key must match `letterMap.fiverr`
+					if (k === 'fiverr.com' || k === 'fiverr') return 'fiverr';
+					// Card says "HostgSim LLC" → first word `hostgsim`; letters live under `letters/hostgsm/`
+					if (k === 'hostgsim') return 'hostgsm';
+					// Agreement PDFs are stored under `letters/techone/`
+					if (k === 'avansight') return 'techone';
+					return k;
 				};
 
 				const toFirstWordKey = (raw) => {
@@ -4101,14 +3667,15 @@
 				const openLetter = (companyRaw, firstWordKey) => {
 					if (!modal || !frame) return;
 
+					const nk = normalizeLetterKey(firstWordKey);
 					const key =
-						firstWordKey && letterMap[firstWordKey] && letterMap[firstWordKey].length
-							? firstWordKey
+						nk && letterMap[nk] && letterMap[nk].length
+							? nk
 							: toAcronymKey(companyRaw);
 
 					const pdfList = (key && letterMap[key] ? letterMap[key] : []) || [];
 					openPdfList(pdfList, {
-						title: key === 'fivverr' ? 'Insights' : 'Service Letter',
+						title: key === 'fiverr' ? 'Insights' : 'Service Letter',
 						metaText: pdfList.length ? `Viewing: ${companyRaw}` : `No letter found for: ${companyRaw}`,
 					});
 				};
@@ -4143,7 +3710,7 @@
 					if (!companyRaw) return;
 
 					const base = toFileBase(companyRaw);
-					const folderKey = base === 'fiverr' ? 'fivverr' : base;
+					const folderKey = normalizeLetterKey(base);
 
 					// Prevent duplicate injections if this script runs more than once.
 					if (article.querySelector('button[data-service-letter="1"]')) return;
@@ -4153,7 +3720,7 @@
 					btn.dataset.serviceLetter = '1';
 					btn.className =
 						'mt-2 mb-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40';
-					const btnLabel = folderKey === 'fivverr' ? 'View Insights' : 'View service letter';
+					const btnLabel = folderKey === 'fiverr' ? 'View Insights' : 'View service letter';
 					btn.innerHTML = `
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
 							<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -4167,9 +3734,10 @@
 
 					btn.addEventListener('click', () => openLetter(companyRaw, folderKey));
 
-					// Insert right below the company name (left column) to avoid
-					// touching the horizontal separator above the "Tech" section.
-					companyEl.insertAdjacentElement('afterend', btn);
+					// Append to the company column so subtitles (e.g. “Previously known as …”) stay above the button.
+					const companyCol = companyEl.parentElement;
+					if (companyCol) companyCol.appendChild(btn);
+					else companyEl.insertAdjacentElement('afterend', btn);
 				});
 
 				// Add O/L and A/L transcript buttons to the Education section.
@@ -4319,7 +3887,7 @@
 					const raw = (companyRaw || '').toLowerCase();
 					if (raw.includes('foodme') || raw.includes('tryfavour') || raw.includes('favour')) return 'https://www.tryfavour.com/';
 					if (raw.includes('avansight')) return 'https://www.avansightinc.com/';
-					if (raw.includes('hostgsm')) return 'https://www.hostgsm.com/';
+					if (raw.includes('hostgsm') || raw.includes('hostgsim')) return 'https://www.hostgsm.com/';
 					if (raw.includes('newglink')) return 'https://newglink.com/';
 					if (raw.includes('emetsoft')) return 'https://emetsoft.com/';
 					if (raw.includes('andere')) return 'https://helpdesksuites.com/';
@@ -4490,7 +4058,7 @@
 					techP.innerHTML = `<span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span>`;
 
 					const wrap = document.createElement('div');
-					wrap.className = 'mt-3 flex flex-wrap gap-2';
+					wrap.className = 'mt-3 mb-6 flex flex-wrap gap-2';
 
 					techItems.forEach((item) => {
 						const pill = document.createElement('span');
@@ -4545,19 +4113,26 @@
 					if ((t === 'java' || /^java\s/.test(t)) && !t.includes('javascript')) return 'java';
 					if (t.includes('c#')) return 'cs';
 					if (t === 'vb.net' || t.includes('vb.net') || t.includes('vb net') || t === 'vb') return './icons/vbnet.svg';
+					if (t.includes('vb6')) return './icons/vb6.png';
+					if (t.includes('crystal report')) return './icons/crystal-reports.png';
+					if (t.includes('payment gateway')) return './icons/payment-gateway.svg';
+					if (t.includes('drone mapping')) return './icons/drone-mapping.svg';
+					if (t.includes('asmx')) return './icons/asmx.svg';
+					if (t.includes('ksoap')) return './icons/ksoap2.svg';
+					if (t.includes('google map')) return './icons/google-maps.svg';
 					if (t.includes('python')) return 'python';
 					if (t.includes('django')) return 'django';
 					if (t.includes('selenium')) return 'selenium';
 					if (t.includes('openai')) return './icons/openai.svg';
-					if (t.includes('cursor')) return './icons/cursor-ai.svg';
-					if (t.includes('copilot')) return './icons/copilot.svg';
+					if (t === 'cursor' || t.includes('cursor')) return './icons/cursor-ai.png';
+					if (t.includes('copilot')) return './icons/copilot.png';
 					if (t.includes('agentic')) return './icons/agentic-ai.svg';
 					if (t.includes('prompt')) return './icons/prompt-engineering.svg';
 					if (t.includes('agent configuring') || (t.includes('agent') && t.includes('config'))) return './icons/agent-configuring.svg';
 					if (t.includes('redux')) return 'redux';
 					if (t.includes('native wind') || t.includes('nativewind')) return './icons/nativewind.svg';
-					if (t.includes('zustand')) return './icons/zustand-bear.svg';
-					if (t.includes('serverless')) return 'serverless';
+					if (t.includes('zustand')) return './icons/zustand.png';
+					if (t.includes('serverless framework') || t.includes('serverless')) return './icons/serverless-framework.png';
 					if (t.includes('aws')) return 'aws';
 					if (t.includes('github actions') || t.includes('github action')) return './icons/github-actions.svg';
 					if (t.includes('gitlab ci') || t.includes('gitlab')) return './icons/gitlab-ci.svg';
@@ -4575,6 +4150,7 @@
 					if (t === 'agile' || t.includes('agile')) return './icons/agile.svg';
 					if (t === 't4 templates' || t === 't4 template' || (t.includes('t4') && t.includes('template'))) return './icons/t4-templates.svg';
 					if (t.includes('jqwidgets') || t.includes('jq widgets') || t.includes('jqwidget')) return './icons/jqwidgets.svg';
+					if (t.includes('rdlc')) return './icons/rdlc.png';
 					if (t.includes('stored proc') || t.includes('stored procs') || t.includes('stored procedures')) return './icons/stored-procs.svg';
 					if (t.includes('ado.net')) return 'dotnet';
 					if (t.includes('docker desktop')) return './icons/docker-desktop.svg';
@@ -4605,9 +4181,11 @@
 					if (t.includes('identity framework') || t.includes('asp.net identity') || t === 'identity') return 'dotnet';
 					if (t.includes('rest')) return './icons/rest-api.ico';
 					if (t.includes('oauth')) return 'https://oauth.net/images/oauth-logo-square.png';
-					if (t.includes('jwt')) return 'jwt';
+					if (t.includes('jwt')) return './icons/jwt.svg';
 					if (t.includes('webpack')) return 'webpack';
 					if (t.includes('gulp')) return 'gulp';
+					if (t.includes('figma')) return 'figma';
+					if (t.includes('ajax')) return './icons/ajax.svg';
 					if (t.includes('jira')) return './icons/jira.svg';
 					if (t.includes('confluence')) return './icons/confluence.svg';
 					if (t.includes('clickup')) return './icons/clickup.svg';
@@ -4619,7 +4197,7 @@
 					if (t.includes('bitbucket')) return './icons/bitbucket.svg';
 					if (t.includes('fiverr')) return 'f';
 					if (t.includes('solidity')) return 'solidity';
-					if (t.includes('android')) return 'https://cdn.prod.website-files.com/5c29380b1110ec92a203aa84/5c4406f679dc69b549b48fa6_p17s2tfgc31jte13d51pea1l2oblr3-p-1080.png';
+					if (t.includes('android')) return './icons/android.png';
 					if (t.includes('react native')) return 'react';
 					if (t.includes('react')) return 'react';
 					if (t === 'c' || /^c\s*$/.test(t)) return 'c';
@@ -4659,6 +4237,22 @@
 						return;
 						}
 
+						// OpenAI: SVG wordmark already includes the name — show image only.
+						if (lower === 'openai') {
+							const img = document.createElement('img');
+							img.alt = 'OpenAI';
+							img.loading = 'lazy';
+							img.className = 'h-9 w-auto max-h-9 object-contain flex-shrink-0';
+							img.src = './icons/openai.svg';
+							pill.dataset.iconized = '1';
+							pill.classList.add('pill-tech--wordmark');
+							pill.textContent = '';
+							pill.appendChild(img);
+							pill.setAttribute('aria-label', 'OpenAI');
+							pill.setAttribute('title', 'OpenAI');
+							return;
+						}
+
 						const key = iconKeyForTech(label);
 						if (!key) return;
 
@@ -4676,9 +4270,20 @@
 						pill.dataset.iconized = '1';
 						pill.textContent = '';
 						pill.appendChild(img);
-						const text = document.createElement('span');
-						text.textContent = label;
-						pill.appendChild(text);
+						// C, C#, C++: skillicons already show the name in the graphic — no duplicate label.
+						const cFamilyIconOnly =
+							lower === 'c' ||
+							lower === 'c#' ||
+							lower === 'c++' ||
+							lower === 'c/c++';
+						if (!cFamilyIconOnly) {
+							const text = document.createElement('span');
+							text.textContent = label;
+							pill.appendChild(text);
+						} else {
+							pill.setAttribute('aria-label', label);
+							pill.setAttribute('title', label);
+						}
 					});
 				};
 
@@ -4993,49 +4598,518 @@
 					});
 				}
 
-				// Profile section: export the visible "Profile" section as a PDF (HTML -> canvas -> PDF).
-				const profileDownloadBtn = document.getElementById('download-profile-pdf');
-				if (profileDownloadBtn) {
-					profileDownloadBtn.addEventListener('click', async () => {
-						profileDownloadBtn.disabled = true;
-							try {
-								if (!window.html2canvas) {
-									throw new Error('Missing html2canvas library.');
-								}
-
-								// Single-pass capture (NO scrollTo / NO stitching).
-								// This captures the outer page container as one image.
-								const captureEl = document.body;
-								const SCALE = 2;
-
-								const canvas = await window.html2canvas(captureEl, {
-									scale: SCALE,
-									useCORS: true,
-									allowTaint: true,
-									backgroundColor: '#f6f3ec'
-								});
-
-								const imgData = canvas.toDataURL('image/png', 1.0);
-								const a = document.createElement('a');
-								a.href = imgData;
-								a.download = 'Supun_Nimantha_Portfolio.png';
-								document.body.appendChild(a);
-								a.click();
-								a.remove();
-						} catch (e) {
-							console.error(e);
-						} finally {
-							profileDownloadBtn.disabled = false;
-						}
-					});
-				}
-
 				enhanceTechPills();
 			})();
 		</script>
 
+		<!-- Same reviews as reviews.json; embedded so opening index.html via file:// still works. Update both when you edit reviews. -->
+		<script type="application/json" id="client-reviews-data">
+[
+	{
+		"name": "rahmansobhan921",
+		"country": "Canada",
+		"review": "Excellent seller. One of the few who understood my requirements."
+	},
+	{
+		"name": "bijukumarvasu",
+		"country": "Australia",
+		"review": "It was very nice working with Supun. He is very committed to getting the job done. I will be giving more project works to Supun. He was so patient and quick with my requests and he exceeded my expectations and is very accommodating."
+	},
+	{
+		"name": "bijukumarvasu",
+		"country": "Australia",
+		"review": "Supun is an awesome seller here. Very happy to work with him again. His proactive approach is very appealing."
+	},
+	{
+		"name": "dopenessism",
+		"country": "Norway",
+		"review": "Seller finished the project in less than 24 hours as promised with express delivery. Provided him with what I had in mind and seller delivered it perfectly. Seller has great competancy in programming and is helpful on the way plus is a good explainer on what was done in the code. Highly recommended if you need programs done in a quick and efficient way."
+	},
+	{
+		"name": "dopenessism",
+		"country": "Norway",
+		"review": "Awesome seller and great communication. During coding of the project seller is helpful by using meetings and going through the code and explaining what was done and what does the code do. Even though seller has completed an original program, he still made a second program using another language even..."
+	},
+	{
+		"name": "corneliaabusan",
+		"country": "United Kingdom",
+		"review": "Supun is very professional. Such a pleasure to work with him. He submitted the work on time and took his time to go step by step and explained everything to us. Highly recommend him."
+	},
+	{
+		"name": "tobiwhite47",
+		"country": "United States",
+		"review": "This guy Did Awesomely. With his experience, he gives significant input to get your work at a professional level"
+	},
+	{
+		"name": "tobiwhite47",
+		"country": "United States",
+		"review": "Words are not enough to appreciate this guy, his services has been awesome and If I am in a position to recommend him, I will recommend him a thousand times. I hope to work with him in the future again."
+	},
+	{
+		"name": "tobiwhite47",
+		"country": "United States",
+		"review": "Nice Job. It's someone everyone should work with."
+	},
+	{
+		"name": "tobiwhite47",
+		"country": "United States",
+		"review": "It's was an awesome experience"
+	},
+	{
+		"name": "hnigam",
+		"country": "United States",
+		"review": "Supun is very knowledgeable and great to work with. Highly recommend him."
+	},
+	{
+		"name": "newbieme",
+		"country": "Singapore",
+		"review": "Supun is a very kind and helpful man. He's very good in fixing bugs and other fixes in my code. His proficiency level is excellent as well. He also do explain in which parts of the code he found errors and where did he fix it. Delivery was delivered before the deadline and the requirement requested were..."
+	},
+	{
+		"name": "hnigam",
+		"country": "United States",
+		"review": "Supun is great to work with. He understands the requirements well and does a great job of delivering them. Good understanding of technology and the UI also. I would highly recommend him and look forward to doing more projects with him. Great job Supun!!"
+	},
+	{
+		"name": "dewaldriegger",
+		"country": "South Africa",
+		"review": "He is fast ! spot on and exactly what I expected. Will send more work to him !Thanks Dewald"
+	},
+	{
+		"name": "roccoianni",
+		"country": "Australia",
+		"review": "Peck is one of the best developers you can choose from! He is a phenomenal developer with a wide range of skills. His communication skills are excellent and he is very accommodating to change. I would recommend him for any custom programming solutions you need."
+	},
+	{
+		"name": "erichanym",
+		"country": "Malaysia",
+		"review": "Fast delivery, and great to work with him."
+	},
+	{
+		"name": "paulacristina65",
+		"country": "Romania",
+		"review": "He is a really good communicator, get's the job done, I truly recommend!"
+	},
+	{
+		"name": "denissevici",
+		"country": "Romania",
+		"review": "Really nice, he helped me a lot in a really short time!"
+	},
+	{
+		"name": "stevenlogwood",
+		"country": "United States",
+		"review": "Quick turnaround. Able to understand and implement specificaitons."
+	},
+	{
+		"name": "blue8487",
+		"country": "United States",
+		"review": "The service was great as usual."
+	},
+	{
+		"name": "blue8487",
+		"country": "United States",
+		"review": "I have worked with Peck_conyon before. He gives you more than what you ask for."
+	},
+	{
+		"name": "big_ss",
+		"country": "United Kingdom",
+		"review": "Was very helpful and very skilled at his job really recommend ."
+	},
+	{
+		"name": "sabamekonnen",
+		"country": "Canada",
+		"review": "peck conyon is the best mentor. He made the course look so simple because of the best technics of her teaching skill. I am very satisfied and I will definitely work again with him."
+	},
+	{
+		"name": "rloct2020",
+		"country": "United States",
+		"review": "Great experience working with Seller and he was accommodating"
+	},
+	{
+		"name": "blue8487",
+		"country": "United States",
+		"review": "The seller was great! I had some difficulty in sending the needed files in a timely manner but that was my bad! peck_conyon did a great job. I expect to work with him again in the future."
+	},
+	{
+		"name": "abdullah210",
+		"country": "Australia",
+		"review": "Peck is one of the few people who u can actually make the job done with a great details, he do your work as the requirements and always confirming with u to make sure the work is perfect. I highly recommend peck and I will defiantly ask him for help in the future."
+	},
+	{
+		"name": "abdullah210",
+		"country": "Australia",
+		"review": "excellent and fast service a great guy, helps you a lot with your work."
+	},
+	{
+		"name": "iamwilly",
+		"country": "United States",
+		"review": "thank you for helping with my project."
+	},
+	{
+		"name": "deusexmachina21",
+		"country": "United States",
+		"review": "Oh my God, I had no idea that someone as awesome as peck_conyon even exists in real life. They helped me with my project EXACTLY the way I needed them to. For any projects in this niche, I would definitely be trusting them forever"
+	},
+	{
+		"name": "milldo",
+		"country": "Indonesia",
+		"review": "did a preliminary project with him and so far looks good. Will continue using his service."
+	},
+	{
+		"name": "nulledrengen1",
+		"country": "Denmark",
+		"review": "Great Work as allways."
+	},
+	{
+		"name": "worldendsmith",
+		"country": "Bulgaria",
+		"review": "Excellent experience. Flexible and always pleasant."
+	},
+	{
+		"name": "richien",
+		"country": "United States",
+		"review": "Peck_conyon is always great to work with. He takes time to discuss everything with you and makes sure you understand your project well."
+	},
+	{
+		"name": "richien",
+		"country": "United States",
+		"review": "peck_conyon does exceptional work and is very pleasant to work with."
+	},
+	{
+		"name": "worldendsmith",
+		"country": "Bulgaria",
+		"review": "Very good working with Peck. My daughter is training ASP.NET with him and she is doing well. Thanks!"
+	},
+	{
+		"name": "hostgsm",
+		"country": "United States",
+		"review": "smart and accurate"
+	},
+	{
+		"name": "ionrotaru",
+		"country": "Canada",
+		"review": "Very helpful and accommodating to my tight time requirements."
+	},
+	{
+		"name": "jaakapup",
+		"country": "United States",
+		"review": "Very clear and easy communication even considering time zone difference. I highly recommend Peck!"
+	},
+	{
+		"name": "user33594046",
+		"country": "Sri Lanka",
+		"review": "Industry level experience (Y) ,Working with Peck was great. He delivered the product as requested and on time . I will definitely use him for any of my projects going forward. Thank you Peck."
+	},
+	{
+		"name": "sangeethamurali",
+		"country": "India",
+		"review": "Fabulous work with affordable cost. Hereafter, He is the go-to person in my future works. Thank you so much"
+	},
+	{
+		"name": "tapatterson",
+		"country": "United States",
+		"review": "Working with Peck was great. He delivered the product as requested. I will definitely use him for any of my projects going forward."
+	},
+	{
+		"name": "aassignment",
+		"country": "Australia",
+		"review": "if you do like surprises, try here, you will find it."
+	},
+	{
+		"name": "richien",
+		"country": "United States",
+		"review": "Excellent service as always."
+	},
+	{
+		"name": "richien",
+		"country": "United States",
+		"review": "I have had several great experiences working with peck_conyon. Great communication and quick response."
+	},
+	{
+		"name": "anderes",
+		"country": "United States",
+		"review": "Excellent work as usual!!"
+	},
+	{
+		"name": "richien",
+		"country": "United States",
+		"review": "Seller is always great to work with. He takes the time to explain concepts and works with me. He is an excellent communicator and teacher."
+	},
+	{
+		"name": "jasg562",
+		"country": "United States",
+		"review": "Great experience. Super responsive and professional. Would definitely recommend"
+	},
+	{
+		"name": "yamaha250",
+		"country": "United States",
+		"review": "Awesome job! Great communication!!"
+	},
+	{
+		"name": "sanjayak",
+		"country": "Australia",
+		"review": "Excellent work and thank you very much fast delivery."
+	},
+	{
+		"name": "anagaty77",
+		"country": "United States",
+		"review": "Thank you for the fast and amazing delivery."
+	},
+	{
+		"name": "tharisaignis",
+		"country": "Singapore",
+		"review": "Awesome! Love that he's a good teacher!"
+	},
+	{
+		"name": "tharisaignis",
+		"country": "Singapore",
+		"review": "Seller was helpful and would communicate anytime he can. He's pretty prompt on his replies and would help you understand anything. While coding he's also taught me a little which was awesome!"
+	},
+	{
+		"name": "acaciarose",
+		"country": "Sri Lanka",
+		"review": "Excellent Talent. Unique and very fast"
+	},
+	{
+		"name": "others442",
+		"country": "United States",
+		"review": "very high experience gig , highly recommeneded"
+	},
+	{
+		"name": "markus_englund",
+		"country": "Sweden",
+		"review": "Very pleasant to work with!"
+	},
+	{
+		"name": "kfircohen652",
+		"country": "Israel",
+		"review": "Very pleasant guy, great interaction"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I had a great experience with this seller!"
+	},
+	{
+		"name": "melodythomas816",
+		"country": "Mexico",
+		"review": "He provided great training!"
+	},
+	{
+		"name": "unclaimedpants",
+		"country": "Singapore",
+		"review": "got my work done in a couple hours. had an issue and he fixed in less than 5mins"
+	},
+	{
+		"name": "aussiedev",
+		"country": "Australia",
+		"review": "peck_conyon did a good job. Will use again"
+	},
+	{
+		"name": "joeydobbs_udm",
+		"country": "United States",
+		"review": "Awesome work!! Would definitely recommend! Thanks!"
+	},
+	{
+		"name": "alexwu980",
+		"country": "Ireland",
+		"review": "Solid developer"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with this seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with this seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with him very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "aassignment",
+		"country": "Australia",
+		"review": "thanks mate"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "happyuser1013",
+		"country": "United States",
+		"review": "I enjoyed working with the seller very much!"
+	},
+	{
+		"name": "aassignment",
+		"country": "Australia",
+		"review": "thanks mate"
+	},
+	{
+		"name": "matthewrichard1",
+		"country": "Australia",
+		"review": "By far one of the best Fiverr sellers I have met. Goes above and beyond requirements. Perfect code with no logical errors. I am so lucky to have found such a perfect person. Thanks and great work Supun! Will most definitely buy again."
+	},
+	{
+		"name": "acaciarose",
+		"country": "Sri Lanka",
+		"review": "Highly Talented.Quick Response and 100% satisfaction.I will order again."
+	},
+	{
+		"name": "matthewrichard1",
+		"country": "Australia",
+		"review": "Great attention to detail, has great communication skills. Does task to high level of quality. Highly recommend!"
+	},
+	{
+		"name": "anderes",
+		"country": "United States",
+		"review": "Excellent work and seller. Very good communication! Thank you. Highly recommend."
+	},
+	{
+		"name": "hostgsm",
+		"country": "United States",
+		"review": "Super like always."
+	},
+	{
+		"name": "imfarhan123",
+		"country": "United Kingdom",
+		"review": "Good examplw during teaching"
+	},
+	{
+		"name": "imfarhan123",
+		"country": "United Kingdom",
+		"review": "Very Good"
+	},
+	{
+		"name": "imfarhan123",
+		"country": "United Kingdom",
+		"review": "Very helpful and approachable when i need him"
+	},
+	{
+		"name": "giuseppemagra",
+		"country": "Italy",
+		"review": "mi trovo sempre bene con questo grafico. ho sempre piena soddisfazione dei lavori che mi consegna. lo consiglio vivamente a tutti. ciao"
+	},
+	{
+		"name": "aassignment",
+		"country": "Australia",
+		"review": "really nice work done mate"
+	},
+	{
+		"name": "aassignment",
+		"country": "Australia",
+		"review": "really nice work done mate"
+	},
+	{
+		"name": "aassignment",
+		"country": "Australia",
+		"review": "really nice seller mate love u work will come back soon"
+	},
+	{
+		"name": "hockeyadc",
+		"country": "United States",
+		"review": "Very reliable"
+	},
+	{
+		"name": "mot154",
+		"country": "United States",
+		"review": "Excellent job, will be back very soon :)"
+	},
+	{
+		"name": "anderes",
+		"country": "United States",
+		"review": "Great Seller! Very smart!"
+	},
+	{
+		"name": "eliasdiek",
+		"country": "United States",
+		"review": "Awesome helpful"
+	},
+	{
+		"name": "anderes",
+		"country": "United States",
+		"review": "Excellent seller! Very good communicator and creative thinker."
+	},
+	{
+		"name": "eliasdiek",
+		"country": "United States",
+		"review": "very helpful"
+	},
+	{
+		"name": "amor1990",
+		"country": "United States",
+		"review": "Awesome job"
+	},
+	{
+		"name": "nulledrengen1",
+		"country": "Denmark",
+		"review": "Great and swift delivery, as usual - all well here ;0)"
+	},
+	{
+		"name": "richien",
+		"country": "United States",
+		"review": "Such a great experience every time! Five Stars!"
+	}
+]
+		</script>
+
 		<script>
-			(() => {
+			(async () => {
 				const carousel = document.getElementById('client-reviews-carousel');
 				if (!carousel) return;
 
@@ -5057,79 +5131,43 @@
 				let autoplayMs = baseAutoplayMs; // updated based on the speed dial
 				const perPage = Number(carousel.getAttribute('data-per-page')) || 3;
 
-				// Replace/edit review text below as needed.
-				const reviews = [
-					{
-						name: 'Jinlei Huo',
-						location: 'United Kingdom',
-						quote: 'Quick communication and reliable delivery. The final work looks clean and professional.'
-					},
-					{
-						name: 'Allan Saravia',
-						location: 'United States',
-						quote: 'Great collaboration and on-time completion. Strong attention to details and requirements.'
-					},
-					{
-						name: 'Russell Sebastian',
-						location: 'United States',
-						quote: 'Clear updates throughout the project and a smooth process from start to finish.'
-					},
-					{
-						name: 'Taniya',
-						location: 'United Kingdom',
-						quote: 'Very responsive and flexible. The end result matched exactly what we discussed.'
-					},
-					{
-						name: 'Client Partner 5',
-						location: 'Canada',
-						quote: 'Excellent problem solving and steady progress. Delivered exactly when promised.'
-					},
-					{
-						name: 'Client Partner 6',
-						location: 'Australia',
-						quote: 'Professional work with clear milestones. Easy to work with and great quality output.'
-					},
-					{
-						name: 'Client Partner 7',
-						location: 'Germany',
-						quote: 'Thoughtful improvements and fast iterations. The solution is stable and well-structured.'
-					},
-					{
-						name: 'Client Partner 8',
-						location: 'France',
-						quote: 'Good communication and dependable delivery. The final product exceeded expectations.'
-					},
-					{
-						name: 'Client Partner 9',
-						location: 'India',
-						quote: 'Strong technical skills and helpful guidance. We got exactly the features we needed.'
-					},
-					{
-						name: 'Client Partner 10',
-						location: 'Singapore',
-						quote: 'Very good turnaround time and smooth implementation. Great experience overall.'
-					},
-					{
-						name: 'Client Partner 11',
-						location: 'UAE',
-						quote: 'Reliable work, clear updates, and high attention to quality. Would hire again.'
-					},
-					{
-						name: 'Client Partner 12',
-						location: 'Sweden',
-						quote: 'Thorough testing and clean delivery. The project was easy to manage with consistent status updates.'
-					},
-					{
-						name: 'Client Partner 13',
-						location: 'Netherlands',
-						quote: 'Professional and detail-oriented. Delivered a solid solution and supported after launch.'
-					},
-					{
-						name: 'Client Partner 14',
-						location: 'New Zealand',
-						quote: 'Great collaboration, fast responses, and a polished final outcome. Highly recommended.'
+				const mapReview = (x) => ({
+					name: x.name,
+					country: x.country || '',
+					quote: String(x.review ?? x.quote ?? '').trim(),
+				});
+
+				let reviews = [];
+				try {
+					const res = await fetch(new URL('reviews.json', window.location.href), { cache: 'no-cache' });
+					if (res.ok) {
+						const data = await res.json();
+						if (Array.isArray(data)) reviews = data.map(mapReview);
 					}
-				];
+				} catch (_) {
+					/* file:// and some hosts block fetch; use embedded JSON */
+				}
+				if (!reviews.length) {
+					const embedded = document.getElementById('client-reviews-data');
+					if (embedded) {
+						try {
+							const data = JSON.parse(embedded.textContent);
+							if (Array.isArray(data)) reviews = data.map(mapReview);
+						} catch (_) {
+							/* ignore */
+						}
+					}
+				}
+				if (!reviews.length) {
+					reviews = [
+						{
+							name: '—',
+							country: '',
+							quote:
+								'Client reviews could not be loaded. Check that reviews.json is valid and reachable, or update the embedded JSON block in index.html (see HTML comment above it).',
+						},
+					];
+				}
 
 				const escapeHtml = (raw) => {
 					return String(raw ?? '')
@@ -5140,18 +5178,52 @@
 						.replaceAll("'", '&#39;');
 				};
 
-				const totalSlots = Math.ceil(reviews.length / perPage) * perPage;
-				const padded = reviews.slice();
-				while (padded.length < totalSlots) {
-					padded.push({
-						placeholder: true,
-						name: 'More reviews',
-						location: '',
-						quote: 'Additional client feedback will appear here soon.'
-					});
-				}
+				const countryToFlagCode = (country) => {
+					const m = {
+						Canada: 'ca',
+						Australia: 'au',
+						Norway: 'no',
+						'United Kingdom': 'gb',
+						'United States': 'us',
+						Singapore: 'sg',
+						'South Africa': 'za',
+						Malaysia: 'my',
+						Romania: 'ro',
+						Denmark: 'dk',
+						Bulgaria: 'bg',
+						Indonesia: 'id',
+						'Sri Lanka': 'lk',
+						India: 'in',
+						Sweden: 'se',
+						Israel: 'il',
+						Mexico: 'mx',
+						Ireland: 'ie',
+						Italy: 'it',
+					};
+					return m[country] || '';
+				};
 
-				const pageCount = padded.length / perPage;
+				const reviewerLineHtml = (r) => {
+					const country = (r.country || r.location || '').trim();
+					const name = escapeHtml(r.name);
+					if (!country) return name;
+					const code = countryToFlagCode(country);
+					const flag = code
+						? `<img src="https://flagcdn.com/w20/${code}.png" alt="" width="20" height="15" class="inline-block shrink-0 rounded-sm object-cover ring-1 ring-stone-200/60" loading="lazy" decoding="async" />`
+						: '';
+					const flagWrap = flag
+						? `<span class="shrink-0" aria-hidden="true" title="${escapeHtml(country)}">${flag}</span>`
+						: '';
+					return `<span class="inline-flex items-center gap-2 min-w-0">${flagWrap}<span class="min-w-0 break-words font-semibold text-ink font-display">${name}</span></span>`;
+				};
+
+				const countryFooterHtml = (r) => {
+					const country = (r.country || r.location || '').trim();
+					if (!country) return '&nbsp;';
+					return `<span class="truncate">${escapeHtml(country)}</span>`;
+				};
+
+				const pageCount = Math.max(1, Math.ceil(reviews.length / perPage));
 				let pageIndex = 0;
 				let timeoutId = null;
 
@@ -5208,25 +5280,24 @@
 						page.dataset.carouselPage = '1';
 						page.className = 'flex-none w-full grid grid-cols-3 gap-6 p-6';
 
-						const pageItems = padded.slice(p * perPage, p * perPage + perPage);
+						const pageItems = reviews.slice(p * perPage, p * perPage + perPage);
 						for (const r of pageItems) {
 							const card = document.createElement('article');
 							card.className =
 								'rounded-2xl border border-stone-200/60 bg-white/70 p-6 shadow-soft backdrop-blur-sm min-h-[250px] flex flex-col';
 
-							const name = escapeHtml(r.name);
-							const location = escapeHtml(r.location);
+							const nameLine = reviewerLineHtml(r);
 							const quote = escapeHtml(r.quote);
-							const locationText = location ? `— ${location}` : '';
+							const locationHtml = countryFooterHtml(r);
 
 							card.innerHTML = `
 								<div class="flex items-start justify-between gap-4">
 									<p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">5 Star Ratings</p>
 									<p class="text-[12px] leading-none text-accent" aria-label="5 Star Ratings">★★★★★</p>
 								</div>
-								<p class="mt-3 text-sm font-semibold text-ink font-display">${name}</p>
+								<p class="mt-3 text-sm">${nameLine}</p>
 								<p class="mt-3 text-sm text-ink/90 leading-relaxed">${quote}</p>
-								<p class="mt-auto pt-4 text-xs text-muted font-mono">${locationText}</p>
+								<p class="mt-auto pt-4 text-xs text-muted font-mono">${locationHtml}</p>
 							`;
 
 							page.appendChild(card);
