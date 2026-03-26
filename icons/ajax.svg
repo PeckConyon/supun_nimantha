@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="ajaxTitle ajaxDesc">
+  <title id="ajaxTitle">AJAX</title>
+  <desc id="ajaxDesc">AJAX icon with async arrows</desc>
+  <defs>
+    <linearGradient id="ajaxGrad" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a6b5c"/>
+      <stop offset="1" stop-color="#b8952e"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="#f6f3ec" stroke="url(#ajaxGrad)" stroke-width="2"/>
+  <path d="M20 25c2-5 6.8-8 12-8 4.4 0 8.5 2.1 11 5.6" fill="none" stroke="url(#ajaxGrad)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M42 17l2 6-6-2" fill="none" stroke="url(#ajaxGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M44 39c-2 5-6.8 8-12 8-4.4 0-8.5-2.1-11-5.6" fill="none" stroke="url(#ajaxGrad)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M22 47l-2-6 6 2" fill="none" stroke="url(#ajaxGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="32" y="37" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a6b5c">AJAX</text>
+</svg>
