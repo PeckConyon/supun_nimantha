@@ -646,11 +646,13 @@
 				outline-offset: 3px;
 			}
 
-			/* Profile avatar strip (6 on desktop; 2 on narrow screens) */
+			/* Profile avatar strip: --per-page must NOT be set inline (would override media query). */
 			.profile-avatar-carousel {
 				--avatar-size: 140px;
 				--avatar-gap: 14px;
-				--per-page: 6;
+				--per-page-desktop: 6;
+				--per-page-mobile: 2;
+				--per-page: var(--per-page-desktop);
 				display: grid;
 				/* minmax(0,1fr) lets the center column shrink so the strip never forces page overflow */
 				grid-template-columns: 52px minmax(0, 1fr) 52px;
@@ -677,10 +679,13 @@
 				will-change: transform;
 				gap: var(--avatar-gap);
 				flex-direction: row !important;
+				width: max-content;
 			}
 			.profile-avatar-carousel .profile-avatar-tile {
 				width: var(--avatar-size);
+				min-width: var(--avatar-size);
 				height: var(--avatar-size);
+				flex: 0 0 var(--avatar-size);
 				padding: 0;
 				margin: 0;
 				background: transparent;
@@ -709,12 +714,12 @@
 				color: #1a6b5c;
 			}
 
-			/* Phone / small tablet: show 2 avatars so each stays large enough (JS sets --per-page to match) */
-			@media (max-width: 768px) {
+			/* Tablet / phone: 2 visible (keep breakpoint in sync with data-mobile-max-width on #profile-avatar-carousel) */
+			@media (max-width: 1024px) {
 				.profile-avatar-carousel {
+					--per-page: var(--per-page-mobile);
 					--avatar-size: 136px;
 					--avatar-gap: 12px;
-					--per-page: 2;
 					grid-template-columns: 46px minmax(0, 1fr) 46px;
 				}
 			}
@@ -1199,6 +1204,9 @@
 							id="profile-avatar-carousel"
 							class="profile-avatar-carousel relative z-20"
 							aria-label="Profile image carousel"
+							data-per-page-desktop="6"
+							data-per-page-mobile="2"
+							data-mobile-max-width="1024"
 						>
 							<button
 								type="button"
@@ -5647,8 +5655,13 @@
 				let hoverOpenTimer = null;
 
 				let index = 0;
-				const mqAvatarMobile = window.matchMedia('(max-width: 768px)');
-				const getAvatarPerPage = () => (mqAvatarMobile.matches ? 2 : 6);
+				const perPageDesktop = Number(carouselEl.getAttribute('data-per-page-desktop')) || 6;
+				const perPageMobile = Number(carouselEl.getAttribute('data-per-page-mobile')) || 2;
+				const mobileMaxWidth = Number(carouselEl.getAttribute('data-mobile-max-width')) || 1024;
+				carouselEl.style.setProperty('--per-page-desktop', String(perPageDesktop));
+				carouselEl.style.setProperty('--per-page-mobile', String(perPageMobile));
+				const mqAvatarMobile = window.matchMedia(`(max-width: ${mobileMaxWidth}px)`);
+				const getAvatarPerPage = () => (mqAvatarMobile.matches ? perPageMobile : perPageDesktop);
 				let perPage = getAvatarPerPage();
 				let sources = [];
 				let maxIndex = 0;
@@ -5847,7 +5860,6 @@
 					const extCandidates = ['png', 'jpg', 'jpeg', 'webp'];
 					const totalSlots = 9;
 					perPage = getAvatarPerPage();
-					carouselEl.style.setProperty('--per-page', String(perPage));
 
 					const resolved = [];
 					for (let i = 1; i <= totalSlots; i++) {
@@ -5915,7 +5927,6 @@
 					const next = getAvatarPerPage();
 					if (next !== perPage) {
 						perPage = next;
-						carouselEl.style.setProperty('--per-page', String(perPage));
 						maxIndex = Math.max(0, sources.length - perPage);
 						index = Math.min(index, maxIndex);
 					}
