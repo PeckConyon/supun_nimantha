@@ -433,7 +433,8 @@
 			}
 			.edu-extra-trigger:hover + .edu-extra-menu,
 			.edu-extra-menu:hover,
-			.edu-extra-trigger:focus + .edu-extra-menu {
+			.edu-extra-trigger:focus + .edu-extra-menu,
+			.edu-extra:focus-within .edu-extra-menu {
 				opacity: 1;
 				transform: translateX(-50%) scale(1) translateY(0);
 				pointer-events: auto;
@@ -470,7 +471,8 @@
 			}
 			.edu-extra-trigger:hover + .edu-extra-menu .edu-extra-connector,
 			.edu-extra-menu:hover .edu-extra-connector,
-			.edu-extra-trigger:focus + .edu-extra-menu .edu-extra-connector {
+			.edu-extra-trigger:focus + .edu-extra-menu .edu-extra-connector,
+			.edu-extra:focus-within .edu-extra-menu .edu-extra-connector {
 				height: var(--radius);
 				opacity: 1;
 			}
@@ -501,7 +503,8 @@
 			}
 			.edu-extra-trigger:hover + .edu-extra-menu .edu-extra-node,
 			.edu-extra-menu:hover .edu-extra-node,
-			.edu-extra-trigger:focus + .edu-extra-menu .edu-extra-node {
+			.edu-extra-trigger:focus + .edu-extra-menu .edu-extra-node,
+			.edu-extra:focus-within .edu-extra-menu .edu-extra-node {
 				opacity: 1;
 				transform: translate(-50%, -50%)
 					rotate(var(--angle))
@@ -536,14 +539,67 @@
 			}
 			@media (max-width: 640px) {
 				.edu-extra-menu {
-					width: 16rem;
-					height: 10.25rem;
-					--radius: 4.95rem;
-					--node-size: 2.75rem;
+					position: static;
+					display: none;
+					width: 100%;
+					height: auto;
+					margin-top: 0.85rem;
+					transform: none;
+					opacity: 1;
+					pointer-events: auto;
+				}
+				.edu-extra-trigger:hover + .edu-extra-menu,
+				.edu-extra-menu:hover,
+				.edu-extra-trigger:focus + .edu-extra-menu,
+				.edu-extra:focus-within .edu-extra-menu {
+					display: block;
+					transform: none;
 				}
 				.edu-extra-center {
-					width: 2.25rem;
-					height: 2.25rem;
+					display: none;
+				}
+				.edu-extra-items {
+					position: static;
+					display: flex;
+					flex-wrap: wrap;
+					gap: 0.65rem;
+					align-items: flex-start;
+				}
+				.edu-extra-connector {
+					display: none;
+				}
+				.edu-extra-node {
+					position: relative;
+					left: auto;
+					top: auto;
+					width: auto;
+					height: auto;
+					min-height: 2.75rem;
+					padding: 0.55rem 0.85rem;
+					gap: 0.45rem;
+					transform: none;
+					opacity: 1;
+					justify-content: flex-start;
+				}
+				.edu-extra-trigger:hover + .edu-extra-menu .edu-extra-node,
+				.edu-extra-menu:hover .edu-extra-node,
+				.edu-extra-trigger:focus + .edu-extra-menu .edu-extra-node,
+				.edu-extra:focus-within .edu-extra-menu .edu-extra-node {
+					transform: none;
+				}
+				.edu-extra-node::after {
+					content: attr(aria-label);
+					font-size: 0.82rem;
+					font-weight: 500;
+					line-height: 1.2;
+					color: #2d3340;
+					text-transform: capitalize;
+				}
+				.edu-extra-node .edu-extra-emoji {
+					font-size: 1.15rem;
+				}
+				.edu-extra-tooltip {
+					display: none;
 				}
 			}
 			@media (max-width: 640px) {
