@@ -3271,11 +3271,11 @@
 									<div class="flex h-[96px] w-[96px] items-center justify-center rounded-full border border-white/20 bg-white/10 p-2 shadow-soft">
 										<img
 											id="business-card-avatar"
-											src="./images/user/photo1.png"
+											src="./images/user/photo2.jpeg"
 											alt="ID image"
 											class="h-full w-full rounded-full object-cover"
 											loading="lazy"
-											onerror="this.onerror=null;this.src='./images/user/photo1.png';"
+											onerror="this.onerror=null;this.src='./images/user/photo2.jpeg';"
 										/>
 									</div>
 								</div>
@@ -4869,7 +4869,7 @@
 							if (window.html2canvas && previewEl && jsPDFCtor) {
 								const avatarEl = document.getElementById('business-card-avatar');
 								// Ensure the avatar is fully loaded before html2canvas snapshots the preview.
-								// This matters because the <img> can fail and then swap to `images/user/photo1.png`.
+								// This matters because the <img> can fail and then swap to `images/user/photo2.jpeg`.
 								await waitForImageWithNaturalSize(avatarEl);
 
 								// html2canvas can sometimes omit <img> pixels depending on how the page is served.
@@ -4912,13 +4912,13 @@
 							// Always embed whatever the on-page avatar actually loaded.
 							const avatarEl = document.getElementById('business-card-avatar');
 							await waitForImageWithNaturalSize(avatarEl);
-								const avatarSrc = avatarEl ? avatarEl.currentSrc || avatarEl.src : './images/user/photo1.png';
+							const avatarSrc = avatarEl ? avatarEl.currentSrc || avatarEl.src : './images/user/photo2.jpeg';
 								// Prefer converting the already-loaded <img> element into a base64 data URL.
 								const avatarDataUrlFromElement = await imageElementToDataUrl(avatarEl);
 								const avatarDataUrl =
 									avatarDataUrlFromElement ||
 									(await urlToDataUrl(avatarSrc)) ||
-										(await urlToDataUrl('./images/user/photo1.png'));
+										(await urlToDataUrl('./images/user/photo2.jpeg'));
 							const { techIcons, qrDataUrl } = await businessCardAssetsPromise;
 							const svg = buildCardSvg({ avatarDataUrl, techIcons, qrDataUrl });
 
