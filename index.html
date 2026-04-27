@@ -43,9 +43,10 @@
 		<style>
 			html {
 				scroll-padding-top: 6.5rem;
-				overflow-x: clip;
 			}
+			/* Clip on body (not html) so fixed UI like scroll-to-top isn’t clipped / mis-positioned on mobile Safari */
 			body {
+				overflow-x: clip;
 				background-color: #f6f3ec;
 				background-image: radial-gradient(ellipse 120% 90% at 50% -30%, rgba(26, 107, 92, 0.09), transparent 52%),
 					radial-gradient(ellipse 70% 50% at 100% 20%, rgba(184, 149, 46, 0.06), transparent 50%),
@@ -53,9 +54,9 @@
 			}
 			.scroll-top-btn {
 				position: fixed;
-				right: 1.5rem;
-				bottom: 1.5rem;
-				z-index: 60;
+				right: max(1rem, env(safe-area-inset-right, 0px));
+				bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+				z-index: 90;
 				display: inline-flex;
 				align-items: center;
 				justify-content: center;
@@ -92,8 +93,9 @@
 			}
 			@media (max-width: 640px) {
 				.scroll-top-btn {
-					right: 1rem;
-					bottom: 1rem;
+					right: max(0.75rem, env(safe-area-inset-right, 0px));
+					/* Clear iOS/Android bottom chrome + home indicator so the control stays in the visual viewport */
+					bottom: max(5.25rem, calc(1rem + env(safe-area-inset-bottom, 0px) + 2.75rem));
 					width: 3rem;
 					height: 3rem;
 				}
@@ -1437,19 +1439,29 @@
 							rel="noopener noreferrer"
 							class="font-medium inline-flex items-center gap-2 text-accent underline decoration-accent/30 underline-offset-4 transition hover:decoration-accent"
 						>
-							<!-- Fiverr icon -->
+							<!-- Fiverr link: custom "fi" in circle (generic mark) -->
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 24 24"
 								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="h-4 w-4"
+								class="h-4 w-4 shrink-0"
 								aria-hidden="true"
+								role="img"
 							>
-								<path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z" />
+								<circle cx="12" cy="12" r="8.85" stroke="currentColor" stroke-width="1.65" />
+								<text
+									x="12"
+									y="12"
+									dominant-baseline="central"
+									text-anchor="middle"
+									fill="currentColor"
+									font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif"
+									font-size="12.75"
+									font-weight="800"
+									letter-spacing="-0.08em"
+								>
+									fi
+								</text>
 							</svg>
 							Fiverr
 						</a>
@@ -1534,7 +1546,7 @@
 					</h2>
 					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
 				</div>
-				<div class="space-y-5 text-[17px] leading-relaxed text-muted max-w-3xl">
+				<div class="w-full space-y-5 text-[17px] leading-relaxed text-muted">
 					<p class="text-justify">
 						I’m a full-stack software engineer with over 10 years of experience designing and delivering scalable, high-performance applications across web, mobile, and cloud environments. My expertise spans modern frontend technologies such as React, Next.js, and React Native, along with backend development in .NET and Python/Django, covering API design, data pipelines, and system architecture.
 
@@ -3220,19 +3232,29 @@ I take pride in seeing things through to completion. If I commit to something, I
 							</div>
 							<div>
 								<dt class="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
-									<!-- Fiverr icon -->
+									<!-- Fiverr link: custom "fi" in circle (generic mark) -->
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
 										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										class="h-4 w-4"
+										class="h-4 w-4 shrink-0"
 										aria-hidden="true"
+										role="img"
 									>
-										<path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z" />
+										<circle cx="12" cy="12" r="8.85" stroke="currentColor" stroke-width="1.65" />
+										<text
+											x="12"
+											y="12"
+											dominant-baseline="central"
+											text-anchor="middle"
+											fill="currentColor"
+											font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif"
+											font-size="12.75"
+											font-weight="800"
+											letter-spacing="-0.08em"
+										>
+											fi
+										</text>
 									</svg>
 									Fiverr
 								</dt>
@@ -6201,15 +6223,39 @@ I take pride in seeing things through to completion. If I commit to something, I
 				const scrollTopBtn = document.getElementById('scroll-to-top');
 				if (!scrollTopBtn) return;
 
+				const getScrollY = () => {
+					const root = document.scrollingElement ?? document.documentElement;
+					const y = root?.scrollTop;
+					if (typeof y === 'number' && !Number.isNaN(y)) return y;
+					return window.pageYOffset || window.scrollY || 0;
+				};
+
+				const showThreshold = () =>
+					window.matchMedia('(max-width: 640px)').matches ? 220 : 360;
+
 				const toggleScrollTopBtn = () => {
-					scrollTopBtn.classList.toggle('is-visible', window.scrollY > 360);
+					scrollTopBtn.classList.toggle('is-visible', getScrollY() > showThreshold());
 				};
 
 				scrollTopBtn.addEventListener('click', () => {
 					window.scrollTo({ top: 0, behavior: 'smooth' });
 				});
 
-				window.addEventListener('scroll', toggleScrollTopBtn, { passive: true });
+				let scrollRaf = 0;
+				const onScrollOrResize = () => {
+					if (scrollRaf) return;
+					scrollRaf = requestAnimationFrame(() => {
+						scrollRaf = 0;
+						toggleScrollTopBtn();
+					});
+				};
+
+				window.addEventListener('scroll', onScrollOrResize, { passive: true });
+				window.addEventListener('resize', onScrollOrResize, { passive: true });
+				if (window.visualViewport) {
+					window.visualViewport.addEventListener('scroll', onScrollOrResize, { passive: true });
+					window.visualViewport.addEventListener('resize', onScrollOrResize, { passive: true });
+				}
 				toggleScrollTopBtn();
 			})();
 		</script>
