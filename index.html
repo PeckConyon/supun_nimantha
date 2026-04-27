@@ -352,40 +352,17 @@
 				height: 0.55rem;
 				bottom: -0.98rem;
 			}
-			/* Skills & Attributes — filled panel (avoids a “blank” strip under the heading) */
+			/* Skills & Attributes — same base treatment as body for a consistent “paper” field */
 			.attributes-board {
 				position: relative;
 				overflow: hidden;
 				border-radius: 1.25rem;
 				border: 1px solid rgba(231, 220, 205, 0.9);
 				box-shadow: 0 4px 28px -6px rgba(18, 21, 28, 0.1);
-				background:
-					radial-gradient(ellipse 95% 75% at 0% -10%, rgba(26, 107, 92, 0.13), transparent 58%),
-					radial-gradient(ellipse 75% 60% at 100% 110%, rgba(184, 149, 46, 0.09), transparent 52%),
-					linear-gradient(165deg, rgba(255, 255, 255, 0.94) 0%, rgba(246, 243, 236, 0.9) 100%);
-			}
-			.attributes-board::before {
-				content: "";
-				position: absolute;
-				inset: 0;
-				background-image: url("data:image/svg+xml,%3Csvg width='72' height='72' viewBox='0 0 72 72' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231a6b5c' fill-opacity='0.055' d='M0 0h36v36H0V0zm36 36h36v36H36V36z'/%3E%3C/svg%3E");
-				opacity: 0.9;
-				pointer-events: none;
-			}
-			.attributes-board::after {
-				content: "";
-				position: absolute;
-				inset: -1px;
-				border-radius: inherit;
-				background: linear-gradient(
-					125deg,
-					rgba(26, 107, 92, 0.06) 0%,
-					transparent 35%,
-					transparent 65%,
-					rgba(184, 149, 46, 0.05) 100%
-				);
-				pointer-events: none;
-				mix-blend-mode: multiply;
+				background-color: #f6f3ec;
+				background-image: radial-gradient(ellipse 120% 90% at 50% -30%, rgba(26, 107, 92, 0.09), transparent 52%),
+					radial-gradient(ellipse 70% 50% at 100% 20%, rgba(184, 149, 46, 0.06), transparent 50%),
+					url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
 			}
 			.attributes-board__inner {
 				position: relative;
@@ -1260,107 +1237,6 @@
 				class="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-b-[2.5rem] bg-gradient-to-b from-white/50 to-transparent"
 			></div>
 			<div class="mx-auto grid max-w-5xl items-center gap-8 md:gap-16 md:text-left hero-enter">
-				<div class="flex justify-center md:justify-center order-2 mt-3 md:mt-0 w-full">
-					<div class="relative">
-						<div
-							class="absolute -inset-1 rounded-full bg-gradient-to-br from-accent/30 via-gold/20 to-accent/10 blur-sm z-10"
-						></div>
-						<div
-							id="profile-avatar-carousel"
-							class="profile-avatar-carousel relative z-20"
-							aria-label="Profile image carousel"
-							data-per-page-desktop="6"
-							data-per-page-mobile="2"
-							data-mobile-max-width="1024"
-						>
-							<button
-								type="button"
-								data-profile-avatar-prev
-								aria-label="Previous profile images"
-								class="profile-avatar-nav"
-							>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-									<path d="M15 18l-6-6 6-6" />
-								</svg>
-							</button>
-
-							<div class="profile-avatar-viewport" data-profile-avatar-viewport>
-								<div
-									id="profile-avatar-track"
-									class="profile-avatar-track relative flex transition-transform duration-700 ease-out"
-									style="transform: translateX(0px)"
-								>
-									<!-- JS will replace these placeholders once it resolves your images in ./images/user/ -->
-									<button
-										type="button"
-										class="profile-avatar-tile"
-										data-avatar-thumb
-										data-avatar-src="./images/user/profile.png"
-										aria-label="Profile image 1"
-									>
-										<img
-											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
-											src="./images/user/profile.png"
-											alt="Profile image 1"
-											width="140"
-											height="140"
-											loading="eager"
-											decoding="async"
-											onerror="this.onerror=null;this.src='./images/user/profile.png';"
-										/>
-									</button>
-									<button
-										type="button"
-										class="profile-avatar-tile"
-										data-avatar-thumb
-										data-avatar-src="./images/user/profile.png"
-										aria-label="Profile image 2"
-									>
-										<img
-											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
-											src="./images/user/profile.png"
-											alt="Profile image 2"
-											width="140"
-											height="140"
-											loading="eager"
-											decoding="async"
-											onerror="this.onerror=null;this.src='./images/user/profile.png';"
-										/>
-									</button>
-									<button
-										type="button"
-										class="profile-avatar-tile"
-										data-avatar-thumb
-										data-avatar-src="./images/user/profile.png"
-										aria-label="Profile image 3"
-									>
-										<img
-											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
-											src="./images/user/profile.png"
-											alt="Profile image 3"
-											width="140"
-											height="140"
-											loading="eager"
-											decoding="async"
-											onerror="this.onerror=null;this.src='./images/user/profile.png';"
-										/>
-									</button>
-								</div>
-							</div>
-
-							<button
-								type="button"
-								data-profile-avatar-next
-								aria-label="Next profile images"
-								class="profile-avatar-nav"
-							>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-									<path d="M9 18l6-6-6-6" />
-								</svg>
-							</button>
-						</div>
-					</div>
-				</div>
 				<div
 					class="hero-text-panel order-1 text-center md:text-left rounded-2xl border border-stone-200/70 bg-white/50 p-8 backdrop-blur-sm"
 				>
@@ -2583,9 +2459,9 @@
 						<button
 							type="button"
 							class="mt-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-[#155a4e] hover:border-accent/45 focus:outline-none focus:ring-2 focus:ring-accent/40"
-							data-education-pdf="./education/msc/msc_results.pdf"
-							data-education-title="MSc Transcript"
-							data-education-meta="Viewing: MSc Transcript"
+							data-education-pdfs='["./education/msc/MSE_SW_Eng_Transcript.pdf","./education/msc/MSE_SW_Eng_Degree_Certificate.pdf","./education/msc/MSE_SW_Eng_NZQCF_Certificate.pdf","./education/msc/All_Assignment_Results_Black_Board_MSE_SW_Eng.pdf"]'
+							data-education-title="MSc documents"
+							data-education-meta="Viewing: Master of Software Engineering"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
 								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -2594,7 +2470,7 @@
 								<line x1="16" y1="17" x2="8" y2="17"></line>
 								<line x1="10" y1="9" x2="8" y2="9"></line>
 							</svg>
-							<span>View MSc Transcript</span>
+							<span>View MSc documents</span>
 						</button>
 
 						<div class="edu-extra">
@@ -2856,6 +2732,130 @@
 							<img src="./hobbies/teaching.png" alt="" loading="lazy" />
 						</div>
 					</div>
+				</div>
+
+				<div class="mt-12">
+				<div class="mb-8 sm:text-left text-center">
+					<h2 class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="h-5 w-5 text-accent/90 flex-shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M23 7l-7 5 7 5V7z"></path>
+							<rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+						</svg>
+						<span>Beyond Work</span>
+					</h2>
+					<div class="mx-auto mt-3 h-px w-12 bg-gradient-to-r from-accent to-transparent sm:mx-0"></div>
+				</div>
+				<div class="mx-auto max-w-6xl">
+					<div class="relative">
+						<div
+							class="absolute -inset-1 rounded-full bg-gradient-to-br from-accent/30 via-gold/20 to-accent/10 blur-sm z-10"
+						></div>
+						<div
+							id="profile-avatar-carousel"
+							class="profile-avatar-carousel relative z-20"
+							aria-label="Profile image carousel"
+							data-per-page-desktop="6"
+							data-per-page-mobile="2"
+							data-mobile-max-width="1024"
+						>
+							<button
+								type="button"
+								data-profile-avatar-prev
+								aria-label="Previous profile images"
+								class="profile-avatar-nav"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+									<path d="M15 18l-6-6 6-6" />
+								</svg>
+							</button>
+
+							<div class="profile-avatar-viewport" data-profile-avatar-viewport>
+								<div
+									id="profile-avatar-track"
+									class="profile-avatar-track relative flex transition-transform duration-700 ease-out"
+									style="transform: translateX(0px)"
+								>
+									<!-- JS will replace these placeholders once it resolves your images in ./images/user/ -->
+									<button
+										type="button"
+										class="profile-avatar-tile"
+										data-avatar-thumb
+										data-avatar-src="./images/user/profile.png"
+										aria-label="Profile image 1"
+									>
+										<img
+											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
+											src="./images/user/profile.png"
+											alt="Profile image 1"
+											width="140"
+											height="140"
+											loading="eager"
+											decoding="async"
+											onerror="this.onerror=null;this.src='./images/user/profile.png';"
+										/>
+									</button>
+									<button
+										type="button"
+										class="profile-avatar-tile"
+										data-avatar-thumb
+										data-avatar-src="./images/user/profile.png"
+										aria-label="Profile image 2"
+									>
+										<img
+											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
+											src="./images/user/profile.png"
+											alt="Profile image 2"
+											width="140"
+											height="140"
+											loading="eager"
+											decoding="async"
+											onerror="this.onerror=null;this.src='./images/user/profile.png';"
+										/>
+									</button>
+									<button
+										type="button"
+										class="profile-avatar-tile"
+										data-avatar-thumb
+										data-avatar-src="./images/user/profile.png"
+										aria-label="Profile image 3"
+									>
+										<img
+											class="profile-avatar-img h-full w-full rounded-full border-[3px] border-white object-cover shadow-lift"
+											src="./images/user/profile.png"
+											alt="Profile image 3"
+											width="140"
+											height="140"
+											loading="eager"
+											decoding="async"
+											onerror="this.onerror=null;this.src='./images/user/profile.png';"
+										/>
+									</button>
+								</div>
+							</div>
+
+							<button
+								type="button"
+								data-profile-avatar-next
+								aria-label="Next profile images"
+								class="profile-avatar-nav"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+									<path d="M9 18l6-6-6-6" />
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
 				</div>
 			</section>
 
@@ -4050,17 +4050,33 @@
 				});
 
 				// Education + certifications: open PDFs in the same viewer.
-				document.querySelectorAll('#education button[data-education-pdf], #certifications button[data-education-pdf]').forEach((btn) => {
-					const pdfPath = btn.dataset.educationPdf;
-					if (!pdfPath) return;
+				// Use `data-education-pdfs` (JSON array of paths) for multiple files, or `data-education-pdf` for one.
+				document
+					.querySelectorAll(
+						'#education button[data-education-pdf], #education button[data-education-pdfs], #certifications button[data-education-pdf]'
+					)
+					.forEach((btn) => {
+						const listRaw = btn.dataset.educationPdfs;
+						let paths = [];
+						if (listRaw) {
+							try {
+								const parsed = JSON.parse(listRaw);
+								if (Array.isArray(parsed)) paths = parsed.filter(Boolean);
+							} catch {
+								paths = [];
+							}
+						}
+						const single = btn.dataset.educationPdf;
+						if (!paths.length && single) paths = [single];
+						if (!paths.length) return;
 
-					btn.addEventListener('click', () => {
-						openPdfList([pdfPath], {
-							title: btn.dataset.educationTitle || 'Document',
-							metaText: btn.dataset.educationMeta || 'Viewing document',
+						btn.addEventListener('click', () => {
+							openPdfList(paths, {
+								title: btn.dataset.educationTitle || 'Document',
+								metaText: btn.dataset.educationMeta || 'Viewing document',
+							});
 						});
 					});
-				});
 
 				const edu = document.getElementById('education');
 
