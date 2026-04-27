@@ -112,33 +112,57 @@
 			.hero-text-panel {
 				position: relative;
 				overflow: hidden;
+				background-image: none;
 			}
 			.hero-text-panel::before {
 				content: "";
 				position: absolute;
 				inset: 0;
-				background-image: url("./images/maori-coding-tattoo.svg");
-				background-size: cover;
-				background-position: 50% 20%;
-				opacity: 0.22;
-				transform: scale(1.03);
-				z-index: 0;
+				background: linear-gradient(
+					to right,
+					rgba(255, 255, 255, 0) 0%,
+					rgba(255, 255, 255, 0.08) 34%,
+					rgba(255, 255, 255, 0.55) 52%,
+					rgba(255, 255, 255, 0.9) 68%,
+					rgba(255, 255, 255, 0.97) 100%
+				);
+				z-index: 1;
 				pointer-events: none;
 			}
 			.hero-text-panel::after {
 				content: "";
 				position: absolute;
-				inset: 0;
-				background-image: url("./images/sl_nz.png");
-				background-size: cover;
-				background-position: 0% 90%;
+				inset: 0 auto 0 0;
+				width: clamp(14rem, 30%, 19rem);
+				background-image: url("./profile_image_1.jpeg");
 				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
 				z-index: 0;
 				pointer-events: none;
 			}
-			.hero-text-panel > * {
-				position: relative;
+			.hero-kiwi-art {
+				position: absolute;
+				right: clamp(2.2rem, 7vw, 5.5rem);
+				bottom: clamp(10.8rem, 8%, 3rem);
+				width: clamp(15rem, 24vw, 19rem);
+				opacity: 0.34;
+				pointer-events: none;
 				z-index: 1;
+			}
+			.hero-kiwi-art img {
+				display: block;
+				width: 100%;
+				height: auto;
+			}
+			@media (min-width: 900px) {
+				.hero-text-panel {
+					padding-left: calc(clamp(14rem, 30%, 19rem) + 2rem) !important;
+				}
+			}
+			.hero-text-panel > *:not(.hero-kiwi-art) {
+				position: relative;
+				z-index: 2;
 			}
 			.nav-link {
 				position: relative;
@@ -774,18 +798,24 @@
 				#top {
 					padding-left: 0.75rem;
 					padding-right: 0.75rem;
+					padding-top: 0;
 				}
 				.hero-text-panel {
 					max-width: 100%;
 					min-width: 0;
+					background-image: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55)),
+						url("./kiwi_lion.png");
+					background-repeat: no-repeat, no-repeat;
+					background-size: 88% auto, 88% auto;
+					background-position: center center, center center;
 					padding: 1.25rem !important;
 					box-sizing: border-box;
 				}
 				.hero-text-panel::after {
-					background-size: 210% auto;
-					background-position: 108% 27%;
-					filter: blur(1.75px);
-					opacity: 0.3;
+					display: none;
+				}
+				.hero-kiwi-art {
+					display: none;
 				}
 				.hero-text-panel .mt-5.flex {
 					gap: 0.5rem 0.75rem;
@@ -1231,26 +1261,37 @@
 
 		<header
 			id="top"
-			class="relative mx-auto w-full max-w-7xl scroll-mt-24 border-b border-stone-200/60 px-4 pb-20 pt-16 sm:px-6 lg:px-8"
+			class="relative mx-auto w-full max-w-7xl scroll-mt-24 border-b border-stone-200/60 px-4 pb-4 pt-16 sm:px-6 lg:px-8"
 		>
 			<div
 				class="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-b-[2.5rem] bg-gradient-to-b from-white/50 to-transparent"
 			></div>
 			<div class="mx-auto grid max-w-5xl items-center gap-8 md:gap-16 md:text-left hero-enter">
+				<div class="md:hidden order-0">
+					<img
+						src="./profile_image_1.jpeg"
+						alt="Supun Nimantha profile"
+						class="w-full max-h-[72vh] rounded-2xl border border-stone-200/70 object-cover shadow-soft"
+						loading="eager"
+						decoding="async"
+					/>
+				</div>
 				<div
 					class="hero-text-panel order-1 text-center md:text-left rounded-2xl border border-stone-200/70 bg-white/50 p-8 backdrop-blur-sm"
 				>
-					<p
-						class="mb-1 inline-flex items-center flex-wrap gap-x-4 gap-y-2 font-display text-lg font-semibold uppercase tracking-[0.35em] text-accent sm:text-xl"
-					>
-						<span>Full-Stack Software Engineer</span>
-						<span class="font-mono text-sm font-semibold uppercase tracking-[0.12em] text-muted">
-							(.Net / React / NextJs / Mobile)
-						</span>
+					<div class="hero-kiwi-art" aria-hidden="true">
+						<img src="./kiwi_lion.png" alt="" loading="lazy" />
+					</div>
+					<p class="mb-1 font-display text-lg font-semibold uppercase tracking-[0.35em] text-accent sm:text-xl">
+						Full-Stack Software Engineer
+					</p>
+					<p class="mt-1 font-mono text-sm font-semibold uppercase tracking-[0.12em] text-muted">
+						(.Net / React / NextJs / Mobile)
 					</p>
 					<h1 class="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-[3.25rem] lg:leading-[1.1]">
 						Supun Nimantha
 					</h1>
+				
 					<p class="mt-3 flex items-start justify-center gap-2 font-light text-muted md:justify-start">
 						<!-- Location icon -->
 						<svg
