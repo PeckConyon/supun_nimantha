@@ -620,6 +620,13 @@
 				height: 1.9rem !important;
 				max-width: 5.5rem;
 			}
+			/* Wide raster logos (e.g. Hot Chocolate mug) — keep pill height, preserve aspect ratio */
+			.pill-tech.pill-tech--wide-icon img {
+				width: auto !important;
+				height: 2.25rem !important;
+				max-width: 3.35rem;
+				object-fit: contain;
+			}
 			.pill-tech svg {
 				width: 2.25rem !important;
 				height: 2.25rem !important;
@@ -1656,7 +1663,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 							<li>Conducted code reviews, wrote unit tests, and facilitated knowledge-sharing.</li>
 							<li>Delivered product demos, led technical interviews, and organized events.</li>
 						</ul>
-						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC Core, WEB API, React, Zustand, Next.js, Tailwind, Dapper, SQL Server, Stored Procs, Unit Testing, T4 Templates, GraphQL, OpenAI, jQWidgets, Gulp, LESS, Bootstrap, AMCharts, AG Grid, Agile, Jira Scrum</p>
+						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC Core, WEB API, React, Zustand, Next.js, Tailwind, Dapper, SQL Server, SQL Toolbelt, Stored Procs, Unit Testing, T4 Templates, GraphQL, OpenAI, jQWidgets, Gulp, LESS, Bootstrap, AMCharts, AG Grid, Agile, Jira Scrum</p>
 					</article>
 
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
@@ -4557,10 +4564,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 					if (t.includes('swagger')) return './icons/swagger.svg';
 					if (t.includes('unit testing')) return './icons/unit-testing.svg';
 					if (t === 'tdd' || t.includes('tdd')) return './icons/tdd.svg';
-					if (t.includes('hotchocklate'))
-						return 'https://camo.githubusercontent.com/624439a8a8fad8c486f117670962a99a993bd031190724bcc35fcd71f9e9f024/68747470733a2f2f6368696c6c69637265616d2e636f6d2f696d672f70726f6a656374732f686f7463686f636f6c6174652d62616e6e65722e737667';
-					if (t.includes('hotchocolate'))
-						return 'https://camo.githubusercontent.com/624439a8a8fad8c486f117670962a99a993bd031190724bcc35fcd71f9e9f024/68747470733a2f2f6368696c6c69637265616d2e636f6d2f696d672f70726f6a656374732f686f7463686f636f6c6174652d62616e6e65722e737667';
+					if (t.includes('hotchocklate') || t.includes('hotchocolate')) return './icons/hotchocolate.png';
 					if (t.includes('graphql')) return 'graphql';
 					if (t.includes('asp.net')) return 'dotnet';
 					if (t.includes('winforms') || t.includes('windows forms')) return 'dotnet';
@@ -4601,18 +4605,15 @@ I take pride in seeing things through to completion. If I commit to something, I
 						const label = (pill.textContent || '').trim();
 						const lower = label.toLowerCase();
 
-						// Custom icon for HotChocolate + Banana Cake Pop using the provided SVG symbol.
+						// Custom icon for HotChocolate + Banana Cake Pop (local assets; external HotChocolate URLs break often).
 						if (lower === 'hotchocolate' || lower === 'banana cake pop') {
 						const img = document.createElement('img');
 						img.alt = label;
 						img.loading = 'lazy';
-						img.className = 'h-9 w-9 flex-shrink-0';
-
 						if (lower === 'hotchocolate') {
-							img.src =
-								'https://camo.githubusercontent.com/624439a8a8fad8c486f117670962a99a993bd031190724bcc35fcd71f9e9f024/68747470733a2f2f6368696c6c69637265616d2e636f6d2f696d672f70726f6a656374732f686f7463686f636f6c6174652d62616e6e65722e737667';
+							pill.classList.add('pill-tech--wide-icon');
+							img.src = './icons/hotchocolate.png';
 						} else {
-							// Banana Cake Pop uses your locally cached banana cake avatar.
 							img.src = './icons/bananacake.png';
 						}
 
