@@ -2158,10 +2158,13 @@ I take pride in seeing things through to completion. If I commit to something, I
 						<div class="flex flex-wrap gap-2">
 							<span class="pill-tech">Cursor</span>
 							<span class="pill-tech">Copilot</span>
+							<span class="pill-tech">Claude Code</span>
 							<span class="pill-tech">Agentic AI</span>
 							<span class="pill-tech">Prompt Engineering</span>
 							<span class="pill-tech">Agent Configuring</span>
 							<span class="pill-tech">OpenAI</span>
+							<span class="pill-tech">Microsoft Agent Framework</span>
+							<span class="pill-tech">Azure AI Foundry</span>
 						</div>
 					</div>
 
@@ -4519,6 +4522,9 @@ I take pride in seeing things through to completion. If I commit to something, I
 					if (t.includes('selenium')) return 'selenium';
 					if (t.includes('openai')) return './icons/openai.svg';
 					if (t === 'cursor' || t.includes('cursor')) return './icons/cursor-ai.png';
+					if (t.includes('claude')) return './icons/claude-code.svg';
+					if (t.includes('microsoft agent') || (t.includes('agent') && t.includes('framework'))) return './icons/microsoft-agent-framework.svg';
+					if (t.includes('azure ai foundry') || t.includes('ai foundry') || t.includes('azure foundry') || t.includes('foundry')) return './icons/azure-ai-foundry.svg';
 					if (t.includes('copilot')) return './icons/copilot.png';
 					if (t.includes('agentic')) return './icons/agentic-ai.svg';
 					if (t.includes('prompt')) return './icons/prompt-engineering.svg';

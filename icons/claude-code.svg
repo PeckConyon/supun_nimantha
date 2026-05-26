@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Claude Code">
+	<defs>
+		<linearGradient id="claudeBg" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0%" stop-color="#1f1d1a"/>
+			<stop offset="100%" stop-color="#3a3631"/>
+		</linearGradient>
+	</defs>
+	<rect width="64" height="64" rx="14" ry="14" fill="url(#claudeBg)"/>
+	<g transform="translate(32 32)" fill="#D97757">
+		<g id="ray">
+			<path d="M0 -18 C 1.6 -10, 1.6 -10, 6 -8 C 1.6 -6, 1.6 -6, 0 0 C -1.6 -6, -1.6 -6, -6 -8 C -1.6 -10, -1.6 -10, 0 -18 Z"/>
+		</g>
+		<use href="#ray" transform="rotate(72)"/>
+		<use href="#ray" transform="rotate(144)"/>
+		<use href="#ray" transform="rotate(216)"/>
+		<use href="#ray" transform="rotate(288)"/>
+	</g>
+</svg>
