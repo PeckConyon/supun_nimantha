@@ -1688,7 +1688,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 							<li>Conducted code reviews, wrote unit tests, and facilitated knowledge-sharing.</li>
 							<li>Delivered product demos, led technical interviews, and organized events.</li>
 						</ul>
-						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC Core, WEB API, React, Zustand, Next.js, Tailwind, Dapper, SQL Server, SQL Toolbelt, Stored Procs, Unit Testing, T4 Templates, GraphQL, OpenAI, jQWidgets, Gulp, LESS, Bootstrap, AMCharts, AG Grid, Agile, Jira Scrum</p>
+						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC Core, WEB API, React, Zustand, Next.js, Tailwind, Dapper, SQL Server, SQL Toolbelt, Stored Procs, Unit Testing, T4 Templates, GraphQL, OpenAI, jQWidgets, Gulp, LESS, Bootstrap, AMCharts, AG Grid, Agile, Jira Scrum, Azure DevOps, Azure AI Foundry, Document Intelligence</p>
 					</article>
 
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
@@ -2190,6 +2190,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 							<span class="pill-tech">OpenAI</span>
 							<span class="pill-tech">Microsoft Agent Framework</span>
 							<span class="pill-tech">Azure AI Foundry</span>
+							<span class="pill-tech">Document Intelligence</span>
 						</div>
 					</div>
 
@@ -4549,7 +4550,8 @@ I take pride in seeing things through to completion. If I commit to something, I
 					if (t === 'cursor' || t.includes('cursor')) return './icons/cursor-ai.png';
 					if (t.includes('claude')) return './icons/claude-code.svg';
 					if (t.includes('microsoft agent') || (t.includes('agent') && t.includes('framework'))) return './icons/microsoft-agent-framework.svg';
-					if (t.includes('azure ai foundry') || t.includes('ai foundry') || t.includes('azure foundry') || t.includes('foundry')) return './icons/azure-ai-foundry.svg';
+					if (t.includes('document intelligence')) return './icons/azure-document-intelligence.svg';
+					if (t.includes('azure ai foundry') || t.includes('ai foundry') || t.includes('azure foundry') || (t.includes('foundry') && !t.includes('document'))) return './icons/azure-ai-foundry.svg';
 					if (t.includes('copilot')) return './icons/copilot.png';
 					if (t.includes('agentic')) return './icons/agentic-ai.svg';
 					if (t.includes('prompt')) return './icons/prompt-engineering.svg';
