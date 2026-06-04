@@ -651,6 +651,8 @@
 				border: 1px solid rgba(26, 107, 92, 0.18);
 				box-shadow: 0 10px 34px -18px rgba(18, 21, 28, 0.22);
 				backdrop-filter: blur(10px);
+				touch-action: none;
+				cursor: pointer;
 			}
 			.carousel-speedo .speedo-ring {
 				position: absolute;
@@ -708,9 +710,10 @@
 				width: 100%;
 				height: 100%;
 				opacity: 0;
-				cursor: pointer;
 				border-radius: 9999px;
 				z-index: 4;
+				/* Keyboard only — dial handles pointer/touch so the arc maps correctly. */
+				pointer-events: none;
 			}
 			.carousel-speedo input[type="range"].speedo-range:focus-visible {
 				outline: 2px solid rgba(184, 149, 46, 0.7);
@@ -3059,7 +3062,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 						<div class="speedo-dial" data-carousel-speed-dial style="--pct: 0.4">
 							<div class="speedo-ring" aria-hidden="true"></div>
 							<div class="speedo-needle" aria-hidden="true"></div>
-							<div class="speedo-center" aria-hidden="true">
+							<div class="speedo-center">
 								<div class="speedo-heading">Speed</div>
 								<div class="speedo-value" data-carousel-speed-value>9</div>
 							</div>
@@ -3071,7 +3074,11 @@ I take pride in seeing things through to completion. If I commit to something, I
 								max="15"
 								step="1"
 								value="9"
-								aria-label="Carousel autoplay speed"
+								aria-valuemin="5"
+								aria-valuemax="15"
+								aria-valuenow="9"
+								aria-valuetext="9 of 15 (5 slowest, 15 fastest)"
+								aria-label="Client reviews carousel speed (5 slowest to 15 fastest)"
 							/>
 						</div>
 					</div>
@@ -5640,6 +5647,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 				const speedDefault = 9;
 				const speedMin = 5;
 				const speedMax = 15;
+				const speedIntervalAtDefault = speedMax + speedMin - speedDefault; // 11 — keeps 9 = baseAutoplayMs
 
 				let autoplayMs = baseAutoplayMs; // updated based on the speed dial
 				const perPageDesktop = Number(carousel.getAttribute('data-per-page')) || 3;
@@ -5744,20 +5752,41 @@ I take pride in seeing things through to completion. If I commit to something, I
 
 				const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 
+				const speedToPct = (speed) => (speed - speedMin) / (speedMax - speedMin);
+
+				const pctToSpeed = (pct) =>
+					Math.round(speedMin + clamp(pct, 0, 1) * (speedMax - speedMin));
+
+				const pointerToPct = (clientX, clientY) => {
+					if (!speedDial) return speedToPct(speedDefault);
+					const rect = speedDial.getBoundingClientRect();
+					const cx = rect.left + rect.width / 2;
+					const cy = rect.top + rect.height / 2;
+					const dx = clientX - cx;
+					const dy = clientY - cy;
+					// 0° at top, clockwise; needle arc matches -120° (min) to +120° (max).
+					const angleDeg = (Math.atan2(dx, -dy) * 180) / Math.PI;
+					return clamp((angleDeg + 120) / 240, 0, 1);
+				};
+
 				const applySpeed = (rawSpeed, resetTimer = true) => {
 					const speed = clamp(Number(rawSpeed) || speedDefault, speedMin, speedMax);
-					// Treat dial value as "seconds per slide" (default 9 => baseAutoplayMs).
-					autoplayMs = baseAutoplayMs * (speed / speedDefault);
+					// Higher dial = faster autoplay (5 slowest … 15 fastest); 9 = baseAutoplayMs.
+					const intervalFactor = speedMax + speedMin - speed;
+					autoplayMs = baseAutoplayMs * (intervalFactor / speedIntervalAtDefault);
 
 					if (speedValueEl) speedValueEl.textContent = String(speed);
 					if (speedDial) {
-						const pct = (speed - speedMin) / (speedMax - speedMin);
-						speedDial.style.setProperty('--pct', String(pct));
+						speedDial.style.setProperty('--pct', String(speedToPct(speed)));
 					}
 
-					// Keep the input clamped if the user drags/selects out of bounds.
-					if (speedInput && String(speedInput.value) !== String(speed)) {
-						speedInput.value = String(speed);
+					if (speedInput) {
+						if (String(speedInput.value) !== String(speed)) speedInput.value = String(speed);
+						speedInput.setAttribute('aria-valuenow', String(speed));
+						speedInput.setAttribute(
+							'aria-valuetext',
+							`${speed} of ${speedMax} (5 slowest, 15 fastest)`
+						);
 					}
 
 					if (resetTimer) scheduleNext();
@@ -5860,9 +5889,83 @@ I take pride in seeing things through to completion. If I commit to something, I
 
 				// Speed dial interactions (updates autoplay timing).
 				if (speedInput) {
-					speedInput.addEventListener('input', () => applySpeed(speedInput.value, true));
-					// Ensure we start with the correct speed and dial position.
+					const onSpeedInput = () => applySpeed(speedInput.value, true);
+					speedInput.addEventListener('input', onSpeedInput);
+					speedInput.addEventListener('change', onSpeedInput);
+
+					if (speedDial) {
+						let draggingDial = false;
+
+						const setSpeedFromPointer = (clientX, clientY, resetTimer) => {
+							applySpeed(pctToSpeed(pointerToPct(clientX, clientY)), resetTimer);
+						};
+
+						speedDial.setAttribute('tabindex', '0');
+						speedDial.setAttribute('role', 'slider');
+						speedDial.setAttribute('aria-valuemin', String(speedMin));
+						speedDial.setAttribute('aria-valuemax', String(speedMax));
+						speedDial.setAttribute(
+							'aria-label',
+							'Client reviews carousel speed (5 slowest to 15 fastest)'
+						);
+
+						speedDial.addEventListener('keydown', (e) => {
+							const current = clamp(Number(speedInput.value) || speedDefault, speedMin, speedMax);
+							if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+								e.preventDefault();
+								applySpeed(current + 1, true);
+							} else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+								e.preventDefault();
+								applySpeed(current - 1, true);
+							}
+						});
+
+						speedDial.addEventListener('pointerdown', (e) => {
+							if (e.button !== 0) return;
+							draggingDial = true;
+							speedDial.setPointerCapture(e.pointerId);
+							setSpeedFromPointer(e.clientX, e.clientY, true);
+						});
+
+						speedDial.addEventListener('pointermove', (e) => {
+							if (!draggingDial) return;
+							setSpeedFromPointer(e.clientX, e.clientY, true);
+						});
+
+						const endDialDrag = (e) => {
+							if (!draggingDial) return;
+							draggingDial = false;
+							try {
+								speedDial.releasePointerCapture(e.pointerId);
+							} catch (_) {
+								/* ignore */
+							}
+						};
+
+						speedDial.addEventListener('pointerup', endDialDrag);
+						speedDial.addEventListener('pointercancel', endDialDrag);
+
+						const syncDialAria = () => {
+							const speed = clamp(Number(speedInput.value) || speedDefault, speedMin, speedMax);
+							speedDial.setAttribute('aria-valuenow', String(speed));
+							speedDial.setAttribute(
+								'aria-valuetext',
+								`${speed} of ${speedMax} (5 slowest, 15 fastest)`
+							);
+						};
+						speedInput.addEventListener('input', syncDialAria);
+						speedInput.addEventListener('change', syncDialAria);
+					}
+
 					applySpeed(speedInput.value || speedDefault, false);
+					if (speedDial) {
+						const speed = clamp(Number(speedInput.value) || speedDefault, speedMin, speedMax);
+						speedDial.setAttribute('aria-valuenow', String(speed));
+						speedDial.setAttribute(
+							'aria-valuetext',
+							`${speed} of ${speedMax} (5 slowest, 15 fastest)`
+						);
+					}
 				} else {
 					applySpeed(speedDefault, false);
 				}
