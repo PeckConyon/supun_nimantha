@@ -4041,6 +4041,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 					andere: ['./letters/andere/agreement.pdf'],
 					fajar: ['./letters/fajar/service_letter.pdf'],
 					newglink: ['./letters/newglink/service_letter.pdf'],
+					avansight: ['./letters/avansight/ServiceLetter.pdf'],
 				};
 
 				const normalizeLetterKey = (k) => {
@@ -4125,24 +4126,6 @@ I take pride in seeing things through to completion. If I commit to something, I
 					if (article.querySelector('[data-service-letter]')) return;
 
 					const companyCol = companyEl.parentElement;
-
-					if (folderKey === 'avansight') {
-						const pending = document.createElement('span');
-						pending.dataset.serviceLetter = 'pending';
-						pending.setAttribute('role', 'status');
-						pending.className =
-							'mt-2 mb-2 inline-flex items-center gap-2 rounded-full border border-amber-200/90 bg-amber-50/90 px-4 py-2 text-sm font-medium text-amber-900/85 shadow-sm';
-						pending.innerHTML = `
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 shrink-0 text-amber-700/90" aria-hidden="true">
-								<circle cx="12" cy="12" r="10"></circle>
-								<polyline points="12 6 12 12 16 14"></polyline>
-							</svg>
-							<span>Service letter pending</span>
-						`;
-						if (companyCol) companyCol.appendChild(pending);
-						else companyEl.insertAdjacentElement('afterend', pending);
-						return;
-					}
 
 					const btn = document.createElement('button');
 					btn.type = 'button';
