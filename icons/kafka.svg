@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kafka">
+	<rect width="64" height="64" rx="14" ry="14" fill="#111827"/>
+	<g transform="translate(32 32)" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+		<circle cx="0" cy="-10" r="4" fill="#ffffff"/>
+		<circle cx="-10" cy="6" r="4" fill="#ffffff"/>
+		<circle cx="10" cy="6" r="4" fill="#ffffff"/>
+		<line x1="0" y1="-6" x2="-8" y2="2"/>
+		<line x1="0" y1="-6" x2="8" y2="2"/>
+		<line x1="-6" y1="6" x2="6" y2="6"/>
+	</g>
+</svg>

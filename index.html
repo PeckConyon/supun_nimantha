@@ -1691,7 +1691,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 							<li>Conducted code reviews, wrote unit tests, and facilitated knowledge-sharing.</li>
 							<li>Delivered product demos, led technical interviews, and organized events.</li>
 						</ul>
-						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC Core, WEB API, React, Zustand, Next.js, Tailwind, Dapper, SQL Server, SQL Toolbelt, Stored Procs, Unit Testing, T4 Templates, GraphQL, OpenAI, jQWidgets, Gulp, LESS, Bootstrap, AMCharts, AG Grid, Agile, Jira Scrum, Azure DevOps, Azure AI Foundry, Document Intelligence</p>
+						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC Core, WEB API, React, TanStack, Headless UI, Zustand, Next.js, Tailwind, Dapper, SQL Server, SQL Toolbelt, Stored Procs, Unit Testing, T4 Templates, GraphQL, OpenAI, jQWidgets, Gulp, LESS, Bootstrap, AMCharts, AG Grid, Agile, Jira Scrum, Azure DevOps, Azure AI Foundry, Document Intelligence</p>
 					</article>
 
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
@@ -2055,8 +2055,11 @@ I take pride in seeing things through to completion. If I commit to something, I
 						<div class="flex flex-wrap gap-2">
 							<span class="pill-tech">React</span>
 							<span class="pill-tech">Next.js</span>
+							<span class="pill-tech">TanStack</span>
 							<span class="pill-tech">Zustand</span>
 							<span class="pill-tech">Redux</span>
+							<span class="pill-tech">Headless UI</span>
+							<span class="pill-tech">AntD</span>
 							<span class="pill-tech">HTML</span>
 							<span class="pill-tech">CSS</span>
 							<span class="pill-tech">Media Queries</span>
@@ -2089,8 +2092,11 @@ I take pride in seeing things through to completion. If I commit to something, I
 							<span class="pill-tech">MVC</span>
 							<span class="pill-tech">Web API</span>
 							<span class="pill-tech">Django</span>
+							<span class="pill-tech">FastAPI</span>
 							<span class="pill-tech">Identity Framework</span>
 							<span class="pill-tech">REST APIs</span>
+							<span class="pill-tech">RabbitMQ</span>
+							<span class="pill-tech">Kafka</span>
 							<span class="pill-tech">GraphQL</span>
 							<span class="pill-tech">HotChocolate</span>
 							<span class="pill-tech">Banana Cake Pop</span>
@@ -4511,6 +4517,12 @@ I take pride in seeing things through to completion. If I commit to something, I
 					if (t === 'banana cake' || t.includes('banana cake')) return './icons/bananacake.png';
 					if (t === 'firebase' || t.includes('firebase')) return 'firebase';
 
+					if (t.includes('tanstack')) return './icons/tanstack.svg';
+					if (t.includes('headless ui') || t.includes('headless')) return './icons/headless-ui.svg';
+					if (t === 'antd' || t.includes('ant design') || t.includes('antd')) return './icons/antd.svg';
+					if (t.includes('fastapi') || t.includes('fast api')) return './icons/fastapi.svg';
+					if (t.includes('rabbitmq') || t.includes('rabbit mq')) return './icons/rabbitmq.svg';
+					if (t.includes('kafka')) return './icons/kafka.svg';
 					if (t.includes('react native')) return 'react';
 					if (t === 'react') return 'react';
 					if (t.includes('react')) return 'react';
