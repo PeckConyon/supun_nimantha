@@ -136,14 +136,21 @@
 			.hero-text-panel::after {
 				content: "";
 				position: absolute;
-				inset: 0 auto 0 0;
-				width: clamp(15rem, 30%, 17rem);
-				background-image: url("./profile_image_1.jpeg");
+				top: 5px;
+				bottom: 5px;
+				left: 0;
+				width: clamp(17rem, 35%, 20.5rem);
+				background-image: url("./profile_image_1.jpg");
 				background-repeat: no-repeat;
 				background-size: cover;
-				background-position: center;
+				background-position: top center;
 				z-index: 0;
 				pointer-events: none;
+			}
+			@media (min-width: 900px) {
+				.hero-text-panel {
+					padding-left: calc(clamp(17rem, 35%, 20.5rem) + 2rem) !important;
+				}
 			}
 			.hero-kiwi-art {
 				position: absolute;
@@ -158,11 +165,6 @@
 				display: block;
 				width: 100%;
 				height: auto;
-			}
-			@media (min-width: 900px) {
-				.hero-text-panel {
-					padding-left: calc(clamp(14rem, 30%, 19rem) + 2rem) !important;
-				}
 			}
 			.hero-text-panel > *:not(.hero-kiwi-art) {
 				position: relative;
@@ -1283,9 +1285,9 @@
 			<div class="mx-auto grid max-w-5xl items-center gap-8 md:gap-16 md:text-left hero-enter">
 				<div class="md:hidden order-0">
 					<img
-						src="./profile_image_1.jpeg"
+						src="./profile_image_1.jpg"
 						alt="Supun Nimantha profile"
-						class="w-full max-h-[72vh] rounded-2xl border border-stone-200/70 object-cover shadow-soft"
+						class="w-full max-h-[72vh] rounded-2xl border border-stone-200/70 object-cover object-top shadow-soft"
 						loading="eager"
 						decoding="async"
 					/>
