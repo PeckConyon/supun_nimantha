@@ -114,6 +114,7 @@
 				animation: fade-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 			}
 			.hero-text-panel {
+				--hero-photo-strip: clamp(17rem, 35%, 20.5rem);
 				position: relative;
 				overflow: hidden;
 				background-image: none;
@@ -138,18 +139,18 @@
 				position: absolute;
 				top: 5px;
 				bottom: 5px;
-				left: 0;
-				width: clamp(17rem, 35%, 20.5rem);
+				left: 5px;
+				width: calc(var(--hero-photo-strip) - 10px);
 				background-image: url("./profile_image_1.jpg");
 				background-repeat: no-repeat;
 				background-size: cover;
-				background-position: top center;
+				background-position: center center;
 				z-index: 0;
 				pointer-events: none;
 			}
 			@media (min-width: 900px) {
 				.hero-text-panel {
-					padding-left: calc(clamp(17rem, 35%, 20.5rem) + 2rem) !important;
+					padding-left: calc(var(--hero-photo-strip) + 2rem) !important;
 				}
 			}
 			.hero-kiwi-art {
