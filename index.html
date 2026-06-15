@@ -1586,7 +1586,7 @@
 				</div>
 				<div class="w-full space-y-5 text-[17px] leading-relaxed text-muted">
 					<p class="text-justify">
-						I’m a full-stack software engineer with over 10 years of experience designing and delivering scalable, high-performance applications across web, mobile, and cloud environments. My expertise spans modern frontend technologies such as React, Next.js, and React Native, along with backend development in .NET and Python/Django, covering API design, data pipelines, and system architecture.
+						I’m a full-stack software engineer with over 10 years of experience designing and delivering scalable, high-performance applications across web, mobile, and cloud environments. My expertise spans modern frontend technologies such as React, Next.js, and React Native, along with backend development in .NET, Node.js/Express, and Python/Django, covering API design, data pipelines, and system architecture.
 
 I have hands-on experience with cloud platforms, primarily AWS (EC2, RDS, S3, Lambda), and have built distributed systems, serverless workflows, and data-driven applications with a strong focus on performance, scalability, and reliability.
 
@@ -1694,7 +1694,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 							<li>Conducted code reviews, wrote unit tests, and facilitated knowledge-sharing.</li>
 							<li>Delivered product demos, led technical interviews, and organized events.</li>
 						</ul>
-						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC Core, WEB API, React, TanStack, Headless UI, Zustand, Next.js, Tailwind, Dapper, SQL Server, SQL Toolbelt, Stored Procs, Unit Testing, T4 Templates, GraphQL, OpenAI, jQWidgets, Gulp, LESS, Bootstrap, AMCharts, AG Grid, Agile, Jira Scrum, Azure DevOps, Azure AI Foundry, Document Intelligence</p>
+						<p class="border-t border-stone-200/80 pt-4 text-xs text-muted"><span class="font-semibold text-accent">Tech</span><span class="text-stone-400"> · </span> ASP.NET MVC Core, WEB API, React, TanStack, Headless UI, Zustand, Next.js, Tailwind, Node.js, Express.js, Prisma ORM, Dapper, SQL Server, SQL Toolbelt, Stored Procs, Unit Testing, T4 Templates, GraphQL, OpenAI, jQWidgets, Gulp, LESS, Bootstrap, AMCharts, AG Grid, Agile, Jira Scrum, Azure DevOps, Azure AI Foundry, Document Intelligence</p>
 					</article>
 
 					<article class="group rounded-2xl border border-stone-200/80 bg-white/70 p-6 shadow-soft backdrop-blur-sm transition duration-300 hover:border-accent/25 hover:shadow-lift sm:p-8">
@@ -2096,6 +2096,8 @@ I take pride in seeing things through to completion. If I commit to something, I
 							<span class="pill-tech">Web API</span>
 							<span class="pill-tech">Django</span>
 							<span class="pill-tech">FastAPI</span>
+							<span class="pill-tech">Node.js</span>
+							<span class="pill-tech">Express.js</span>
 							<span class="pill-tech">Identity Framework</span>
 							<span class="pill-tech">REST APIs</span>
 							<span class="pill-tech">RabbitMQ</span>
@@ -2122,6 +2124,7 @@ I take pride in seeing things through to completion. If I commit to something, I
 						<div class="flex flex-wrap gap-2">
 							<span class="pill-tech">Entity Framework</span>
 							<span class="pill-tech">Dapper</span>
+							<span class="pill-tech">Prisma ORM</span>
 							<span class="pill-tech">ADO.NET</span>
 						</div>
 					</div>
@@ -4550,6 +4553,9 @@ I take pride in seeing things through to completion. If I commit to something, I
 					if (t.includes('google map')) return './icons/google-maps.svg';
 					if (t.includes('python')) return 'python';
 					if (t.includes('django')) return 'django';
+					if (t.includes('node.js') || t.includes('nodejs')) return 'nodejs';
+					if (t.includes('express.js') || t.includes('express')) return 'express';
+					if (t.includes('prisma')) return 'prisma';
 					if (t.includes('selenium')) return 'selenium';
 					if (t.includes('openai')) return './icons/openai.svg';
 					if (t === 'cursor' || t.includes('cursor')) return './icons/cursor-ai.png';
