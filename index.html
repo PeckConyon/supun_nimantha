@@ -4194,33 +4194,25 @@ I take pride in seeing things through to completion. If I commit to something, I
 						article.querySelector('p.shrink-0.font-mono.text-xs')?.textContent || ''
 					).trim();
 					const isCurrentRole = /present/i.test(dateText);
-					const isFoodmeCompany = /foodme|favour/i.test(companyRaw);
-					const stillAtFoodme = [...exp.querySelectorAll('article')].some((a) => {
-						const c = (a.querySelector('p.text-muted')?.textContent || '').trim();
-						const d = (a.querySelector('p.shrink-0.font-mono.text-xs')?.textContent || '').trim();
-						return /foodme|favour/i.test(c) && /present/i.test(d);
-					});
 
-					if (isFoodmeCompany && stillAtFoodme) {
-						if (isCurrentRole) {
-							const badge = document.createElement('span');
-							badge.dataset.serviceLetter = 'current';
-							badge.setAttribute('role', 'status');
-							badge.className =
-								'mt-2 mb-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/10 px-4 py-2 text-sm font-medium text-accent shadow-sm';
-							badge.innerHTML = `
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 shrink-0" aria-hidden="true">
-									<path d="M3 21h18"></path>
-									<path d="M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14"></path>
-									<path d="M9 21v-8h6v8"></path>
-									<path d="M9 9h.01"></path>
-									<path d="M15 9h.01"></path>
-								</svg>
-								<span>Currently working</span>
-							`;
-							if (companyCol) companyCol.appendChild(badge);
-							else companyEl.insertAdjacentElement('afterend', badge);
-						}
+					if (isCurrentRole) {
+						const badge = document.createElement('span');
+						badge.dataset.serviceLetter = 'current';
+						badge.setAttribute('role', 'status');
+						badge.className =
+							'mt-2 mb-2 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/10 px-4 py-2 text-sm font-medium text-accent shadow-sm';
+						badge.innerHTML = `
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 shrink-0" aria-hidden="true">
+								<path d="M3 21h18"></path>
+								<path d="M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14"></path>
+								<path d="M9 21v-8h6v8"></path>
+								<path d="M9 9h.01"></path>
+								<path d="M15 9h.01"></path>
+							</svg>
+							<span>Currently working</span>
+						`;
+						if (companyCol) companyCol.appendChild(badge);
+						else companyEl.insertAdjacentElement('afterend', badge);
 						return;
 					}
 
