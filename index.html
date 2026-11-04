@@ -993,7 +993,37 @@
 					z-index: auto !important;
 				}
 			}
-		</style>
+		
+/* Portfolio download controls: primary CV, optional detail, and supporting feedback. */
+.portfolio-downloads { display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:center; gap:14px; margin-top:32px; width:100%; }
+.cv-download-group { display:flex; flex-direction:column; align-items:stretch; gap:10px; }
+.portfolio-download-button { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:46px; min-width:180px; padding:11px 20px; border:1px solid #1a6b5c; border-radius:12px; font-size:14px; font-weight:600; line-height:22px; text-decoration:none; transition:background-color .18s, border-color .18s; }
+.portfolio-download-button svg { width:17px; height:17px; flex-shrink:0; }
+.portfolio-download-primary { background:#1a6b5c; color:#fff; box-shadow:0 3px 8px rgba(26,107,92,.12); }
+.portfolio-download-primary:hover { background:#155a4e; border-color:#155a4e; }
+.portfolio-download-secondary { color:#1a6b5c; background:rgba(255,255,255,.65); border-color:rgba(26,107,92,.32); }
+.portfolio-download-secondary:hover { background:#edf5f2; border-color:#1a6b5c; }
+.portfolio-downloads a:focus-visible { outline:2px solid #1a6b5c; outline-offset:4px; }
+@media (min-width:768px) { .portfolio-downloads { justify-content:flex-start; } }
+@media (max-width:639px) { .portfolio-downloads { flex-direction:column; align-items:stretch; gap:18px; margin-top:26px; } .cv-download-group { width:100%; } .portfolio-download-button { width:100%; min-width:0; box-sizing:border-box; } }
+
+
+.cv-download-group { width:240px; gap:0; text-align:left; }
+.cv-download-group > button { width:100%; cursor:pointer; }
+.cv-download-chevron { margin-left:auto; transition:transform .18s; }
+#cv-download-toggle[aria-expanded="true"] .cv-download-chevron { transform:rotate(180deg); }
+.cv-download-options { margin-top:8px; padding:5px; border:1px solid rgba(26,107,92,.18); border-radius:14px; background:#fff; box-shadow:0 8px 24px rgba(18,21,28,.1); }
+.cv-download-options[hidden] { display:none; }
+.cv-download-options a { display:block; padding:12px 10px; border-radius:9px; color:#193f38; text-decoration:none; }
+.cv-download-options a:hover, .cv-download-options a:focus-visible { background:#edf5f2; }
+.cv-download-options a + a { border-top:1px solid #edf0ee; }
+.cv-option-heading { display:flex; flex-wrap:wrap; align-items:center; gap:7px; font-size:14px; font-weight:600; }
+.cv-option-badge { padding:2px 6px; border-radius:5px; background:#edf5f2; color:#1a6b5c; font-size:10px; font-weight:500; }
+.cv-option-description { display:block; margin-top:4px; color:#5a5f6e; font-size:12px; line-height:1.5; }
+.portfolio-downloads button:focus-visible { outline:2px solid #1a6b5c; outline-offset:4px; }
+@media(max-width:639px) { .cv-download-group { width:100%; } }
+
+</style>
 	</head>
 	<body class="font-sans min-h-screen text-ink text-[18px] leading-relaxed antialiased selection:bg-accent/15 selection:text-ink">
 		<a
@@ -1505,53 +1535,18 @@
 						</a>
 					</div>
 
-					<a
-						href="./cv/CV_Supun_Nimantha_Software_Engineer.pdf"
-						download="CV_Supun_Nimantha_Software_Engineer.pdf"
-						class="mt-10 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-7 py-2.5 text-sm font-medium text-white shadow-soft transition hover:border-accent hover:bg-[#155a4e]"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							class="h-4 w-4"
-							aria-hidden="true"
-						>
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-							<path d="M7 10l5 5 5-5" />
-							<path d="M12 15V3" />
-						</svg>
-						Download CV
-					</a>
-					<a
-						href="./letters/fiverr/Fiverr Profile Page.pdf"
-						download
-						class="mt-10 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent px-7 py-2.5 text-sm font-medium text-white shadow-soft transition hover:border-accent hover:bg-[#155a4e]"
-						aria-label="Download client feedback (Fiverr reviews PDF)"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							class="h-4 w-4"
-							aria-hidden="true"
-						>
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-							<path d="M7 10l5 5 5-5" />
-							<path d="M12 15V3" />
-						</svg>
-						Download Client Feedback
-					</a>
+					<div class="portfolio-downloads" aria-label="CV and client feedback">
+ <div class="cv-download-group" id="cv-download-picker">
+  <button type="button" class="portfolio-download-button portfolio-download-primary" id="cv-download-toggle" aria-expanded="false" aria-controls="cv-download-options"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg><span>Download CV</span><svg class="cv-download-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg></button>
+  <div class="cv-download-options" id="cv-download-options" hidden aria-label="Choose a CV version">
+   <a href="./cv/Supun_Nimantha_Senior_Full-Stack_Software_Engineer_CV_Concise.pdf" download="Supun_Nimantha_Senior_Full-Stack_Software_Engineer_CV_Concise.pdf"><span class="cv-option-heading">Concise CV <span class="cv-option-badge">Recommended</span></span><span class="cv-option-description">A focused overview of my experience</span></a>
+   <a href="./cv/Supun_Nimantha_Senior_Full-Stack_Software_Engineer_CV_Detailed.pdf" download="Supun_Nimantha_Senior_Full-Stack_Software_Engineer_CV_Detailed.pdf"><span class="cv-option-heading">Detailed CV</span><span class="cv-option-description">Full project and technical details</span></a>
+  </div>
+ </div>
+ <a class="portfolio-download-button portfolio-download-secondary" href="./letters/fiverr/Fiverr Profile Page.pdf" download aria-label="Download client feedback PDF"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg><span>Client feedback</span></a>
+</div>
 
-					<!-- (removed) Sri Lanka lion + New Zealand kiwi indicators -->
+<!-- (removed) Sri Lanka lion + New Zealand kiwi indicators -->
 				</div>
 			</div>
 		</header>
@@ -1675,7 +1670,7 @@
 							</div>
 						</div>
 						<h4 class="mb-3 mt-5 font-semibold text-accent">Project: AI Report Builder &amp; Trial Master File (TMF) Digitalization</h4>
-<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60"><li>Introduced AI-assisted digitalization of Trial Master File (TMF) clinical reports, using Azure Document Intelligence for extraction and Azure OpenAI for interpreting and structuring report content.</li><li>Developed a QA Agent module to validate digitised reports and automatically create tickets in the DartAI platform when issues were detected.</li><li>Delivered a production AI report platform with a .NET API, Next.js frontend and xUnit tests, reviewing AI-assisted implementation and refactoring.</li><li>Developed multimodal AI annotation of scanned and handwritten clinical-exam PDFs, assigning confidence levels and routing uncertain findings for human review.</li><li>Enabled PDF-to-Word generation with sandboxed execution, retries and source validation; added versioned prompts for non-technical updates.</li><li>Orchestrated resilient server-side pipelines for annotation, SharePoint delivery and report generation, with Teams notifications, restart handling, model concurrency controls and Azure usage/cost monitoring.</li><li>Migrated GitHub repositories to self-hosted Gitea with Gitea Actions CI/CD; deployed Gitea with Docker on a Hostinger Ubuntu VPS, set up a SoftEther VPN server for access to protected Azure services, and hardened the server with fail2ban.</li><li>Developing a narrative-generation workflow using Microsoft Agent Framework, MCP and LangChain, with prompt engineering and RAG over digitised TMF and Word reports using embeddings and a vector database.</li></ul>
+<ul class="mb-5 ml-5 list-outside list-disc space-y-2 text-sm leading-relaxed text-muted marker:text-accent/60"><li>Initially used Azure Document Intelligence for extraction and Azure OpenAI to structure Trial Master File (TMF) clinical reports, before moving to multimodal AI annotation of scanned and handwritten clinical-exam PDFs.</li><li>Developed a QA Agent module to validate digitised reports and automatically create tickets in the DartAI platform when issues were detected.</li><li>Delivered a production AI report platform with a .NET API, Next.js frontend and xUnit tests, reviewing AI-assisted implementation and refactoring.</li><li>Developed multimodal AI annotation of scanned and handwritten clinical-exam PDFs, assigning confidence levels and routing uncertain findings for human review.</li><li>Enabled PDF-to-Word generation with sandboxed execution, retries and source validation; added versioned prompts for non-technical updates.</li><li>Orchestrated resilient server-side pipelines for annotation, SharePoint delivery and report generation, with Teams notifications, restart handling, model concurrency controls and Azure usage/cost monitoring.</li><li>Migrated GitHub repositories to self-hosted Gitea with Gitea Actions CI/CD; deployed Gitea with Docker on a Hostinger Ubuntu VPS, set up a SoftEther VPN server for access to protected Azure services, and hardened the server with fail2ban.</li><li>Developing a narrative-generation workflow using Microsoft Agent Framework, MCP and LangChain, with prompt engineering and RAG over digitised TMF and Word reports using embeddings and a vector database.</li></ul>
 <details class="project-technologies mb-5 border-t border-stone-200/80 pt-3"><summary class="cursor-pointer text-sm font-semibold text-accent">Technologies used</summary><div class="mt-3 flex flex-wrap gap-2"><span class="pill-tech">C#</span><span class="pill-tech">ASP.NET Core</span><span class="pill-tech">Next.js</span><span class="pill-tech">TypeScript</span><span class="pill-tech">Python</span><span class="pill-tech">xUnit</span><span class="pill-tech">Azure OpenAI</span><span class="pill-tech">Azure Document Intelligence</span><span class="pill-tech">Microsoft Graph</span><span class="pill-tech">SharePoint</span><span class="pill-tech">Teams Webhooks</span><span class="pill-tech">Entra ID</span><span class="pill-tech">Docker</span><span class="pill-tech">Linux</span><span class="pill-tech">Ubuntu</span><span class="pill-tech">Caddy</span><span class="pill-tech">Gitea</span><span class="pill-tech">Gitea Actions</span><span class="pill-tech">Hostinger VPS</span><span class="pill-tech">SoftEther VPN</span><span class="pill-tech">fail2ban</span><span class="pill-tech">Claude Code</span><span class="pill-tech">Codex</span><span class="pill-tech">Computer-use skills</span><span class="pill-tech">Claude Design</span><span class="pill-tech">Microsoft Agent Framework</span><span class="pill-tech">MCP</span><span class="pill-tech">RAG</span><span class="pill-tech">Vector Databases</span><span class="pill-tech">Embeddings</span><span class="pill-tech">LangChain</span><span class="pill-tech">Prompt Engineering</span><span class="pill-tech">Multimodal AI</span><span class="pill-tech">Human-in-the-loop Validation</span></div></details>
 </article>
 
@@ -2300,8 +2295,7 @@
 				</div>
 			</section>
 
-			<aside class="mb-12 rounded-2xl border border-stone-200/80 bg-white/60 p-5"><h2 class="font-display text-xl font-semibold text-ink">Other familiar areas</h2><p class="mt-2 text-sm leading-relaxed text-muted">Node.js · Express.js · Hangfire · RabbitMQ · Kafka · Event-driven architecture</p></aside>
-<section id="education" class="mb-24 scroll-mt-24">
+			<section id="education" class="mb-24 scroll-mt-24">
 				<div class="mb-8 sm:text-left text-center">
 					<h2
 						class="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl inline-flex items-center gap-3"
@@ -6537,5 +6531,38 @@
 			async
 			src="https://gc.zgo.at/count.js"
 		></script>
-	</body>
+	
+<script>
+(() => {
+ const picker = document.getElementById('cv-download-picker');
+ const toggle = document.getElementById('cv-download-toggle');
+ const options = document.getElementById('cv-download-options');
+ if (!picker || !toggle || !options) return;
+ const links = Array.from(options.querySelectorAll('a'));
+ const setOpen = (open, restoreFocus = false) => {
+  options.hidden = !open;
+  toggle.setAttribute('aria-expanded', String(open));
+  if (restoreFocus) toggle.focus();
+ };
+ toggle.addEventListener('click', () => setOpen(options.hidden));
+ toggle.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+   event.preventDefault(); setOpen(true);
+   links[event.key === 'ArrowDown' ? 0 : links.length - 1].focus();
+  }
+ });
+ picker.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !options.hidden) { event.preventDefault(); setOpen(false, true); }
+  const index = links.indexOf(document.activeElement);
+  if (index >= 0 && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+   event.preventDefault(); links[(index + (event.key === 'ArrowDown' ? 1 : links.length - 1)) % links.length].focus();
+  }
+ });
+ links.forEach(link => link.addEventListener('click', () => setOpen(false, true)));
+ document.addEventListener('click', event => { if (!picker.contains(event.target)) setOpen(false); });
+ picker.addEventListener('focusout', event => { if (!picker.contains(event.relatedTarget)) setOpen(false); });
+})();
+</script>
+
+</body>
 </html>
